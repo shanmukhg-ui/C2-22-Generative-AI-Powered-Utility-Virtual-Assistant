@@ -1,0 +1,128 @@
+/* UtilityAI Intro Screen Design Tokens & Keyframes */
+:root {
+  --intro-primary: #6D28F5;
+  --intro-purple-bright: #7C3AED;
+  --intro-indigo-deep: #171642;
+  --intro-sidebar-indigo: #201B50;
+  --intro-cyan: #22D3EE;
+  --intro-cyan-glow: rgba(34, 211, 238, 0.45);
+  --intro-purple-glow: rgba(124, 58, 237, 0.5);
+  --intro-success: #16A34A;
+  --intro-success-bright: #4ADE80;
+  --intro-bg-gradient: radial-gradient(circle at 50% 45%, #2b1170 0%, #0b0a26 55%, #05041a 100%);
+  --intro-ring-size: min(210px, 34vh, 60vw);
+}
+
+/* 1. Core Beating Animation: scale 1 -> 1.08 -> 1, 2s loop */
+@keyframes intro-beat {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.6));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.85));
+  }
+}
+
+.intro-beat {
+  animation: intro-beat 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* 2. Neural Network Slow Rotation: 24s per turn */
+@keyframes intro-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.intro-spin {
+  animation: intro-spin 24s linear infinite;
+  transform-origin: center;
+}
+
+/* 3. Node Staggered Pulsing */
+@keyframes intro-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    r: 3.5;
+  }
+  50% {
+    opacity: 1;
+    r: 5.5;
+    filter: drop-shadow(0 0 6px var(--intro-cyan));
+  }
+}
+
+.intro-pulse-node {
+  animation: intro-pulse 2.2s ease-in-out infinite;
+}
+
+/* 4. Blinking Enter Keycap */
+@keyframes intro-blink {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.5), inset 0 0 6px rgba(34, 211, 238, 0.25);
+  }
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 2px rgba(34, 211, 238, 0.1);
+  }
+}
+
+.intro-blink {
+  animation: intro-blink 1.4s ease-in-out infinite;
+}
+
+/* 5. Cyan Scan Line Sweeping: top to bottom every 3.5s */
+@keyframes intro-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.intro-scan {
+  animation: intro-scan 3.5s ease-in-out infinite;
+}
+
+/* 6. Perspective Grid Floor Scrolling toward Viewer */
+@keyframes intro-gridmove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 60px;
+  }
+}
+
+.intro-gridmove {
+  animation: intro-gridmove 2.4s linear infinite;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .intro-beat,
+  .intro-spin,
+  .intro-pulse-node,
+  .intro-blink,
+  .intro-scan,
+  .intro-gridmove {
+    animation: none !important;
+    transform: none !important;
+  }
+}

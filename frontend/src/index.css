@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import './styles/intro.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Design Tokens - Light Theme */
+  --primary: 109 40 245;            /* #6D28F5 */
+  --primary-bright: 124 58 237;     /* #7C3AED */
+  --primary-hover: 91 33 182;       /* #5B21B6 */
+  --primary-light: 243 238 255;     /* #F3EEFF */
+
+  --indigo-deep: 23 22 66;          /* #171642 */
+  --sidebar-indigo: 32 27 80;       /* #201B50 */
+
+  --lavender: 243 238 255;          /* #F3EEFF */
+  --page-bg: 248 249 252;           /* #F8F9FC */
+  --card-bg: 255 255 255;           /* #FFFFFF */
+  --text-main: 17 24 39;            /* #111827 */
+  --text-muted: 100 116 139;        /* #64748B */
+  --border-color: 229 231 235;      /* #E5E7EB */
+
+  --status-success: 22 163 74;      /* #16A34A */
+  --status-warning: 245 158 11;     /* #F59E0B */
+  --status-critical: 239 68 68;     /* #EF4444 */
+
+  --radius-card: 12px;
+  --radius-input: 8px;
+}
+
+.dark {
+  /* Design Tokens - Dark Theme (Derived from base tokens) */
+  --primary: 124 58 237;            /* #7C3AED */
+  --primary-bright: 139 92 246;     /* #8B5CF6 */
+  --primary-hover: 109 40 245;      /* #6D28F5 */
+  --primary-light: 42 34 92;        /* Dark lavender accent */
+
+  /* Sidebar stays deep indigo in both themes */
+  --indigo-deep: 23 22 66;          /* #171642 */
+  --sidebar-indigo: 32 27 80;       /* #201B50 */
+
+  --lavender: 38 30 82;             /* #261E52 */
+  --page-bg: 15 14 38;              /* #0F0E26 Dark indigo page bg */
+  --card-bg: 23 21 54;              /* #171536 Dark card surface */
+  --text-main: 248 250 252;         /* #F8FAFC */
+  --text-muted: 148 163 184;        /* #94A3B8 */
+  --border-color: 40 37 86;         /* #282556 */
+
+  --status-success: 34 197 94;      /* #22C55E */
+  --status-warning: 251 191 36;     /* #FBBF24 */
+  --status-critical: 248 113 113;   /* #F87171 */
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--border-color));
+  }
+  body {
+    background-color: rgb(var(--page-bg));
+    color: rgb(var(--text-main));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  }
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Accessible Visible Focus States */
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary));
+    outline-offset: 2px;
+  }
+
+  /* Form Elements High-Contrast Guard */
+  select, input, textarea {
+    color: #111827;
+  }
+  option {
+    color: #111827 !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Universal Form Elements Readability Guard - Prevents White-on-White or Low Contrast in all browsers & themes */
+select {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+option, optgroup {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-weight: 500 !important;
+}
+
+/* Light background container form elements */
+.bg-white select,
+.bg-white input,
+.bg-white textarea,
+.bg-slate-50 select,
+.bg-slate-50 input,
+.bg-slate-50 textarea {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.bg-white select option,
+.bg-white select optgroup {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--text-muted) / 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--text-muted) / 0.5);
+}

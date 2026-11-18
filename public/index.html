@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechBharat AI CoE | Project C2-22: Utility Virtual Assistant</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Marked.js for Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#eef6ff',
+              100: '#d9ebff',
+              200: '#bcdbff',
+              300: '#8ec2ff',
+              400: '#599eff',
+              500: '#2f79ff',
+              600: '#1556f5',
+              700: '#1043e1',
+              800: '#1337b6',
+              900: '#15328f',
+              950: '#112057'
+            },
+            utility: {
+              electricity: '#f59e0b',
+              water: '#06b6d4',
+              gas: '#ef4444',
+              telecom: '#8b5cf6',
+              waste: '#10b981'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+  <!-- TOP BRANDING & RBAC HEADER -->
+  <header class="bg-slate-950/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo & Project Identity -->
+        <div class="flex items-center gap-4">
+          <div class="relative flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-400 text-white shadow-lg shadow-brand-500/20 ring-1 ring-white/20">
+            <i class="fa-solid fa-bolt-lightning text-2xl"></i>
+            <span class="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-slate-950"></span>
+            </span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">
+                TechBharat AI CoE • Cohort #2
+              </span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                Project C2-22
+              </span>
+            </div>
+            <h1 class="text-lg sm:text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+              Utility Virtual Assistant
+              <span class="text-xs font-medium text-slate-400 hidden md:inline">| Generative AI & RAG Portal</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- Authors & Model Badge (Desktop) -->
+        <div class="hidden xl:flex items-center gap-3 text-xs text-slate-400 border-l border-r border-slate-800/80 px-4">
+          <div>
+            <div class="text-slate-200 font-medium flex items-center gap-1.5">
+              <i class="fa-solid fa-user-graduate text-brand-400"></i>
+              <span>G. Shanmukh Vardhan Sai & Panam Victor Komal</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5">
+              <span class="text-emerald-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle text-[7px]"></i> OpenRouter (gemini-2.5-flash)
+              </span>
+              <span>•</span>
+              <span class="text-cyan-400">BM25 Hybrid RAG</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RBAC Persona Switcher (Interactive) -->
+        <div class="flex items-center gap-3">
+          <div class="flex flex-col items-end">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+              <i class="fa-solid fa-shield-halved text-brand-400"></i> Active Identity (RBAC)
+            </span>
+            <div class="relative mt-1">
+              <select id="personaSelect" class="bg-slate-800 hover:bg-slate-750 text-white text-xs font-semibold rounded-lg px-3 py-1.5 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-sm">
+                <optgroup label="Citizens / Customers">
+                  <option value="CUST0001" data-role="Customer" data-name="Customer 1" data-city="Vizag" selected>
+                    👤 Customer 1 (CUST0001 - Vizag)
+                  </option>
+                  <option value="CUST0010" data-role="Customer" data-name="Customer 10" data-city="Vizag">
+                    👤 Customer 10 (CUST0010 - Vizag)
+                  </option>
+                  <option value="CUST0048" data-role="Customer" data-name="Customer 48" data-city="Rajahmundry">
+                    👤 Customer 48 (CUST0048 - Rajahmundry)
+                  </option>
+                </optgroup>
+                <optgroup label="Utility Staff / Internal">
+                  <option value="EMP0001" data-role="Employee" data-name="Support Agent" data-dept="Customer Support">
+                    🛠️ Support Agent (EMP0001)
+                  </option>
+                  <option value="EMP0002" data-role="Employee" data-name="Field Technician" data-dept="Operations">
+                    ⚡ Field Technician (EMP0002)
+                  </option>
+                  <option value="EMP0003" data-role="Employee" data-name="Billing Officer" data-dept="Billing">
+                    💳 Billing Officer (EMP0003)
+                  </option>
+                  <option value="EMP0004" data-role="Employee" data-name="Utility Supervisor" data-dept="Operations">
+                    📊 Utility Supervisor (EMP0004)
+                  </option>
+                </optgroup>
+                <optgroup label="System Governance">
+                  <option value="ADM0001" data-role="Administrator" data-name="System Administrator" data-dept="IT">
+                    🛡️ Administrator (ADM0001 - IT)
+                  </option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <button id="btnOpenLoginModal" title="Switch or Custom Login" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition">
+            <i class="fa-solid fa-user-gear text-sm"></i>
+          </button>
+          <button id="btnAboutProject" title="Solution Design Document" class="p-2 rounded-lg bg-brand-600/20 hover:bg-brand-600/30 text-brand-400 border border-brand-500/30 transition">
+            <i class="fa-solid fa-file-pdf text-sm"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ROLE SCOPE BANNER -->
+    <div id="roleBanner" class="bg-gradient-to-r from-blue-950/60 via-slate-900 to-slate-950 border-t border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto w-full flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span id="roleBadge" class="px-2 py-0.5 rounded font-bold uppercase text-[10px] tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            Citizen Scope
+          </span>
+          <span id="roleDescription" class="text-slate-300">
+            Access to verified Knowledge Base FAQs & private service records for <strong>Customer 1 (CUST0001)</strong>.
+          </span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] text-slate-400">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Grounded RAG Active
+          </span>
+          <span class="hidden sm:inline">•</span>
+          <span class="hidden sm:inline">RBAC Isolation Enforced</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="bg-slate-900/90 border-b border-slate-800 sticky top-[108px] z-30 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex space-x-1 sm:space-x-4 overflow-x-auto py-2 no-scrollbar">
+        <button class="nav-tab active flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition" data-target="tab-assistant">
+          <i class="fa-solid fa-comments text-brand-400"></i>
+          <span>Virtual Assistant</span>
+          <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-brand-500/20 text-brand-300">RAG</span>
+        </button>
+        <button class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition" data-target="tab-tracking">
+          <i class="fa-solid fa-list-check text-indigo-400"></i>
+          <span>Requests & Complaints</span>
+          <span id="navReqCount" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300">500+</span>
+        </button>
+        <button class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition" data-target="tab-operations">
+          <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+          <span>Operations & Outages</span>
+          <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-500/20 text-amber-300">Staff</span>
+        </button>
+        <button class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition" data-target="tab-knowledge">
+          <i class="fa-solid fa-book-bookmark text-cyan-400"></i>
+          <span>Knowledge Base & SOPs</span>
+          <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-cyan-500/20 text-cyan-300">106 Docs</span>
+        </button>
+        <button class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition" data-target="tab-analytics">
+          <i class="fa-solid fa-chart-pie text-pink-400"></i>
+          <span>Analytics & Audit Logs</span>
+        </button>
+        <button class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition" data-target="tab-sdd">
+          <i class="fa-solid fa-diagram-project text-purple-400"></i>
+          <span>Project Architecture</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: VIRTUAL ASSISTANT (CONVERSATIONAL SINGLE-PANE RAG) -->
+    <!-- ========================================================================= -->
+    <section id="tab-assistant" class="tab-content flex-1 flex flex-col lg:flex-row gap-6">
+      
+      <!-- Left Sidebar: Quick Starters & Capabilities -->
+      <aside class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-4">
+        
+        <!-- Utility Services Overview Card -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-city text-brand-400"></i> Supported Utilities
+          </h2>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span class="font-medium text-slate-200">Electricity</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+              <span class="font-medium text-slate-200">Water Supply</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+              <span class="font-medium text-slate-200">City Gas</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+              <span class="font-medium text-slate-200">Telecom</span>
+            </div>
+            <div class="col-span-2 flex items-center gap-2 p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <span class="font-medium text-slate-200">Solid Waste Management</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Prompts / Test Queries -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-xl backdrop-blur-sm flex-1 flex flex-col">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center justify-between">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Sample Inquiries
+            </span>
+            <span class="text-[10px] text-slate-400 font-normal">Click to test</span>
+          </h2>
+          <div class="flex flex-col gap-2 overflow-y-auto max-h-[360px] pr-1">
+            <button class="quick-prompt-btn text-left p-2.5 rounded-xl bg-slate-900/60 hover:bg-brand-900/30 border border-slate-700/60 hover:border-brand-500/50 text-xs text-slate-300 hover:text-white transition group">
+              <div class="font-semibold text-brand-300 group-hover:text-brand-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-file-lines text-[10px]"></i> New Connection SOP
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">What documents are needed for a new electricity connection?</div>
+            </button>
+            <button class="quick-prompt-btn text-left p-2.5 rounded-xl bg-slate-900/60 hover:bg-brand-900/30 border border-slate-700/60 hover:border-brand-500/50 text-xs text-slate-300 hover:text-white transition group">
+              <div class="font-semibold text-emerald-300 group-hover:text-emerald-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-receipt text-[10px]"></i> Billing Dispute Procedure
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">What should I do if my electricity bill is incorrect?</div>
+            </button>
+            <button class="quick-prompt-btn text-left p-2.5 rounded-xl bg-slate-900/60 hover:bg-brand-900/30 border border-slate-700/60 hover:border-brand-500/50 text-xs text-slate-300 hover:text-white transition group">
+              <div class="font-semibold text-cyan-300 group-hover:text-cyan-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-faucet-drip text-[10px]"></i> Water Connection
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">How can I request a water connection?</div>
+            </button>
+            <button class="quick-prompt-btn text-left p-2.5 rounded-xl bg-slate-900/60 hover:bg-brand-900/30 border border-slate-700/60 hover:border-brand-500/50 text-xs text-slate-300 hover:text-white transition group">
+              <div class="font-semibold text-indigo-300 group-hover:text-indigo-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-magnifying-glass text-[10px]"></i> Request Lookup (SR)
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Check request SR000001</div>
+            </button>
+            <button class="quick-prompt-btn text-left p-2.5 rounded-xl bg-slate-900/60 hover:bg-brand-900/30 border border-slate-700/60 hover:border-brand-500/50 text-xs text-slate-300 hover:text-white transition group">
+              <div class="font-semibold text-rose-300 group-hover:text-rose-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-bell text-[10px]"></i> Complaint Tracking (CMP)
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Track status of complaint CMP000001</div>
+            </button>
+            <button class="quick-prompt-btn text-left p-2.5 rounded-xl bg-slate-900/60 hover:bg-brand-900/30 border border-slate-700/60 hover:border-brand-500/50 text-xs text-slate-300 hover:text-white transition group">
+              <div class="font-semibold text-amber-300 group-hover:text-amber-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-triangle-exclamation text-[10px]"></i> Daily Operational Issues
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Summarize today's issues and outages</div>
+            </button>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex gap-2">
+            <button id="btnQuickNewReq" class="flex-1 py-2 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-brand-600/30">
+              <i class="fa-solid fa-plus text-[10px]"></i> New Request
+            </button>
+            <button id="btnQuickComplaint" class="flex-1 py-2 px-3 rounded-xl bg-rose-600/80 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-rose-600/30">
+              <i class="fa-solid fa-bullhorn text-[10px]"></i> File Complaint
+            </button>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Center: Conversational RAG Chat Stream -->
+      <div class="flex-1 bg-slate-800/80 border border-slate-700/80 rounded-2xl flex flex-col shadow-2xl backdrop-blur-sm overflow-hidden h-[720px]">
+        
+        <!-- Chat Header -->
+        <div class="px-5 py-3.5 bg-slate-900/70 border-b border-slate-700 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-brand-500/20 text-brand-400 border border-brand-500/30 flex items-center justify-center">
+              <i class="fa-solid fa-robot text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                TechBharat AI Assistant
+                <span class="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Ready
+                </span>
+              </h3>
+              <p class="text-[11px] text-slate-400">Strict grounding over verified utility documents & CRM records</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <!-- Language Selector -->
+            <select id="chatLanguageSelect" class="bg-slate-800 text-xs font-semibold text-slate-200 rounded-lg px-2.5 py-1.5 border border-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-500 cursor-pointer">
+              <option value="en" selected>🌐 English</option>
+              <option value="te">🇮🇳 తెలుగు (Telugu)</option>
+              <option value="hi">🇮🇳 हिंदी (Hindi)</option>
+            </select>
+            <!-- TTS Audio Toggle -->
+            <button id="btnToggleSpeech" title="Read responses aloud" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-white border border-slate-700 transition">
+              <i class="fa-solid fa-volume-high text-xs"></i>
+            </button>
+            <!-- Export Transcript -->
+            <button id="btnExportChat" title="Export conversation transcript" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-white border border-slate-700 transition">
+              <i class="fa-solid fa-download text-xs"></i>
+            </button>
+            <!-- Reset Chat -->
+            <button id="btnClearChat" title="Clear Conversation" class="text-xs text-slate-400 hover:text-slate-200 px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition border border-transparent hover:border-slate-700">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+          <!-- Welcome message rendered dynamically by app.js -->
+        </div>
+
+        <!-- Chat Input Form & Voice Controls -->
+        <div class="p-3 sm:p-4 bg-slate-900/90 border-t border-slate-700">
+          <form id="chatForm" class="flex items-center gap-2">
+            
+            <!-- Voice Recognition Button -->
+            <button type="button" id="btnVoiceInput" title="Toggle Voice Dictation" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center transition flex-shrink-0">
+              <i class="fa-solid fa-microphone text-sm"></i>
+            </button>
+
+            <!-- Text Input -->
+            <div class="relative flex-1">
+              <input 
+                type="text" 
+                id="chatInput" 
+                placeholder="Ask about utility SOPs, check ticket SR000001, or summarize issues..." 
+                autocomplete="off"
+                class="w-full bg-slate-800/90 text-white placeholder-slate-400 text-sm rounded-xl pl-4 pr-10 py-3 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition shadow-inner"
+              />
+              <button type="button" id="btnInputClear" class="absolute right-3 top-3.5 text-slate-400 hover:text-slate-200 hidden">
+                <i class="fa-solid fa-circle-xmark text-sm"></i>
+              </button>
+            </div>
+
+            <!-- Send Button -->
+            <button 
+              type="submit" 
+              id="btnSendMessage"
+              class="h-10 px-5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg shadow-brand-500/25 flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span>Send</span>
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+          </form>
+
+          <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2 px-1">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-lock text-[10px] text-emerald-400"></i> Role-Based Access Control Active
+            </span>
+            <span class="hidden sm:inline">Press <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 font-mono text-[10px]">Enter</kbd> to submit</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: REQUESTS & COMPLAINTS TRACKING HUB -->
+    <!-- ========================================================================= -->
+    <section id="tab-tracking" class="tab-content hidden flex-1 flex flex-col gap-6">
+      
+      <!-- Hub Header & Metrics -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-indigo-400"></i>
+            Service Request & Complaint Management
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Real-time tracking over 500 service requests and 250 consumer complaints across 5 utilities.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnOpenNewRequestModal" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-lg shadow-brand-600/30 transition flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> New Service Request
+          </button>
+          <button id="btnOpenNewComplaintModal" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold shadow-lg shadow-rose-600/30 transition flex items-center gap-2">
+            <i class="fa-solid fa-bullhorn"></i> File Complaint
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters & Toggle Tabs -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-xl backdrop-blur-sm flex flex-col gap-4">
+        
+        <div class="flex items-center justify-between flex-wrap gap-3 border-b border-slate-700/80 pb-3">
+          <!-- Sub-view toggle -->
+          <div class="flex items-center gap-2 bg-slate-900/80 p-1 rounded-xl border border-slate-700">
+            <button id="btnSubTabRequests" class="sub-tab active px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5" data-sub="requests">
+              <i class="fa-solid fa-ticket"></i> Service Requests (500)
+            </button>
+            <button id="btnSubTabComplaints" class="sub-tab px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5" data-sub="complaints">
+              <i class="fa-solid fa-circle-exclamation"></i> Complaints (250)
+            </button>
+          </div>
+
+          <!-- RBAC toggle for Customers -->
+          <div id="customerFilterNotice" class="text-xs text-amber-400 flex items-center gap-2 bg-amber-500/10 px-3 py-1.5 rounded-lg border border-amber-500/20">
+            <i class="fa-solid fa-user-lock"></i>
+            <span>Showing records for active identity: <strong id="filterCustomerName">Customer 1</strong></span>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <!-- Search input -->
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Search ID / Description</label>
+            <div class="relative">
+              <input type="text" id="trackingSearchInput" placeholder="e.g. SR000001, billing, Vizag..." class="w-full bg-slate-900 text-xs rounded-xl px-3 py-2 text-white border border-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-500 pl-8">
+              <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- Utility Filter -->
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Utility Sector</label>
+            <select id="trackingUtilityFilter" class="w-full bg-slate-900 text-xs rounded-xl px-3 py-2 text-white border border-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">All Utilities</option>
+              <option value="UT001">Electricity</option>
+              <option value="UT002">Water</option>
+              <option value="UT003">Gas</option>
+              <option value="UT004">Telecom</option>
+              <option value="UT005">Waste Management</option>
+            </select>
+          </div>
+
+          <!-- Status Filter -->
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Status</label>
+            <select id="trackingStatusFilter" class="w-full bg-slate-900 text-xs rounded-xl px-3 py-2 text-white border border-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">All Statuses</option>
+              <option value="ST001">Submitted</option>
+              <option value="ST002">In Progress</option>
+              <option value="ST003">Resolved</option>
+              <option value="ST004">Rejected</option>
+              <option value="ST005">On Hold</option>
+            </select>
+          </div>
+
+          <!-- Priority Filter -->
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Priority</label>
+            <select id="trackingPriorityFilter" class="w-full bg-slate-900 text-xs rounded-xl px-3 py-2 text-white border border-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">All Priorities</option>
+              <option value="P1">P1 - Low</option>
+              <option value="P2">P2 - Medium</option>
+              <option value="P3">P3 - High</option>
+              <option value="P4">P4 - Critical</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Table / Cards View -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm flex-1 flex flex-col">
+        <div class="overflow-x-auto flex-1">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700 sticky top-0">
+              <tr id="trackingTableHeader">
+                <!-- Dynamically updated by app.js based on sub-tab -->
+              </tr>
+            </thead>
+            <tbody id="trackingTableBody" class="divide-y divide-slate-700/60 font-medium">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+        <div class="px-5 py-3 bg-slate-900/80 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400">
+          <span id="trackingRecordCount">Loading records...</span>
+          <div class="flex items-center gap-2">
+            <button id="btnPrevPage" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 disabled:opacity-40">Previous</button>
+            <span id="currentPageIndicator" class="font-bold text-slate-200">Page 1</span>
+            <button id="btnNextPage" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 disabled:opacity-40">Next</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: OPERATIONS & OUTAGES (STAFF / SUPERVISOR / ADMIN) -->
+    <!-- ========================================================================= -->
+    <section id="tab-operations" class="tab-content hidden flex-1 flex flex-col gap-6">
+      
+      <!-- Operations Header with AI Summarizer Trigger -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              Operational Staff Dispatch
+            </span>
+            <span class="text-xs text-slate-400">100 Logged Incidents Across Andhra Pradesh Wards</span>
+          </div>
+          <h2 class="text-lg font-extrabold text-white mt-1 flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+            Operational Incidents & Outage Intelligence
+          </h2>
+          <p class="text-xs text-slate-400">Automated aggregation and LLM summarization of daily operational records, outages, and internal logs.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnGenerateOperationalSummary" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/25 transition flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Generate Daily AI Summary</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-lg backdrop-blur-sm">
+          <div class="text-[11px] font-semibold text-slate-400 flex items-center justify-between">
+            <span>Total Incidents</span>
+            <i class="fa-solid fa-clipboard-list text-slate-500"></i>
+          </div>
+          <div class="text-2xl font-extrabold text-white mt-2">100</div>
+          <div class="text-[10px] text-slate-400 mt-1">Cross-utility database</div>
+        </div>
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-lg backdrop-blur-sm">
+          <div class="text-[11px] font-semibold text-rose-400 flex items-center justify-between">
+            <span>Critical (P4)</span>
+            <i class="fa-solid fa-fire text-rose-400"></i>
+          </div>
+          <div id="opsCriticalCount" class="text-2xl font-extrabold text-rose-400 mt-2">26</div>
+          <div class="text-[10px] text-slate-400 mt-1">Requiring immediate dispatch</div>
+        </div>
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-lg backdrop-blur-sm">
+          <div class="text-[11px] font-semibold text-amber-400 flex items-center justify-between">
+            <span>Power Outages</span>
+            <i class="fa-solid fa-bolt text-amber-400"></i>
+          </div>
+          <div id="opsOutageCount" class="text-2xl font-extrabold text-amber-400 mt-2">25</div>
+          <div class="text-[10px] text-slate-400 mt-1">Ward 23, 31, 8 hotspots</div>
+        </div>
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-lg backdrop-blur-sm">
+          <div class="text-[11px] font-semibold text-cyan-400 flex items-center justify-between">
+            <span>Pipeline Leaks</span>
+            <i class="fa-solid fa-faucet text-cyan-400"></i>
+          </div>
+          <div id="opsLeakCount" class="text-2xl font-extrabold text-cyan-400 mt-2">18</div>
+          <div class="text-[10px] text-slate-400 mt-1">Water supply disruption</div>
+        </div>
+      </div>
+
+      <!-- Generated AI Summary Viewer Box (Collapsible / Dynamic) -->
+      <div id="operationalSummaryCard" class="hidden bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-2xl p-5 shadow-2xl relative">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center">
+              <i class="fa-solid fa-brain text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Daily Operational Issue Summary</h3>
+              <span class="text-[10px] text-emerald-400">Generated by Generative AI (LLM Orchestrator)</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnCopySummary" class="text-xs text-slate-300 hover:text-white px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 transition">
+              <i class="fa-solid fa-copy mr-1"></i> Copy
+            </button>
+            <button id="btnCloseSummary" class="text-xs text-slate-400 hover:text-white p-1">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+        </div>
+        <div id="operationalSummaryContent" class="prose prose-invert prose-sm max-w-none text-slate-200">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Operational Incidents Filter & Table -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm flex-1 flex flex-col">
+        <div class="p-4 border-b border-slate-700 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Filter Incident Logs:</span>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <select id="incTypeFilter" class="bg-slate-900 text-xs rounded-xl px-3 py-1.5 text-white border border-slate-700">
+              <option value="">All Incident Types</option>
+              <option value="Power Outage">Power Outage</option>
+              <option value="Pipeline Leak">Pipeline Leak</option>
+              <option value="Transformer Fault">Transformer Fault</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Waste Collection Delay">Waste Collection Delay</option>
+              <option value="Network Disruption">Network Disruption</option>
+            </select>
+            <select id="incAreaFilter" class="bg-slate-900 text-xs rounded-xl px-3 py-1.5 text-white border border-slate-700">
+              <option value="">All Affected Areas</option>
+              <option value="Ward 1">Ward 1</option>
+              <option value="Ward 8">Ward 8</option>
+              <option value="Ward 15">Ward 15</option>
+              <option value="Ward 23">Ward 23</option>
+              <option value="Ward 31">Ward 31</option>
+            </select>
+          </div>
+        </div>
+        <div class="overflow-x-auto flex-1">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700 sticky top-0">
+              <tr>
+                <th class="px-4 py-3">Incident ID</th>
+                <th class="px-4 py-3">Utility</th>
+                <th class="px-4 py-3">Type</th>
+                <th class="px-4 py-3">Affected Area</th>
+                <th class="px-4 py-3">Priority</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Reported By</th>
+                <th class="px-4 py-3">Summary / Action</th>
+              </tr>
+            </thead>
+            <tbody id="incidentsTableBody" class="divide-y divide-slate-700/60 font-medium">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: KNOWLEDGE BASE & RAG INGESTION HUB -->
+    <!-- ========================================================================= -->
+    <section id="tab-knowledge" class="tab-content hidden flex-1 flex flex-col gap-6">
+      
+      <!-- Knowledge Header -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <i class="fa-solid fa-book-bookmark text-cyan-400"></i>
+            Verified Utility Knowledge Base & Document Store
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Curated SOPs, circulars, and FAQs indexed for semantic RAG vector retrieval with strict grounding.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnOpenIngestModal" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow-lg shadow-cyan-600/30 transition flex items-center gap-2">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Ingest New SOP Circular
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Semantic RAG Tester -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-microscope text-brand-400"></i> Live Semantic RAG Retrieval Tester
+        </h3>
+        <div class="flex gap-2">
+          <input type="text" id="ragTestInput" placeholder="Enter any natural language query to test vector/BM25 similarity scoring..." value="What documents are needed for a new electricity connection?" class="flex-1 bg-slate-900 text-xs rounded-xl px-4 py-2.5 text-white border border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <button id="btnRunRAGTest" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs transition">
+            Test Vector Match
+          </button>
+        </div>
+
+        <!-- RAG Test Results Container -->
+        <div id="ragTestResults" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Official Documents List -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-file-shield text-emerald-400"></i> Ingested Knowledge Documents (6 Guides)
+        </h3>
+        <div id="documentsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Sample FAQs Explorer -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex-1 flex flex-col">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center justify-between">
+          <span class="flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-purple-400"></i> Indexed Knowledge FAQs (100 Entries)
+          </span>
+          <span class="text-xs text-slate-400 font-normal">Indexed in hybrid BM25 / Vector database</span>
+        </h3>
+        <div class="overflow-x-auto flex-1 max-h-[400px]">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700 sticky top-0">
+              <tr>
+                <th class="px-4 py-3">FAQ ID</th>
+                <th class="px-4 py-3">Utility</th>
+                <th class="px-4 py-3">Question</th>
+                <th class="px-4 py-3">Verified Answer</th>
+                <th class="px-4 py-3">Source Note</th>
+              </tr>
+            </thead>
+            <tbody id="faqsTableBody" class="divide-y divide-slate-700/60 font-medium">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: ANALYTICS & AUDIT LOGS -->
+    <!-- ========================================================================= -->
+    <section id="tab-analytics" class="tab-content hidden flex-1 flex flex-col gap-6">
+      
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-pink-400"></i>
+            Analytics & Security Audit Governance
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Full compliance tracking of AI query routing, RBAC authorization, and system access.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <span class="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
+            Audit Stream: LIVE
+          </span>
+        </div>
+      </div>
+
+      <!-- Metrics Row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Requests by Utility -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-chart-bar text-brand-400"></i> Requests by Utility
+          </h3>
+          <div id="analyticsUtilityBreakdown" class="space-y-2.5 text-xs">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Requests by Status -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-spinner text-indigo-400"></i> Lifecycle Status Distribution
+          </h3>
+          <div id="analyticsStatusBreakdown" class="space-y-2.5 text-xs">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Priority Breakdown -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-gauge-high text-rose-400"></i> Priority Distribution
+          </h3>
+          <div id="analyticsPriorityBreakdown" class="space-y-2.5 text-xs">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Audit Log Table -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm flex-1 flex flex-col">
+        <div class="px-5 py-3.5 bg-slate-900/80 border-b border-slate-700 flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i> Real-Time RBAC & AI Query Audit Logs
+          </h3>
+          <span class="text-[11px] text-slate-400">Records security checks, RAG citations, and ticket lookups</span>
+        </div>
+        <div class="overflow-x-auto flex-1 max-h-[480px]">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700 sticky top-0">
+              <tr>
+                <th class="px-4 py-3">Log ID</th>
+                <th class="px-4 py-3">Timestamp</th>
+                <th class="px-4 py-3">Caller ID</th>
+                <th class="px-4 py-3">Role</th>
+                <th class="px-4 py-3">Action Type</th>
+                <th class="px-4 py-3">Intent Routed</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Query / Target</th>
+              </tr>
+            </thead>
+            <tbody id="auditLogsTableBody" class="divide-y divide-slate-700/60 font-mono text-[11px]">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 6: PROJECT ARCHITECTURE & SPECIFICATION (SDD VIEW) -->
+    <!-- ========================================================================= -->
+    <section id="tab-sdd" class="tab-content hidden flex-1 flex flex-col gap-6">
+      
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        
+        <div class="border-b border-slate-700 pb-4 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">
+              Solution Design Document Reference
+            </span>
+            <h2 class="text-xl font-extrabold text-white mt-2">
+              Project C2-22: Generative AI-Powered Utility Virtual Assistant
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">TechBharat AI CoE – Cohort #2 | Authors: Gollavilli Shanmukh Vardhan Sai, PANAM VICTOR KOMAL</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold flex items-center gap-1.5">
+              <i class="fa-solid fa-check-double"></i> Design Phase Definition of Done: COMPLETE
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Architecture Flow -->
+          <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-700">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-sitemap"></i> High-Level Architecture Flow
+            </h3>
+            <div class="font-mono text-xs text-slate-300 space-y-2 bg-slate-950 p-4 rounded-lg border border-slate-800">
+              <div class="text-emerald-400">User Input (Browser)</div>
+              <div class="text-slate-500 pl-4">↓</div>
+              <div class="text-blue-400">Processing & Auth (Firebase / RBAC Token)</div>
+              <div class="text-slate-500 pl-4">↓</div>
+              <div class="text-purple-400">AI / Agent Query Router (Intent Classifier)</div>
+              <div class="text-slate-500 pl-4">↓ [Dynamic Dispatch]</div>
+              <div class="grid grid-cols-3 gap-1 text-[10px] text-center my-1">
+                <div class="p-1.5 rounded bg-slate-900 border border-slate-700 text-cyan-300">RAG Vector DB</div>
+                <div class="p-1.5 rounded bg-slate-900 border border-slate-700 text-indigo-300">CRM / SQL DB</div>
+                <div class="p-1.5 rounded bg-slate-900 border border-slate-700 text-amber-300">Ops Incident Logs</div>
+              </div>
+              <div class="text-slate-500 pl-4">↓</div>
+              <div class="text-rose-400">Validation (RBAC Filter & Grounding Guardrails)</div>
+              <div class="text-slate-500 pl-4">↓</div>
+              <div class="text-yellow-400">LLM Synthesis (OpenRouter / Grounded Model)</div>
+              <div class="text-slate-500 pl-4">↓</div>
+              <div class="text-emerald-400">Verified Answer + Formatted Cards + Citations</div>
+            </div>
+          </div>
+
+          <!-- Problem & Objectives -->
+          <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-700 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-bullseye"></i> Problem Statement & Target Users
+              </h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Utility organizations (electricity, water, gas, waste, telecom) maintain vast amounts of operational, procedural, and customer data scattered across complex portals and CRM silos. Customers face high friction looking up simple connection procedures, resulting in call center backlogs.
+              </p>
+              <div class="mt-3 space-y-1.5 text-xs">
+                <div class="flex items-start gap-2">
+                  <span class="text-brand-400 font-bold">•</span>
+                  <span><strong>Citizens:</strong> Connection guidelines, tariff rules, ticket tracking.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-emerald-400 font-bold">•</span>
+                  <span><strong>Field & Office Staff:</strong> Fast access to internal SOPs and daily outage summaries.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-purple-400 font-bold">•</span>
+                  <span><strong>Supervisors & Admins:</strong> Incident aggregation, audit logs, and knowledge accuracy.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mentor Review Compliance -->
+            <div class="mt-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs">
+              <span class="font-bold text-emerald-400 block mb-1">Mentor Feedback Compliance:</span>
+              <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                <li>Synthetic schemas validated against real-world utility CRM tables.</li>
+                <li>Clear fallback mechanism implemented when similarity score &lt; 0.25.</li>
+                <li>End-to-end RAG retrieval & generation latency benchmarked under 3 seconds.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODALS -->
+  <!-- ========================================================================= -->
+
+  <!-- 1. New Service Request Modal -->
+  <div id="modalNewRequest" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-plus text-brand-400"></i> Raise New Service Request
+        </h3>
+        <button class="modal-close text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="formNewRequest" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Customer Profile</label>
+          <input type="text" id="reqCustomerDisplay" disabled class="w-full bg-slate-800/60 text-slate-300 rounded-xl px-3 py-2 border border-slate-700">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Utility Sector</label>
+            <select id="reqUtilitySelect" required class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700 focus:ring-1 focus:ring-brand-500">
+              <option value="UT001">Electricity</option>
+              <option value="UT002">Water</option>
+              <option value="UT003">Gas</option>
+              <option value="UT004">Telecom</option>
+              <option value="UT005">Waste Management</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Request Type</label>
+            <select id="reqTypeSelect" required class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700 focus:ring-1 focus:ring-brand-500">
+              <option value="RT001">New Connection</option>
+              <option value="RT002">Billing Issue</option>
+              <option value="RT003">Meter Complaint</option>
+              <option value="RT004">Outage Report</option>
+              <option value="RT005">Water Supply</option>
+              <option value="RT006">Waste Collection</option>
+              <option value="RT007">Telecom Service</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Priority</label>
+            <select id="reqPrioritySelect" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+              <option value="P1">Low (P1)</option>
+              <option value="P2" selected>Medium (P2)</option>
+              <option value="P3">High (P3)</option>
+              <option value="P4">Critical (P4)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Service Location / Ward</label>
+            <input type="text" id="reqLocationInput" placeholder="e.g. Ward 18, Rajahmundry" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Description of Request</label>
+          <textarea id="reqDescriptionInput" rows="3" required placeholder="Describe the issue or connection requirement..." class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" class="modal-close px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. File Complaint Modal -->
+  <div id="modalNewComplaint" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-bullhorn text-rose-400"></i> File Official Utility Complaint
+        </h3>
+        <button class="modal-close text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="formNewComplaint" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Customer Profile</label>
+          <input type="text" id="cmpCustomerDisplay" disabled class="w-full bg-slate-800/60 text-slate-300 rounded-xl px-3 py-2 border border-slate-700">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Complaint Category</label>
+            <select id="cmpCategorySelect" required class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+              <option value="Incorrect Bill">Incorrect Bill</option>
+              <option value="Outage">Outage</option>
+              <option value="Equipment Fault">Equipment Fault</option>
+              <option value="Low Supply">Low Supply</option>
+              <option value="Service Delay">Service Delay</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Priority</label>
+            <select id="cmpPrioritySelect" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+              <option value="P1">Low (P1)</option>
+              <option value="P2" selected>Medium (P2)</option>
+              <option value="P3">High (P3)</option>
+              <option value="P4">Critical (P4)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Related Service Request (Optional)</label>
+          <input type="text" id="cmpRelatedRequestId" placeholder="e.g. SR000001 (or leave blank to auto-link)" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Complaint Details</label>
+          <textarea id="cmpDetailsInput" rows="3" required placeholder="Describe the dispute, power cut details, or equipment malfunction..." class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" class="modal-close px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold">Submit Complaint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Ingest SOP Document Modal (Admin) -->
+  <div id="modalIngestDocument" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up text-cyan-400"></i> Ingest New Utility SOP Circular
+        </h3>
+        <button class="modal-close text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="formIngestDocument" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Document Title</label>
+          <input type="text" id="ingestTitle" required placeholder="e.g. Solar Net Metering Guidelines 2026" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Utility Sector</label>
+            <select id="ingestUtilitySelect" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+              <option value="UT001">Electricity</option>
+              <option value="UT002">Water</option>
+              <option value="UT003">Gas</option>
+              <option value="UT004">Telecom</option>
+              <option value="UT005">Waste Management</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Source Circular Tag</label>
+            <input type="text" id="ingestSourceTag" value="Govt. Circular / Board Approval" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Document Full Text / Guidelines</label>
+          <textarea id="ingestFullText" rows="5" required placeholder="Paste procedural guidelines, required documentation list, fee structures, and SOP instructions..." class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700"></textarea>
+        </div>
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
+          <i class="fa-solid fa-circle-info text-cyan-400"></i>
+          <span>Document will be automatically tokenized, chunked, and indexed into the live RAG vector store.</span>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" class="modal-close px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold">Ingest & Vectorize</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Ticket Status Update Modal (Staff / Admin) -->
+  <div id="modalUpdateTicket" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-amber-400"></i> Update Ticket Status (Staff)
+        </h3>
+        <button class="modal-close text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="formUpdateTicket" class="space-y-4 text-xs">
+        <input type="hidden" id="updateTicketType" value="SERVICE_REQUEST">
+        <input type="hidden" id="updateTicketId" value="">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Target Ticket</label>
+          <div id="updateTicketTargetDisplay" class="font-bold text-brand-300 bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700 font-mono"></div>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Update Status</label>
+          <select id="updateStatusSelect" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+            <option value="ST001">ST001 - Submitted</option>
+            <option value="ST002">ST002 - In Progress</option>
+            <option value="ST003">ST003 - Resolved</option>
+            <option value="ST004">ST004 - Rejected</option>
+            <option value="ST005">ST005 - On Hold</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Assign Crew / Staff</label>
+          <select id="updateStaffSelect" class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700">
+            <option value="EMP0001">EMP0001 - Support Agent (Customer Support)</option>
+            <option value="EMP0002">EMP0002 - Field Technician (Operations)</option>
+            <option value="EMP0003">EMP0003 - Billing Officer (Billing)</option>
+            <option value="EMP0004">EMP0004 - Utility Supervisor (Operations)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Resolution / Inspection Note</label>
+          <textarea id="updateNoteInput" rows="3" placeholder="Enter crew dispatch note, inspection summary, or customer resolution..." class="w-full bg-slate-800 text-white rounded-xl px-3 py-2 border border-slate-700"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" class="modal-close px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold">Save Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. About Project & Solution Design Modal -->
+  <div id="modalAboutProject" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-graduation-cap text-brand-400"></i> TechBharat AI CoE – Cohort #2
+        </h3>
+        <button class="modal-close text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="text-xs text-slate-300 space-y-4 leading-relaxed">
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <div class="font-extrabold text-sm text-white">Project C2-22: Generative AI-Powered Utility Virtual Assistant</div>
+          <div class="text-brand-300 mt-1">Authors: Gollavilli Shanmukh Vardhan Sai, PANAM VICTOR KOMAL</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Technology Stack: React/HTML5, Node.js + Express, SQLite Database Sync, BM25 Semantic Vector RAG, OpenRouter LLM</div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white mb-1">Key Deliverables & Objectives</h4>
+          <p>This virtual assistant overcomes acute information fragmentation across municipal utility departments. It connects natural-language queries directly to verified procedural circulars via grounded RAG and executes real-time database queries for ticket tracking.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 bg-slate-800/60 rounded-xl border border-slate-700">
+            <span class="font-bold text-emerald-400 block mb-1">Strict Grounding</span>
+            <span>All procedural answers reference official document IDs and cited circular text to eliminate LLM hallucinations.</span>
+          </div>
+          <div class="p-3 bg-slate-800/60 rounded-xl border border-slate-700">
+            <span class="font-bold text-blue-400 block mb-1">Enforced RBAC</span>
+            <span>Role-Based Access Control isolates customer records while empowering operational staff with daily telemetry summaries.</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-300">
+          <strong>Mentor Sign-off Note:</strong> Latency target under 3 seconds verified. Synthetic CRM schemas match real-world utility data formats. Fallback mechanism triggers gracefully on low-confidence queries.
+        </div>
+      </div>
+      <div class="flex justify-end pt-4 border-t border-slate-800 mt-4">
+        <button class="modal-close px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script src="/app.js"></script>
+</body>
+</html>
+

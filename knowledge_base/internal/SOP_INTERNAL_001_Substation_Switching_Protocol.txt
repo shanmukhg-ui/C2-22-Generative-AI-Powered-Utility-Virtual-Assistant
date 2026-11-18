@@ -1,0 +1,17 @@
+CONFIDENTIAL // INTERNAL UTILITY STAFF ONLY
+TECHBHARAT ELECTRICAL ENGINEERING DEPARTMENT
+STANDARD OPERATING PROCEDURE: SUBSTATION SWITCHING & PERMIT-TO-WORK (PTW)
+Document ID: INTERNAL-SOP-001 | Classification: RESTRICTED / INTERNAL STAFF ONLY
+
+1. APPLICABILITY & RBAC
+This SOP is strictly restricted to Utility Supervisors (EMP0004), Field Technicians (EMP0002), and Grid Control Engineers. Citizen accounts are strictly barred from accessing switching diagrams or breaker configurations.
+
+2. PERMIT-TO-WORK (PTW) ISSUANCE
+Before any maintenance crew touches 33kV/11kV transformers:
+- The Senior Operations Supervisor must issue an authorized digital PTW number.
+- Both upstream circuit breaker and downstream isolator switches must be physically locked and tagged (LOTO protocol).
+- Grounding leads must be attached to discharge residual capacitive charges.
+
+3. SCADA DISPATCH LOGGING
+All feeder trips in Wards 1 through 40 must be logged in the operational_incidents database with timestamp, trip current, and fault impedance.
+Restoration must not be initiated without positive confirmation from the on-site field engineer.

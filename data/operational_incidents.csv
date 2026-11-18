@@ -1,0 +1,101 @@
+incident_id,utility_id,reported_by_staff_id,reported_at,incident_type,affected_area,priority_id,status_id,summary
+INC00001,UT005,ADM0001,2026-01-17 21:00:00,Power Outage,Ward 23,P1,ST003,Inspection started
+INC00002,UT001,EMP0001,2026-02-03 09:00:00,Power Outage,Ward 31,P2,ST005,Crew assigned
+INC00003,UT003,EMP0001,2026-04-05 21:00:00,Power Outage,Ward 8,P3,ST005,Repair completed
+INC00004,UT005,ADM0001,2026-06-30 05:00:00,Pipeline Leak,Ward 31,P1,ST001,Inspection started
+INC00005,UT002,EMP0003,2026-09-28 06:00:00,Pipeline Leak,Ward 31,P1,ST001,Crew assigned
+INC00006,UT004,EMP0003,2026-09-16 22:00:00,Maintenance,Ward 31,P2,ST004,Inspection started
+INC00007,UT004,EMP0004,2026-04-03 11:00:00,Pipeline Leak,Ward 31,P2,ST004,Inspection started
+INC00008,UT004,EMP0001,2026-06-10 03:00:00,Waste Collection Delay,Ward 8,P4,ST003,Repair completed
+INC00009,UT001,EMP0001,2026-10-13 23:00:00,Transformer Fault,Ward 23,P1,ST004,Repair completed
+INC00010,UT003,EMP0004,2026-08-22 19:00:00,Pipeline Leak,Ward 31,P4,ST003,Monitoring ongoing
+INC00011,UT004,EMP0003,2026-04-07 02:00:00,Pipeline Leak,Ward 1,P4,ST001,Monitoring ongoing
+INC00012,UT001,EMP0001,2026-08-13 16:00:00,Pipeline Leak,Ward 23,P4,ST005,Inspection started
+INC00013,UT003,EMP0002,2026-03-28 02:00:00,Transformer Fault,Ward 8,P4,ST001,Crew assigned
+INC00014,UT004,EMP0003,2026-08-06 23:00:00,Maintenance,Ward 31,P3,ST004,Repair completed
+INC00015,UT005,EMP0004,2026-09-01 21:00:00,Network Disruption,Ward 31,P3,ST002,Monitoring ongoing
+INC00016,UT003,EMP0004,2026-02-25 03:00:00,Network Disruption,Ward 8,P2,ST001,Inspection started
+INC00017,UT004,EMP0001,2026-01-28 02:00:00,Pipeline Leak,Ward 23,P3,ST002,Repair completed
+INC00018,UT005,EMP0004,2026-02-19 02:00:00,Network Disruption,Ward 8,P3,ST004,Monitoring ongoing
+INC00019,UT005,EMP0003,2026-09-16 08:00:00,Waste Collection Delay,Ward 31,P1,ST001,Monitoring ongoing
+INC00020,UT004,EMP0003,2026-03-02 12:00:00,Network Disruption,Ward 23,P4,ST001,Inspection started
+INC00021,UT003,EMP0002,2026-04-01 17:00:00,Network Disruption,Ward 23,P2,ST003,Monitoring ongoing
+INC00022,UT005,EMP0004,2026-09-07 03:00:00,Maintenance,Ward 31,P4,ST004,Crew assigned
+INC00023,UT004,EMP0003,2026-09-17 01:00:00,Network Disruption,Ward 31,P4,ST005,Repair completed
+INC00024,UT001,EMP0001,2026-05-26 10:00:00,Waste Collection Delay,Ward 1,P2,ST003,Repair completed
+INC00025,UT003,EMP0004,2026-10-26 00:00:00,Power Outage,Ward 23,P3,ST003,Monitoring ongoing
+INC00026,UT002,EMP0002,2026-06-29 01:00:00,Pipeline Leak,Ward 15,P1,ST001,Repair completed
+INC00027,UT002,EMP0001,2026-02-28 10:00:00,Waste Collection Delay,Ward 15,P1,ST004,Monitoring ongoing
+INC00028,UT004,EMP0003,2026-10-18 16:00:00,Power Outage,Ward 23,P1,ST003,Monitoring ongoing
+INC00029,UT003,ADM0001,2026-10-20 12:00:00,Power Outage,Ward 23,P1,ST002,Repair completed
+INC00030,UT003,EMP0002,2026-09-12 16:00:00,Waste Collection Delay,Ward 15,P3,ST004,Crew assigned
+INC00031,UT001,ADM0001,2026-09-12 20:00:00,Pipeline Leak,Ward 15,P3,ST001,Repair completed
+INC00032,UT002,ADM0001,2026-10-21 12:00:00,Maintenance,Ward 1,P1,ST005,Repair completed
+INC00033,UT005,ADM0001,2026-05-20 02:00:00,Network Disruption,Ward 23,P2,ST003,Inspection started
+INC00034,UT003,EMP0004,2026-06-04 16:00:00,Maintenance,Ward 31,P3,ST002,Monitoring ongoing
+INC00035,UT005,ADM0001,2026-07-25 08:00:00,Network Disruption,Ward 31,P2,ST001,Crew assigned
+INC00036,UT002,EMP0004,2026-10-23 15:00:00,Transformer Fault,Ward 31,P4,ST005,Inspection started
+INC00037,UT003,EMP0004,2026-09-25 06:00:00,Pipeline Leak,Ward 8,P2,ST003,Monitoring ongoing
+INC00038,UT001,EMP0002,2026-07-30 10:00:00,Network Disruption,Ward 15,P3,ST002,Repair completed
+INC00039,UT004,EMP0002,2026-11-04 07:00:00,Power Outage,Ward 8,P2,ST001,Crew assigned
+INC00040,UT004,ADM0001,2026-06-08 14:00:00,Network Disruption,Ward 23,P1,ST002,Crew assigned
+INC00041,UT001,EMP0003,2026-05-20 04:00:00,Transformer Fault,Ward 31,P2,ST001,Monitoring ongoing
+INC00042,UT001,EMP0003,2026-01-11 01:00:00,Waste Collection Delay,Ward 15,P1,ST004,Repair completed
+INC00043,UT002,EMP0002,2026-02-16 12:00:00,Power Outage,Ward 31,P1,ST005,Repair completed
+INC00044,UT002,ADM0001,2026-09-12 02:00:00,Power Outage,Ward 15,P3,ST005,Monitoring ongoing
+INC00045,UT002,EMP0002,2026-05-01 13:00:00,Power Outage,Ward 8,P2,ST003,Monitoring ongoing
+INC00046,UT005,EMP0001,2026-07-29 08:00:00,Network Disruption,Ward 31,P3,ST001,Repair completed
+INC00047,UT004,EMP0002,2026-10-07 13:00:00,Transformer Fault,Ward 8,P3,ST004,Repair completed
+INC00048,UT005,EMP0001,2026-06-07 00:00:00,Maintenance,Ward 1,P2,ST003,Monitoring ongoing
+INC00049,UT003,EMP0001,2026-06-08 20:00:00,Waste Collection Delay,Ward 8,P4,ST004,Inspection started
+INC00050,UT003,EMP0001,2026-07-21 08:00:00,Pipeline Leak,Ward 15,P2,ST002,Monitoring ongoing
+INC00051,UT004,EMP0001,2026-06-12 20:00:00,Transformer Fault,Ward 1,P4,ST004,Monitoring ongoing
+INC00052,UT004,EMP0001,2026-06-20 22:00:00,Pipeline Leak,Ward 15,P1,ST003,Monitoring ongoing
+INC00053,UT005,EMP0003,2026-11-05 23:00:00,Network Disruption,Ward 1,P1,ST002,Monitoring ongoing
+INC00054,UT004,EMP0002,2026-03-11 00:00:00,Maintenance,Ward 15,P3,ST005,Inspection started
+INC00055,UT002,ADM0001,2026-02-26 05:00:00,Maintenance,Ward 8,P4,ST003,Monitoring ongoing
+INC00056,UT002,EMP0003,2026-09-02 23:00:00,Pipeline Leak,Ward 31,P3,ST003,Crew assigned
+INC00057,UT003,EMP0002,2026-02-13 13:00:00,Network Disruption,Ward 23,P2,ST001,Inspection started
+INC00058,UT005,EMP0002,2026-10-13 20:00:00,Power Outage,Ward 23,P2,ST003,Crew assigned
+INC00059,UT005,EMP0004,2026-01-26 12:00:00,Waste Collection Delay,Ward 15,P2,ST001,Repair completed
+INC00060,UT001,EMP0001,2026-03-29 18:00:00,Maintenance,Ward 31,P4,ST004,Monitoring ongoing
+INC00061,UT002,EMP0002,2026-03-02 07:00:00,Transformer Fault,Ward 15,P4,ST004,Crew assigned
+INC00062,UT005,EMP0002,2026-08-09 06:00:00,Transformer Fault,Ward 8,P4,ST002,Monitoring ongoing
+INC00063,UT003,EMP0003,2026-03-16 00:00:00,Pipeline Leak,Ward 31,P4,ST002,Repair completed
+INC00064,UT004,EMP0001,2026-10-26 21:00:00,Power Outage,Ward 23,P2,ST003,Monitoring ongoing
+INC00065,UT004,EMP0004,2026-04-19 22:00:00,Maintenance,Ward 31,P3,ST001,Inspection started
+INC00066,UT001,EMP0003,2026-10-13 01:00:00,Pipeline Leak,Ward 23,P3,ST005,Inspection started
+INC00067,UT005,ADM0001,2026-01-03 08:00:00,Network Disruption,Ward 15,P4,ST003,Crew assigned
+INC00068,UT005,EMP0002,2026-10-14 01:00:00,Transformer Fault,Ward 8,P4,ST003,Monitoring ongoing
+INC00069,UT003,ADM0001,2026-03-09 02:00:00,Network Disruption,Ward 8,P3,ST001,Repair completed
+INC00070,UT004,EMP0003,2026-01-23 04:00:00,Maintenance,Ward 15,P4,ST003,Repair completed
+INC00071,UT005,EMP0003,2026-11-10 08:00:00,Network Disruption,Ward 8,P3,ST004,Crew assigned
+INC00072,UT004,EMP0001,2026-10-12 21:00:00,Pipeline Leak,Ward 8,P1,ST002,Crew assigned
+INC00073,UT003,EMP0002,2026-01-19 15:00:00,Maintenance,Ward 23,P4,ST001,Monitoring ongoing
+INC00074,UT003,ADM0001,2026-01-21 14:00:00,Network Disruption,Ward 23,P4,ST001,Crew assigned
+INC00075,UT001,EMP0002,2026-03-05 11:00:00,Transformer Fault,Ward 8,P2,ST005,Repair completed
+INC00076,UT005,EMP0002,2026-10-16 21:00:00,Waste Collection Delay,Ward 1,P2,ST004,Inspection started
+INC00077,UT001,EMP0003,2026-05-07 15:00:00,Power Outage,Ward 15,P1,ST004,Repair completed
+INC00078,UT003,EMP0002,2026-10-30 03:00:00,Power Outage,Ward 1,P4,ST004,Monitoring ongoing
+INC00079,UT001,EMP0003,2026-05-18 19:00:00,Power Outage,Ward 31,P4,ST003,Crew assigned
+INC00080,UT003,EMP0003,2026-04-19 01:00:00,Power Outage,Ward 1,P4,ST001,Monitoring ongoing
+INC00081,UT002,EMP0004,2026-05-11 05:00:00,Power Outage,Ward 1,P2,ST002,Monitoring ongoing
+INC00082,UT002,EMP0001,2026-07-26 09:00:00,Transformer Fault,Ward 23,P4,ST003,Crew assigned
+INC00083,UT001,EMP0003,2026-07-03 21:00:00,Waste Collection Delay,Ward 8,P4,ST004,Monitoring ongoing
+INC00084,UT005,ADM0001,2026-09-01 08:00:00,Network Disruption,Ward 1,P4,ST003,Crew assigned
+INC00085,UT004,EMP0001,2026-08-11 20:00:00,Power Outage,Ward 31,P3,ST004,Crew assigned
+INC00086,UT005,ADM0001,2026-03-21 15:00:00,Power Outage,Ward 15,P4,ST004,Inspection started
+INC00087,UT002,EMP0002,2026-09-02 09:00:00,Maintenance,Ward 15,P2,ST005,Monitoring ongoing
+INC00088,UT001,ADM0001,2026-06-01 18:00:00,Power Outage,Ward 1,P1,ST005,Monitoring ongoing
+INC00089,UT004,ADM0001,2026-07-31 03:00:00,Transformer Fault,Ward 15,P3,ST005,Inspection started
+INC00090,UT001,EMP0004,2026-09-15 00:00:00,Pipeline Leak,Ward 8,P4,ST001,Inspection started
+INC00091,UT003,EMP0003,2026-08-02 22:00:00,Waste Collection Delay,Ward 23,P4,ST005,Repair completed
+INC00092,UT002,EMP0002,2026-06-24 05:00:00,Power Outage,Ward 31,P3,ST001,Monitoring ongoing
+INC00093,UT001,EMP0004,2026-10-01 00:00:00,Power Outage,Ward 1,P2,ST004,Monitoring ongoing
+INC00094,UT005,EMP0004,2026-07-27 21:00:00,Transformer Fault,Ward 31,P3,ST004,Repair completed
+INC00095,UT002,EMP0001,2026-02-14 04:00:00,Pipeline Leak,Ward 1,P1,ST002,Inspection started
+INC00096,UT002,EMP0002,2026-04-18 15:00:00,Network Disruption,Ward 31,P2,ST001,Repair completed
+INC00097,UT004,EMP0004,2026-08-26 04:00:00,Power Outage,Ward 1,P2,ST002,Monitoring ongoing
+INC00098,UT001,EMP0004,2026-09-06 15:00:00,Waste Collection Delay,Ward 8,P2,ST003,Monitoring ongoing
+INC00099,UT001,EMP0001,2026-01-27 10:00:00,Maintenance,Ward 23,P4,ST004,Repair completed
+INC00100,UT004,EMP0004,2026-01-19 15:00:00,Waste Collection Delay,Ward 31,P4,ST002,Inspection started

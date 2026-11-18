@@ -1,0 +1,251 @@
+complaint_id,customer_id,request_id,category,description,status,priority,created_at,updated_at
+CMP000001,CUST0048,SR000352,Incorrect Bill,Team assigned,Resolved,Low,2026-08-08,2026-08-08
+CMP000002,CUST0093,SR000258,Outage,Resolution communicated,Rejected,High,2026-01-06,2026-01-06
+CMP000003,CUST0092,SR000252,Equipment Fault,Team assigned,In Progress,Medium,2026-09-14,2026-09-14
+CMP000004,CUST0047,SR000017,Equipment Fault,Team assigned,Submitted,High,2026-03-07,2026-03-07
+CMP000005,CUST0038,SR000381,Other,Team assigned,In Progress,Medium,2026-02-21,2026-02-21
+CMP000006,CUST0053,SR000475,Equipment Fault,Resolution communicated,On Hold,Critical,2026-10-26,2026-10-26
+CMP000007,CUST0030,SR000455,Service Delay,Resolution communicated,Rejected,Critical,2026-04-23,2026-04-23
+CMP000008,CUST0098,SR000369,Low Supply,Resolution communicated,Rejected,Low,2026-10-04,2026-10-04
+CMP000009,CUST0002,SR000234,Incorrect Bill,Resolution communicated,In Progress,Critical,2026-08-18,2026-08-18
+CMP000010,CUST0015,SR000265,Other,Resolution communicated,Submitted,Medium,2026-10-07,2026-10-07
+CMP000011,CUST0027,SR000204,Low Supply,Resolution communicated,Resolved,Critical,2026-04-13,2026-04-13
+CMP000012,CUST0047,SR000151,Outage,Resolution communicated,Submitted,Medium,2026-10-24,2026-10-24
+CMP000013,CUST0025,SR000047,Other,Team assigned,On Hold,Low,2026-10-17,2026-10-17
+CMP000014,CUST0072,SR000202,Equipment Fault,Team assigned,Resolved,Critical,2026-05-11,2026-05-11
+CMP000015,CUST0099,SR000233,Outage,Under investigation,In Progress,Critical,2026-11-12,2026-11-12
+CMP000016,CUST0013,SR000166,Other,Complaint registered,In Progress,Low,2026-03-17,2026-03-17
+CMP000017,CUST0082,SR000362,Equipment Fault,Team assigned,Resolved,Low,2026-03-08,2026-03-08
+CMP000018,CUST0018,SR000194,Outage,Under investigation,Rejected,Low,2026-10-03,2026-10-03
+CMP000019,CUST0024,SR000290,Other,Team assigned,In Progress,Medium,2026-01-22,2026-01-22
+CMP000020,CUST0047,SR000394,Other,Under investigation,Submitted,Critical,2026-09-03,2026-09-03
+CMP000021,CUST0038,SR000374,Equipment Fault,Team assigned,Resolved,Medium,2026-04-02,2026-04-02
+CMP000022,CUST0085,SR000492,Service Delay,Resolution communicated,Submitted,High,2026-05-30,2026-05-30
+CMP000023,CUST0042,SR000255,Equipment Fault,Team assigned,On Hold,Low,2026-11-01,2026-11-01
+CMP000024,CUST0038,SR000112,Outage,Resolution communicated,Rejected,Critical,2026-04-11,2026-04-11
+CMP000025,CUST0075,SR000041,Outage,Under investigation,On Hold,Low,2026-07-30,2026-07-30
+CMP000026,CUST0034,SR000318,Other,Team assigned,On Hold,Medium,2026-01-21,2026-01-21
+CMP000027,CUST0056,SR000076,Incorrect Bill,Complaint registered,Resolved,Low,2026-10-21,2026-10-21
+CMP000028,CUST0088,SR000342,Outage,Complaint registered,On Hold,High,2026-04-17,2026-04-17
+CMP000029,CUST0087,SR000026,Incorrect Bill,Under investigation,Rejected,Medium,2026-02-18,2026-02-18
+CMP000030,CUST0053,SR000313,Other,Under investigation,On Hold,Medium,2026-08-01,2026-08-01
+CMP000031,CUST0039,SR000477,Incorrect Bill,Under investigation,Submitted,High,2026-06-01,2026-06-01
+CMP000032,CUST0015,SR000460,Equipment Fault,Under investigation,Submitted,Critical,2026-01-10,2026-01-10
+CMP000033,CUST0079,SR000242,Service Delay,Resolution communicated,Submitted,High,2026-03-12,2026-03-12
+CMP000034,CUST0090,SR000269,Service Delay,Complaint registered,In Progress,Low,2026-05-09,2026-05-09
+CMP000035,CUST0070,SR000248,Other,Under investigation,On Hold,High,2026-06-15,2026-06-15
+CMP000036,CUST0003,SR000133,Outage,Resolution communicated,On Hold,High,2026-03-02,2026-03-02
+CMP000037,CUST0006,SR000267,Other,Team assigned,Rejected,Critical,2026-09-19,2026-09-19
+CMP000038,CUST0014,SR000363,Low Supply,Complaint registered,In Progress,Low,2026-03-06,2026-03-06
+CMP000039,CUST0026,SR000239,Other,Resolution communicated,Submitted,Medium,2026-01-16,2026-01-16
+CMP000040,CUST0042,SR000024,Low Supply,Team assigned,Resolved,Medium,2026-04-09,2026-04-09
+CMP000041,CUST0079,SR000354,Low Supply,Under investigation,Resolved,Low,2026-03-17,2026-03-17
+CMP000042,CUST0050,SR000260,Outage,Under investigation,Resolved,Low,2026-06-13,2026-06-13
+CMP000043,CUST0045,SR000175,Equipment Fault,Team assigned,On Hold,Low,2026-03-09,2026-03-09
+CMP000044,CUST0077,SR000170,Low Supply,Team assigned,Rejected,Critical,2026-01-28,2026-01-28
+CMP000045,CUST0073,SR000247,Service Delay,Resolution communicated,Rejected,High,2026-11-04,2026-11-04
+CMP000046,CUST0058,SR000476,Other,Complaint registered,Submitted,High,2026-06-05,2026-06-05
+CMP000047,CUST0007,SR000107,Outage,Team assigned,Resolved,High,2026-09-08,2026-09-08
+CMP000048,CUST0082,SR000144,Incorrect Bill,Resolution communicated,Resolved,Critical,2026-09-25,2026-09-25
+CMP000049,CUST0088,SR000096,Outage,Complaint registered,Submitted,High,2026-02-21,2026-02-21
+CMP000050,CUST0005,SR000140,Equipment Fault,Under investigation,Submitted,Critical,2026-06-26,2026-06-26
+CMP000051,CUST0077,SR000232,Low Supply,Complaint registered,In Progress,High,2026-10-11,2026-10-11
+CMP000052,CUST0075,SR000192,Incorrect Bill,Complaint registered,In Progress,Low,2026-02-16,2026-02-16
+CMP000053,CUST0013,SR000410,Equipment Fault,Under investigation,On Hold,Medium,2026-10-06,2026-10-06
+CMP000054,CUST0096,SR000473,Equipment Fault,Team assigned,On Hold,High,2026-09-02,2026-09-02
+CMP000055,CUST0047,SR000394,Incorrect Bill,Complaint registered,On Hold,Medium,2026-08-31,2026-08-31
+CMP000056,CUST0059,SR000236,Equipment Fault,Under investigation,On Hold,Low,2026-09-01,2026-09-01
+CMP000057,CUST0005,SR000478,Incorrect Bill,Resolution communicated,On Hold,Low,2026-05-26,2026-05-26
+CMP000058,CUST0090,SR000456,Incorrect Bill,Under investigation,Submitted,High,2026-01-29,2026-01-29
+CMP000059,CUST0055,SR000328,Service Delay,Under investigation,Resolved,Medium,2026-05-16,2026-05-16
+CMP000060,CUST0078,SR000142,Outage,Under investigation,Resolved,Critical,2026-02-25,2026-02-25
+CMP000061,CUST0079,SR000077,Service Delay,Complaint registered,Resolved,Low,2026-10-26,2026-10-26
+CMP000062,CUST0044,SR000106,Outage,Team assigned,Resolved,High,2026-10-26,2026-10-26
+CMP000063,CUST0056,SR000483,Other,Complaint registered,Resolved,Medium,2026-03-14,2026-03-14
+CMP000064,CUST0031,SR000160,Outage,Team assigned,Resolved,Critical,2026-05-08,2026-05-08
+CMP000065,CUST0043,SR000015,Equipment Fault,Complaint registered,Submitted,Low,2026-08-27,2026-08-27
+CMP000066,CUST0012,SR000045,Equipment Fault,Under investigation,Rejected,Medium,2026-11-02,2026-11-02
+CMP000067,CUST0031,SR000160,Low Supply,Team assigned,In Progress,Low,2026-05-21,2026-05-21
+CMP000068,CUST0012,SR000048,Other,Under investigation,Rejected,Low,2026-06-20,2026-06-20
+CMP000069,CUST0098,SR000351,Other,Team assigned,Rejected,Critical,2026-06-25,2026-06-25
+CMP000070,CUST0049,SR000074,Outage,Team assigned,Resolved,High,2026-02-17,2026-02-17
+CMP000071,CUST0064,SR000359,Other,Resolution communicated,Resolved,High,2026-01-24,2026-01-24
+CMP000072,CUST0010,SR000016,Incorrect Bill,Resolution communicated,Rejected,Low,2026-11-06,2026-11-06
+CMP000073,CUST0006,SR000237,Service Delay,Complaint registered,Resolved,High,2026-03-30,2026-03-30
+CMP000074,CUST0032,SR000208,Other,Under investigation,Submitted,High,2026-09-10,2026-09-10
+CMP000075,CUST0064,SR000273,Equipment Fault,Team assigned,Rejected,Critical,2026-05-18,2026-05-18
+CMP000076,CUST0096,SR000281,Service Delay,Under investigation,Rejected,Critical,2026-07-23,2026-07-23
+CMP000077,CUST0007,SR000107,Other,Under investigation,On Hold,Critical,2026-09-19,2026-09-19
+CMP000078,CUST0045,SR000279,Other,Resolution communicated,In Progress,Medium,2026-06-09,2026-06-09
+CMP000079,CUST0008,SR000059,Outage,Complaint registered,On Hold,Critical,2026-08-23,2026-08-23
+CMP000080,CUST0047,SR000421,Equipment Fault,Complaint registered,In Progress,High,2026-02-26,2026-02-26
+CMP000081,CUST0056,SR000307,Incorrect Bill,Resolution communicated,On Hold,Critical,2026-02-07,2026-02-07
+CMP000082,CUST0052,SR000331,Other,Team assigned,Submitted,Low,2026-09-18,2026-09-18
+CMP000083,CUST0030,SR000455,Outage,Resolution communicated,Submitted,Medium,2026-04-26,2026-04-26
+CMP000084,CUST0064,SR000273,Low Supply,Team assigned,Rejected,Critical,2026-05-17,2026-05-17
+CMP000085,CUST0086,SR000349,Low Supply,Under investigation,Resolved,High,2026-03-06,2026-03-06
+CMP000086,CUST0042,SR000046,Outage,Under investigation,Submitted,Critical,2026-05-17,2026-05-17
+CMP000087,CUST0043,SR000032,Low Supply,Under investigation,On Hold,Low,2026-03-19,2026-03-19
+CMP000088,CUST0058,SR000057,Low Supply,Resolution communicated,Submitted,Medium,2026-05-12,2026-05-12
+CMP000089,CUST0078,SR000321,Low Supply,Resolution communicated,Rejected,Critical,2026-08-09,2026-08-09
+CMP000090,CUST0008,SR000280,Service Delay,Team assigned,In Progress,Critical,2026-01-27,2026-01-27
+CMP000091,CUST0042,SR000285,Equipment Fault,Under investigation,Resolved,Critical,2026-07-26,2026-07-26
+CMP000092,CUST0060,SR000447,Other,Complaint registered,In Progress,Medium,2026-03-11,2026-03-11
+CMP000093,CUST0075,SR000332,Incorrect Bill,Team assigned,In Progress,Critical,2026-05-07,2026-05-07
+CMP000094,CUST0094,SR000044,Service Delay,Team assigned,Rejected,Critical,2026-09-09,2026-09-09
+CMP000095,CUST0099,SR000233,Outage,Under investigation,Rejected,Critical,2026-11-22,2026-11-22
+CMP000096,CUST0083,SR000116,Service Delay,Team assigned,Rejected,Low,2026-08-29,2026-08-29
+CMP000097,CUST0001,SR000365,Outage,Complaint registered,Resolved,Critical,2026-11-07,2026-11-07
+CMP000098,CUST0085,SR000020,Outage,Resolution communicated,Rejected,High,2026-02-08,2026-02-08
+CMP000099,CUST0063,SR000493,Other,Resolution communicated,Submitted,Medium,2026-04-20,2026-04-20
+CMP000100,CUST0015,SR000265,Incorrect Bill,Resolution communicated,On Hold,Low,2026-10-05,2026-10-05
+CMP000101,CUST0026,SR000323,Other,Under investigation,Submitted,High,2026-01-27,2026-01-27
+CMP000102,CUST0001,SR000274,Incorrect Bill,Under investigation,Rejected,Critical,2026-02-08,2026-02-08
+CMP000103,CUST0006,SR000216,Low Supply,Complaint registered,Resolved,High,2026-05-24,2026-05-24
+CMP000104,CUST0067,SR000356,Outage,Resolution communicated,Resolved,High,2026-09-05,2026-09-05
+CMP000105,CUST0068,SR000297,Service Delay,Complaint registered,On Hold,Low,2026-03-17,2026-03-17
+CMP000106,CUST0084,SR000147,Equipment Fault,Under investigation,Submitted,Medium,2026-04-08,2026-04-08
+CMP000107,CUST0066,SR000130,Service Delay,Under investigation,On Hold,High,2026-05-02,2026-05-02
+CMP000108,CUST0007,SR000008,Other,Resolution communicated,Submitted,Medium,2026-02-03,2026-02-03
+CMP000109,CUST0088,SR000190,Service Delay,Team assigned,Resolved,Medium,2026-03-03,2026-03-03
+CMP000110,CUST0013,SR000410,Outage,Team assigned,Submitted,High,2026-10-02,2026-10-02
+CMP000111,CUST0084,SR000305,Service Delay,Team assigned,Rejected,Critical,2026-01-30,2026-01-30
+CMP000112,CUST0052,SR000339,Equipment Fault,Complaint registered,In Progress,Medium,2026-01-31,2026-01-31
+CMP000113,CUST0014,SR000329,Low Supply,Resolution communicated,Submitted,Low,2026-06-07,2026-06-07
+CMP000114,CUST0031,SR000205,Equipment Fault,Resolution communicated,Resolved,Critical,2026-09-03,2026-09-03
+CMP000115,CUST0060,SR000350,Other,Team assigned,Rejected,Critical,2026-06-06,2026-06-06
+CMP000116,CUST0055,SR000272,Equipment Fault,Resolution communicated,Submitted,High,2026-11-06,2026-11-06
+CMP000117,CUST0006,SR000348,Low Supply,Under investigation,On Hold,Low,2026-06-22,2026-06-22
+CMP000118,CUST0094,SR000490,Equipment Fault,Under investigation,On Hold,High,2026-11-05,2026-11-05
+CMP000119,CUST0046,SR000137,Incorrect Bill,Team assigned,Resolved,Critical,2026-11-08,2026-11-08
+CMP000120,CUST0020,SR000376,Other,Team assigned,On Hold,Medium,2026-09-19,2026-09-19
+CMP000121,CUST0054,SR000161,Outage,Complaint registered,Submitted,Low,2026-10-25,2026-10-25
+CMP000122,CUST0065,SR000211,Incorrect Bill,Under investigation,On Hold,Low,2026-09-21,2026-09-21
+CMP000123,CUST0032,SR000113,Other,Complaint registered,Resolved,High,2026-07-28,2026-07-28
+CMP000124,CUST0039,SR000013,Outage,Complaint registered,Submitted,Low,2026-03-02,2026-03-02
+CMP000125,CUST0014,SR000363,Incorrect Bill,Team assigned,Submitted,Medium,2026-03-15,2026-03-15
+CMP000126,CUST0096,SR000459,Incorrect Bill,Resolution communicated,In Progress,High,2026-09-13,2026-09-13
+CMP000127,CUST0052,SR000339,Incorrect Bill,Under investigation,Rejected,High,2026-02-02,2026-02-02
+CMP000128,CUST0019,SR000132,Service Delay,Resolution communicated,Submitted,High,2026-03-14,2026-03-14
+CMP000129,CUST0085,SR000199,Low Supply,Team assigned,Submitted,High,2026-05-29,2026-05-29
+CMP000130,CUST0022,SR000226,Incorrect Bill,Team assigned,Rejected,Medium,2026-09-17,2026-09-17
+CMP000131,CUST0052,SR000331,Equipment Fault,Team assigned,Submitted,Medium,2026-09-25,2026-09-25
+CMP000132,CUST0006,SR000315,Other,Complaint registered,Submitted,Critical,2026-03-25,2026-03-25
+CMP000133,CUST0021,SR000018,Incorrect Bill,Complaint registered,Submitted,High,2026-07-04,2026-07-04
+CMP000134,CUST0015,SR000460,Equipment Fault,Resolution communicated,In Progress,Low,2026-01-09,2026-01-09
+CMP000135,CUST0046,SR000137,Service Delay,Resolution communicated,Resolved,Critical,2026-10-25,2026-10-25
+CMP000136,CUST0018,SR000245,Equipment Fault,Complaint registered,Rejected,Low,2026-08-05,2026-08-05
+CMP000137,CUST0077,SR000197,Other,Under investigation,Rejected,Low,2026-08-24,2026-08-24
+CMP000138,CUST0060,SR000350,Low Supply,Under investigation,Rejected,Low,2026-05-31,2026-05-31
+CMP000139,CUST0001,SR000274,Low Supply,Team assigned,Submitted,Critical,2026-02-02,2026-02-02
+CMP000140,CUST0032,SR000091,Outage,Under investigation,Submitted,Critical,2026-02-11,2026-02-11
+CMP000141,CUST0083,SR000357,Equipment Fault,Complaint registered,Submitted,High,2026-04-10,2026-04-10
+CMP000142,CUST0042,SR000454,Other,Complaint registered,Rejected,Medium,2026-04-10,2026-04-10
+CMP000143,CUST0052,SR000099,Incorrect Bill,Resolution communicated,On Hold,Medium,2026-08-22,2026-08-22
+CMP000144,CUST0053,SR000033,Outage,Complaint registered,Resolved,Critical,2026-02-15,2026-02-15
+CMP000145,CUST0049,SR000019,Low Supply,Resolution communicated,Submitted,High,2026-04-14,2026-04-14
+CMP000146,CUST0030,SR000061,Service Delay,Team assigned,On Hold,Critical,2026-10-27,2026-10-27
+CMP000147,CUST0071,SR000474,Incorrect Bill,Complaint registered,Submitted,Medium,2026-10-16,2026-10-16
+CMP000148,CUST0079,SR000242,Outage,Complaint registered,Submitted,Medium,2026-03-06,2026-03-06
+CMP000149,CUST0028,SR000089,Other,Resolution communicated,Submitted,High,2026-02-23,2026-02-23
+CMP000150,CUST0053,SR000313,Service Delay,Complaint registered,On Hold,Low,2026-07-21,2026-07-21
+CMP000151,CUST0042,SR000255,Outage,Team assigned,On Hold,Medium,2026-10-19,2026-10-19
+CMP000152,CUST0030,SR000219,Low Supply,Team assigned,Rejected,High,2026-06-20,2026-06-20
+CMP000153,CUST0071,SR000165,Service Delay,Complaint registered,Submitted,Medium,2026-10-19,2026-10-19
+CMP000154,CUST0024,SR000062,Low Supply,Under investigation,In Progress,Critical,2026-09-03,2026-09-03
+CMP000155,CUST0046,SR000284,Service Delay,Team assigned,Rejected,Medium,2026-05-17,2026-05-17
+CMP000156,CUST0007,SR000052,Other,Complaint registered,On Hold,Critical,2026-02-27,2026-02-27
+CMP000157,CUST0071,SR000451,Equipment Fault,Team assigned,Submitted,Low,2026-07-22,2026-07-22
+CMP000158,CUST0053,SR000475,Incorrect Bill,Resolution communicated,On Hold,High,2026-10-29,2026-10-29
+CMP000159,CUST0006,SR000355,Service Delay,Resolution communicated,In Progress,Medium,2026-10-04,2026-10-04
+CMP000160,CUST0065,SR000211,Service Delay,Resolution communicated,In Progress,Low,2026-09-12,2026-09-12
+CMP000161,CUST0039,SR000314,Incorrect Bill,Complaint registered,Resolved,High,2026-03-16,2026-03-16
+CMP000162,CUST0052,SR000286,Service Delay,Under investigation,In Progress,Low,2026-02-21,2026-02-21
+CMP000163,CUST0011,SR000442,Outage,Team assigned,On Hold,Medium,2026-06-26,2026-06-26
+CMP000164,CUST0078,SR000142,Incorrect Bill,Resolution communicated,In Progress,Low,2026-02-26,2026-02-26
+CMP000165,CUST0042,SR000255,Service Delay,Under investigation,In Progress,Low,2026-10-18,2026-10-18
+CMP000166,CUST0020,SR000146,Service Delay,Resolution communicated,Rejected,High,2026-02-19,2026-02-19
+CMP000167,CUST0056,SR000023,Incorrect Bill,Complaint registered,Submitted,Medium,2026-03-10,2026-03-10
+CMP000168,CUST0016,SR000249,Outage,Resolution communicated,Submitted,Low,2026-11-16,2026-11-16
+CMP000169,CUST0094,SR000304,Outage,Under investigation,Resolved,Critical,2026-07-19,2026-07-19
+CMP000170,CUST0083,SR000118,Incorrect Bill,Team assigned,Resolved,Medium,2026-08-28,2026-08-28
+CMP000171,CUST0028,SR000378,Equipment Fault,Complaint registered,In Progress,Critical,2026-04-29,2026-04-29
+CMP000172,CUST0079,SR000242,Outage,Team assigned,Rejected,Low,2026-03-15,2026-03-15
+CMP000173,CUST0051,SR000111,Outage,Under investigation,Rejected,Medium,2026-02-21,2026-02-21
+CMP000174,CUST0058,SR000070,Equipment Fault,Team assigned,In Progress,High,2026-10-18,2026-10-18
+CMP000175,CUST0089,SR000172,Service Delay,Team assigned,Submitted,Low,2026-02-09,2026-02-09
+CMP000176,CUST0058,SR000057,Equipment Fault,Under investigation,Rejected,Critical,2026-05-04,2026-05-04
+CMP000177,CUST0032,SR000113,Low Supply,Team assigned,On Hold,Medium,2026-07-27,2026-07-27
+CMP000178,CUST0012,SR000045,Equipment Fault,Resolution communicated,On Hold,Critical,2026-10-25,2026-10-25
+CMP000179,CUST0030,SR000429,Equipment Fault,Team assigned,Resolved,Low,2026-04-03,2026-04-03
+CMP000180,CUST0030,SR000127,Low Supply,Complaint registered,Rejected,Medium,2026-04-14,2026-04-14
+CMP000181,CUST0059,SR000214,Incorrect Bill,Resolution communicated,Submitted,Critical,2026-02-12,2026-02-12
+CMP000182,CUST0055,SR000272,Equipment Fault,Resolution communicated,Rejected,Low,2026-11-06,2026-11-06
+CMP000183,CUST0047,SR000124,Incorrect Bill,Team assigned,On Hold,Low,2026-09-19,2026-09-19
+CMP000184,CUST0061,SR000068,Low Supply,Complaint registered,Resolved,Medium,2026-07-18,2026-07-18
+CMP000185,CUST0011,SR000246,Other,Complaint registered,Resolved,Medium,2026-01-31,2026-01-31
+CMP000186,CUST0017,SR000500,Equipment Fault,Team assigned,Rejected,Medium,2026-11-19,2026-11-19
+CMP000187,CUST0062,SR000405,Low Supply,Resolution communicated,Rejected,Low,2026-01-14,2026-01-14
+CMP000188,CUST0026,SR000458,Other,Resolution communicated,Resolved,Low,2026-09-09,2026-09-09
+CMP000189,CUST0078,SR000386,Low Supply,Under investigation,On Hold,Medium,2026-07-24,2026-07-24
+CMP000190,CUST0029,SR000377,Incorrect Bill,Complaint registered,On Hold,High,2026-08-02,2026-08-02
+CMP000191,CUST0077,SR000197,Low Supply,Under investigation,Rejected,Low,2026-08-24,2026-08-24
+CMP000192,CUST0036,SR000090,Other,Team assigned,On Hold,Low,2026-04-25,2026-04-25
+CMP000193,CUST0089,SR000172,Service Delay,Team assigned,On Hold,Low,2026-02-16,2026-02-16
+CMP000194,CUST0078,SR000386,Other,Under investigation,In Progress,High,2026-08-02,2026-08-02
+CMP000195,CUST0093,SR000258,Other,Complaint registered,Rejected,High,2026-01-02,2026-01-02
+CMP000196,CUST0054,SR000191,Low Supply,Resolution communicated,Rejected,Critical,2026-06-10,2026-06-10
+CMP000197,CUST0097,SR000364,Outage,Under investigation,On Hold,High,2026-09-02,2026-09-02
+CMP000198,CUST0013,SR000410,Other,Complaint registered,Submitted,Medium,2026-10-14,2026-10-14
+CMP000199,CUST0090,SR000042,Equipment Fault,Complaint registered,In Progress,High,2026-10-19,2026-10-19
+CMP000200,CUST0016,SR000085,Low Supply,Team assigned,Submitted,Medium,2026-07-25,2026-07-25
+CMP000201,CUST0056,SR000448,Service Delay,Resolution communicated,On Hold,Low,2026-07-06,2026-07-06
+CMP000202,CUST0043,SR000497,Other,Under investigation,On Hold,Medium,2026-03-27,2026-03-27
+CMP000203,CUST0006,SR000216,Equipment Fault,Complaint registered,Submitted,High,2026-05-25,2026-05-25
+CMP000204,CUST0009,SR000012,Service Delay,Under investigation,On Hold,High,2026-08-26,2026-08-26
+CMP000205,CUST0025,SR000336,Other,Resolution communicated,Resolved,Critical,2026-08-14,2026-08-14
+CMP000206,CUST0085,SR000156,Outage,Under investigation,In Progress,High,2026-10-21,2026-10-21
+CMP000207,CUST0008,SR000117,Equipment Fault,Team assigned,Resolved,High,2026-08-26,2026-08-26
+CMP000208,CUST0096,SR000181,Low Supply,Under investigation,Rejected,Medium,2026-10-23,2026-10-23
+CMP000209,CUST0017,SR000094,Service Delay,Complaint registered,In Progress,Medium,2026-09-08,2026-09-08
+CMP000210,CUST0078,SR000022,Low Supply,Under investigation,On Hold,Medium,2026-05-25,2026-05-25
+CMP000211,CUST0088,SR000190,Service Delay,Under investigation,In Progress,Low,2026-02-26,2026-02-26
+CMP000212,CUST0056,SR000076,Low Supply,Complaint registered,Rejected,Medium,2026-10-26,2026-10-26
+CMP000213,CUST0067,SR000472,Incorrect Bill,Resolution communicated,Rejected,Critical,2026-04-12,2026-04-12
+CMP000214,CUST0058,SR000476,Low Supply,Under investigation,In Progress,Low,2026-06-05,2026-06-05
+CMP000215,CUST0066,SR000243,Low Supply,Under investigation,On Hold,Medium,2026-11-05,2026-11-05
+CMP000216,CUST0015,SR000353,Incorrect Bill,Complaint registered,Rejected,Low,2026-02-27,2026-02-27
+CMP000217,CUST0032,SR000158,Incorrect Bill,Under investigation,Rejected,Medium,2026-02-14,2026-02-14
+CMP000218,CUST0012,SR000048,Low Supply,Under investigation,Submitted,Medium,2026-06-13,2026-06-13
+CMP000219,CUST0072,SR000101,Incorrect Bill,Resolution communicated,Submitted,Critical,2026-07-03,2026-07-03
+CMP000220,CUST0009,SR000100,Equipment Fault,Resolution communicated,Resolved,Low,2026-08-21,2026-08-21
+CMP000221,CUST0056,SR000076,Other,Under investigation,Rejected,High,2026-10-29,2026-10-29
+CMP000222,CUST0085,SR000007,Low Supply,Resolution communicated,Resolved,High,2026-05-01,2026-05-01
+CMP000223,CUST0056,SR000448,Outage,Resolution communicated,Submitted,Medium,2026-07-11,2026-07-11
+CMP000224,CUST0062,SR000412,Equipment Fault,Resolution communicated,Resolved,Medium,2026-08-19,2026-08-19
+CMP000225,CUST0005,SR000072,Outage,Team assigned,On Hold,Low,2026-02-25,2026-02-25
+CMP000226,CUST0085,SR000156,Equipment Fault,Resolution communicated,On Hold,High,2026-10-18,2026-10-18
+CMP000227,CUST0042,SR000046,Incorrect Bill,Team assigned,Rejected,High,2026-05-26,2026-05-26
+CMP000228,CUST0042,SR000285,Equipment Fault,Team assigned,On Hold,Medium,2026-07-28,2026-07-28
+CMP000229,CUST0032,SR000427,Equipment Fault,Under investigation,Resolved,Critical,2026-02-09,2026-02-09
+CMP000230,CUST0028,SR000428,Outage,Team assigned,Resolved,Critical,2026-09-27,2026-09-27
+CMP000231,CUST0027,SR000014,Incorrect Bill,Resolution communicated,In Progress,High,2026-05-18,2026-05-18
+CMP000232,CUST0042,SR000064,Other,Resolution communicated,Resolved,Critical,2026-10-10,2026-10-10
+CMP000233,CUST0045,SR000465,Other,Under investigation,In Progress,Low,2026-11-06,2026-11-06
+CMP000234,CUST0010,SR000253,Incorrect Bill,Resolution communicated,On Hold,High,2026-07-23,2026-07-23
+CMP000235,CUST0099,SR000445,Low Supply,Complaint registered,Rejected,Low,2026-05-26,2026-05-26
+CMP000236,CUST0087,SR000433,Low Supply,Under investigation,In Progress,Low,2026-06-20,2026-06-20
+CMP000237,CUST0006,SR000237,Other,Complaint registered,In Progress,High,2026-03-31,2026-03-31
+CMP000238,CUST0005,SR000140,Low Supply,Under investigation,Rejected,High,2026-06-20,2026-06-20
+CMP000239,CUST0021,SR000150,Outage,Complaint registered,Submitted,Medium,2026-03-09,2026-03-09
+CMP000240,CUST0056,SR000307,Service Delay,Under investigation,On Hold,High,2026-02-07,2026-02-07
+CMP000241,CUST0038,SR000139,Other,Team assigned,Resolved,Low,2026-06-22,2026-06-22
+CMP000242,CUST0085,SR000007,Service Delay,Resolution communicated,On Hold,High,2026-05-03,2026-05-03
+CMP000243,CUST0065,SR000211,Low Supply,Team assigned,In Progress,Low,2026-09-13,2026-09-13
+CMP000244,CUST0093,SR000258,Service Delay,Resolution communicated,In Progress,Low,2026-01-14,2026-01-14
+CMP000245,CUST0047,SR000470,Incorrect Bill,Resolution communicated,Submitted,Medium,2026-04-17,2026-04-17
+CMP000246,CUST0071,SR000179,Low Supply,Under investigation,Resolved,Medium,2026-04-27,2026-04-27
+CMP000247,CUST0028,SR000089,Other,Team assigned,Resolved,Low,2026-02-23,2026-02-23
+CMP000248,CUST0016,SR000066,Other,Team assigned,In Progress,Medium,2026-04-01,2026-04-01
+CMP000249,CUST0015,SR000108,Service Delay,Complaint registered,Submitted,Critical,2026-11-03,2026-11-03
+CMP000250,CUST0027,SR000010,Equipment Fault,Complaint registered,Rejected,Low,2026-03-15,2026-03-15

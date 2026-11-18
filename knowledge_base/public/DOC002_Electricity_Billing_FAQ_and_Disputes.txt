@@ -1,0 +1,18 @@
+TECHBHARAT ELECTRICITY BOARD
+BILLING GRIEVANCE REDRESSAL & METER COMPLAINT SOP
+Document ID: DOC002 | Version: 2026.1 | Scope: Public / Citizen Access
+
+1. WHAT TO DO IF YOUR BILL IS INCORRECT
+If a customer notices sudden bill inflation, wrong meter readings, or tariff miscalculation:
+a) Retain your latest physical bill and note down the current 6-digit cumulative kWh reading directly from your physical meter LCD display.
+b) Register a formal billing complaint through the Utility Virtual Assistant or online portal, specifying your Service Request ID or Consumer Number.
+c) A provisional freeze on late payment surcharge is applied while the dispute undergoes review by a designated Billing Officer (EMP0003).
+
+2. METER DEFECTS & BURNT METER REPLACEMENT
+- If the meter display is blank, blinking unusually, or suspected to be running fast, file a 'Meter Complaint'.
+- An authorized field inspection crew is dispatched within 3 business days.
+- If the meter is verified defective or burnt due to voltage surge, it is replaced free of charge provided no unauthorized seal tampering is observed.
+
+3. PAYMENT CHANNELS & DUE DATES
+- Payments can be made via UPI, Net Banking, or offline utility collection counters.
+- A grace period of 15 days from bill generation date is provided before notice of disconnection.

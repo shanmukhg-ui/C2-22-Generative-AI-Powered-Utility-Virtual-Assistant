@@ -1,0 +1,7 @@
+document_id,utility_id,document_title,document_text,source_type
+DOC001,UT001,Electricity New Connection Guide,"Synthetic sample guide: submit application, identity/address proof, and site inspection may be required.",Synthetic / demo only
+DOC002,UT001,Electricity Billing FAQ,Synthetic sample: keep bill and meter details; raise a billing complaint using the official provider channel.,Synthetic / demo only
+DOC003,UT002,Water Connection Guide,Synthetic sample guide: application and feasibility inspection may be required.,Synthetic / demo only
+DOC004,UT001,Outage Reporting Guide,Synthetic sample: report location and time and retain the complaint reference.,Synthetic / demo only
+DOC005,UT004,Telecom Service Guide,Synthetic sample: check service coverage and submit a provider support request.,Synthetic / demo only
+DOC006,UT005,Waste Collection Guide,Synthetic sample: report missed pickup with address and collection date.,Synthetic / demo only

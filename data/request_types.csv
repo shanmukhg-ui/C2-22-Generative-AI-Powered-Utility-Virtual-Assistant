@@ -1,0 +1,8 @@
+request_type_id,request_type_name
+RT001,New Connection
+RT002,Billing Issue
+RT003,Meter Complaint
+RT004,Outage Report
+RT005,Water Supply
+RT006,Waste Collection
+RT007,Telecom Service

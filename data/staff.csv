@@ -1,0 +1,6 @@
+staff_id,email,staff_name,department
+EMP0001,staff1@example.test,Support Agent,Customer Support
+EMP0002,staff2@example.test,Field Technician,Operations
+EMP0003,staff3@example.test,Billing Officer,Billing
+EMP0004,staff4@example.test,Utility Supervisor,Operations
+ADM0001,admin1@example.test,Administrator,IT

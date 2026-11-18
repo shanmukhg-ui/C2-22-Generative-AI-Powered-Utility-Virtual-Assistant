@@ -1,0 +1,14 @@
+TECHBHARAT ELECTRICITY GRID OPERATIONS
+CITIZEN OUTAGE REPORTING & EMERGENCY SAFETY INSTRUCTIONS
+Document ID: DOC004 | Version: 2026.1 | Scope: Public / Citizen Access
+
+1. REPORTING A POWER OUTAGE
+When experiencing a localized blackout or phase drop:
+- First check whether neighborhood streetlights or adjacent houses have power to identify if it is an individual fuse blowout or feeder trip.
+- Report the affected ward and locality through the virtual assistant. You will receive an immediate Complaint ID (CMPXXXXXX) for tracking.
+- Do not touch fallen overhead cables or damaged distribution boxes. Keep a safe distance of at least 10 meters.
+
+2. ESTIMATED RESTORATION TIMELINES
+- Local 11kV Feeder Trips: Restored within 1 to 2 hours via secondary substation switching.
+- Distribution Transformer (DTR) Failures: Replacement and oil testing typically requires 4 to 8 hours.
+- Scheduled Maintenance: Prior circulars are broadcast via SMS and public advisories 24 hours in advance.
