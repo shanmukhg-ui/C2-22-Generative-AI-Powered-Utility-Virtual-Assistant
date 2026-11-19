@@ -1,0 +1,27 @@
+TECHBHARAT ELECTRICITY DISTRIBUTION CORPORATION
+STANDARD OPERATING PROCEDURE: NEW DOMESTIC & COMMERCIAL ELECTRICITY CONNECTION
+Document ID: DOC001 | Version: 2026.1 | Scope: Public / Citizen Access
+
+1. ELIGIBILITY & SCOPE
+Any lawful owner or occupier of a premises requiring low-tension (LT) or high-tension (HT) electricity supply is eligible to apply online or via authorized utility virtual assistant channels.
+
+2. MANDATORY DOCUMENTS REQUIRED
+To apply for a new single-phase or three-phase electricity connection, the applicant must provide verified copies of:
+a) Proof of Identity: Government-issued Photo ID (Aadhaar Card, Passport, Voter ID Card, or PAN Card).
+b) Proof of Address / Ownership: Registered Sale Deed, Title Deed, Property Tax Receipt, or Valid Lease / Tenancy Agreement with Owner NOC.
+c) Occupancy Proof: Recent municipal assessment order or building permit approval certificate.
+d) Formal Application Form: Duly filled online application along with test report from an authorized licensed electrical contractor.
+
+3. SITE INSPECTION & FEASIBILITY REVIEW
+Upon receiving the complete application and fee deposit:
+- Technical inspection is scheduled within 48 to 72 business hours.
+- Field engineers verify meter cabin accessibility, earthing installations, and load feasibility.
+- If deviations or safety deficiencies are found, an inspection notice is issued via SMS/Email with 7 days rectification time.
+
+4. TARIFF SLABS & ESTIMATE DEPOSITS
+- Domestic LT-I: Fixed service charge + variable consumption slabs (0-100 units, 101-200 units, 201+ units).
+- Security Deposit: Refundable consumer security deposit calculated based on connected electrical load in kW.
+- Metering: Smart electronic dual-source meters installed by utility-authorized technicians only.
+
+5. ESCALATION & GRIEVANCE REDRESSAL
+Applicants can track application status using their registered Service Request ID (e.g., SRXXXXXX). If an application remains pending beyond 7 working days post-inspection, it is automatically escalated to the Divisional Engineer.

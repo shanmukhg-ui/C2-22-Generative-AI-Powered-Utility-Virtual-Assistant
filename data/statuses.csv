@@ -1,0 +1,6 @@
+status_id,status_name
+ST001,Submitted
+ST002,In Progress
+ST003,Resolved
+ST004,Rejected
+ST005,On Hold

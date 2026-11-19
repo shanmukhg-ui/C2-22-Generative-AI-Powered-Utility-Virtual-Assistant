@@ -1,0 +1,101 @@
+log_id,utility,incident_type,affected_area,severity,description,timestamp,status,reported_by_staff_id
+INC00001,Waste Management,Power Outage,Ward 23,Low,Inspection started,2026-01-17 21:00:00,Monitoring ongoing,ADM0001
+INC00002,Electricity,Power Outage,Ward 31,Medium,Crew assigned,2026-02-03 09:00:00,Resolved,EMP0001
+INC00003,Gas,Power Outage,Ward 8,High,Repair completed,2026-04-05 21:00:00,Resolved,EMP0001
+INC00004,Waste Management,Pipeline Leak,Ward 31,Low,Inspection started,2026-06-30 05:00:00,Inspection started,ADM0001
+INC00005,Water,Pipeline Leak,Ward 31,Low,Crew assigned,2026-09-28 06:00:00,Inspection started,EMP0003
+INC00006,Telecom,Maintenance,Ward 31,Medium,Inspection started,2026-09-16 22:00:00,Repair completed,EMP0003
+INC00007,Telecom,Pipeline Leak,Ward 31,Medium,Inspection started,2026-04-03 11:00:00,Repair completed,EMP0004
+INC00008,Telecom,Waste Collection Delay,Ward 8,Critical,Repair completed,2026-06-10 03:00:00,Monitoring ongoing,EMP0001
+INC00009,Electricity,Transformer Fault,Ward 23,Low,Repair completed,2026-10-13 23:00:00,Repair completed,EMP0001
+INC00010,Gas,Pipeline Leak,Ward 31,Critical,Monitoring ongoing,2026-08-22 19:00:00,Monitoring ongoing,EMP0004
+INC00011,Telecom,Pipeline Leak,Ward 1,Critical,Monitoring ongoing,2026-04-07 02:00:00,Inspection started,EMP0003
+INC00012,Electricity,Pipeline Leak,Ward 23,Critical,Inspection started,2026-08-13 16:00:00,Resolved,EMP0001
+INC00013,Gas,Transformer Fault,Ward 8,Critical,Crew assigned,2026-03-28 02:00:00,Inspection started,EMP0002
+INC00014,Telecom,Maintenance,Ward 31,High,Repair completed,2026-08-06 23:00:00,Repair completed,EMP0003
+INC00015,Waste Management,Network Disruption,Ward 31,High,Monitoring ongoing,2026-09-01 21:00:00,Crew assigned,EMP0004
+INC00016,Gas,Network Disruption,Ward 8,Medium,Inspection started,2026-02-25 03:00:00,Inspection started,EMP0004
+INC00017,Telecom,Pipeline Leak,Ward 23,High,Repair completed,2026-01-28 02:00:00,Crew assigned,EMP0001
+INC00018,Waste Management,Network Disruption,Ward 8,High,Monitoring ongoing,2026-02-19 02:00:00,Repair completed,EMP0004
+INC00019,Waste Management,Waste Collection Delay,Ward 31,Low,Monitoring ongoing,2026-09-16 08:00:00,Inspection started,EMP0003
+INC00020,Telecom,Network Disruption,Ward 23,Critical,Inspection started,2026-03-02 12:00:00,Inspection started,EMP0003
+INC00021,Gas,Network Disruption,Ward 23,Medium,Monitoring ongoing,2026-04-01 17:00:00,Monitoring ongoing,EMP0002
+INC00022,Waste Management,Maintenance,Ward 31,Critical,Crew assigned,2026-09-07 03:00:00,Repair completed,EMP0004
+INC00023,Telecom,Network Disruption,Ward 31,Critical,Repair completed,2026-09-17 01:00:00,Resolved,EMP0003
+INC00024,Electricity,Waste Collection Delay,Ward 1,Medium,Repair completed,2026-05-26 10:00:00,Monitoring ongoing,EMP0001
+INC00025,Gas,Power Outage,Ward 23,High,Monitoring ongoing,2026-10-26 00:00:00,Monitoring ongoing,EMP0004
+INC00026,Water,Pipeline Leak,Ward 15,Low,Repair completed,2026-06-29 01:00:00,Inspection started,EMP0002
+INC00027,Water,Waste Collection Delay,Ward 15,Low,Monitoring ongoing,2026-02-28 10:00:00,Repair completed,EMP0001
+INC00028,Telecom,Power Outage,Ward 23,Low,Monitoring ongoing,2026-10-18 16:00:00,Monitoring ongoing,EMP0003
+INC00029,Gas,Power Outage,Ward 23,Low,Repair completed,2026-10-20 12:00:00,Crew assigned,ADM0001
+INC00030,Gas,Waste Collection Delay,Ward 15,High,Crew assigned,2026-09-12 16:00:00,Repair completed,EMP0002
+INC00031,Electricity,Pipeline Leak,Ward 15,High,Repair completed,2026-09-12 20:00:00,Inspection started,ADM0001
+INC00032,Water,Maintenance,Ward 1,Low,Repair completed,2026-10-21 12:00:00,Resolved,ADM0001
+INC00033,Waste Management,Network Disruption,Ward 23,Medium,Inspection started,2026-05-20 02:00:00,Monitoring ongoing,ADM0001
+INC00034,Gas,Maintenance,Ward 31,High,Monitoring ongoing,2026-06-04 16:00:00,Crew assigned,EMP0004
+INC00035,Waste Management,Network Disruption,Ward 31,Medium,Crew assigned,2026-07-25 08:00:00,Inspection started,ADM0001
+INC00036,Water,Transformer Fault,Ward 31,Critical,Inspection started,2026-10-23 15:00:00,Resolved,EMP0004
+INC00037,Gas,Pipeline Leak,Ward 8,Medium,Monitoring ongoing,2026-09-25 06:00:00,Monitoring ongoing,EMP0004
+INC00038,Electricity,Network Disruption,Ward 15,High,Repair completed,2026-07-30 10:00:00,Crew assigned,EMP0002
+INC00039,Telecom,Power Outage,Ward 8,Medium,Crew assigned,2026-11-04 07:00:00,Inspection started,EMP0002
+INC00040,Telecom,Network Disruption,Ward 23,Low,Crew assigned,2026-06-08 14:00:00,Crew assigned,ADM0001
+INC00041,Electricity,Transformer Fault,Ward 31,Medium,Monitoring ongoing,2026-05-20 04:00:00,Inspection started,EMP0003
+INC00042,Electricity,Waste Collection Delay,Ward 15,Low,Repair completed,2026-01-11 01:00:00,Repair completed,EMP0003
+INC00043,Water,Power Outage,Ward 31,Low,Repair completed,2026-02-16 12:00:00,Resolved,EMP0002
+INC00044,Water,Power Outage,Ward 15,High,Monitoring ongoing,2026-09-12 02:00:00,Resolved,ADM0001
+INC00045,Water,Power Outage,Ward 8,Medium,Monitoring ongoing,2026-05-01 13:00:00,Monitoring ongoing,EMP0002
+INC00046,Waste Management,Network Disruption,Ward 31,High,Repair completed,2026-07-29 08:00:00,Inspection started,EMP0001
+INC00047,Telecom,Transformer Fault,Ward 8,High,Repair completed,2026-10-07 13:00:00,Repair completed,EMP0002
+INC00048,Waste Management,Maintenance,Ward 1,Medium,Monitoring ongoing,2026-06-07 00:00:00,Monitoring ongoing,EMP0001
+INC00049,Gas,Waste Collection Delay,Ward 8,Critical,Inspection started,2026-06-08 20:00:00,Repair completed,EMP0001
+INC00050,Gas,Pipeline Leak,Ward 15,Medium,Monitoring ongoing,2026-07-21 08:00:00,Crew assigned,EMP0001
+INC00051,Telecom,Transformer Fault,Ward 1,Critical,Monitoring ongoing,2026-06-12 20:00:00,Repair completed,EMP0001
+INC00052,Telecom,Pipeline Leak,Ward 15,Low,Monitoring ongoing,2026-06-20 22:00:00,Monitoring ongoing,EMP0001
+INC00053,Waste Management,Network Disruption,Ward 1,Low,Monitoring ongoing,2026-11-05 23:00:00,Crew assigned,EMP0003
+INC00054,Telecom,Maintenance,Ward 15,High,Inspection started,2026-03-11 00:00:00,Resolved,EMP0002
+INC00055,Water,Maintenance,Ward 8,Critical,Monitoring ongoing,2026-02-26 05:00:00,Monitoring ongoing,ADM0001
+INC00056,Water,Pipeline Leak,Ward 31,High,Crew assigned,2026-09-02 23:00:00,Monitoring ongoing,EMP0003
+INC00057,Gas,Network Disruption,Ward 23,Medium,Inspection started,2026-02-13 13:00:00,Inspection started,EMP0002
+INC00058,Waste Management,Power Outage,Ward 23,Medium,Crew assigned,2026-10-13 20:00:00,Monitoring ongoing,EMP0002
+INC00059,Waste Management,Waste Collection Delay,Ward 15,Medium,Repair completed,2026-01-26 12:00:00,Inspection started,EMP0004
+INC00060,Electricity,Maintenance,Ward 31,Critical,Monitoring ongoing,2026-03-29 18:00:00,Repair completed,EMP0001
+INC00061,Water,Transformer Fault,Ward 15,Critical,Crew assigned,2026-03-02 07:00:00,Repair completed,EMP0002
+INC00062,Waste Management,Transformer Fault,Ward 8,Critical,Monitoring ongoing,2026-08-09 06:00:00,Crew assigned,EMP0002
+INC00063,Gas,Pipeline Leak,Ward 31,Critical,Repair completed,2026-03-16 00:00:00,Crew assigned,EMP0003
+INC00064,Telecom,Power Outage,Ward 23,Medium,Monitoring ongoing,2026-10-26 21:00:00,Monitoring ongoing,EMP0001
+INC00065,Telecom,Maintenance,Ward 31,High,Inspection started,2026-04-19 22:00:00,Inspection started,EMP0004
+INC00066,Electricity,Pipeline Leak,Ward 23,High,Inspection started,2026-10-13 01:00:00,Resolved,EMP0003
+INC00067,Waste Management,Network Disruption,Ward 15,Critical,Crew assigned,2026-01-03 08:00:00,Monitoring ongoing,ADM0001
+INC00068,Waste Management,Transformer Fault,Ward 8,Critical,Monitoring ongoing,2026-10-14 01:00:00,Monitoring ongoing,EMP0002
+INC00069,Gas,Network Disruption,Ward 8,High,Repair completed,2026-03-09 02:00:00,Inspection started,ADM0001
+INC00070,Telecom,Maintenance,Ward 15,Critical,Repair completed,2026-01-23 04:00:00,Monitoring ongoing,EMP0003
+INC00071,Waste Management,Network Disruption,Ward 8,High,Crew assigned,2026-11-10 08:00:00,Repair completed,EMP0003
+INC00072,Telecom,Pipeline Leak,Ward 8,Low,Crew assigned,2026-10-12 21:00:00,Crew assigned,EMP0001
+INC00073,Gas,Maintenance,Ward 23,Critical,Monitoring ongoing,2026-01-19 15:00:00,Inspection started,EMP0002
+INC00074,Gas,Network Disruption,Ward 23,Critical,Crew assigned,2026-01-21 14:00:00,Inspection started,ADM0001
+INC00075,Electricity,Transformer Fault,Ward 8,Medium,Repair completed,2026-03-05 11:00:00,Resolved,EMP0002
+INC00076,Waste Management,Waste Collection Delay,Ward 1,Medium,Inspection started,2026-10-16 21:00:00,Repair completed,EMP0002
+INC00077,Electricity,Power Outage,Ward 15,Low,Repair completed,2026-05-07 15:00:00,Repair completed,EMP0003
+INC00078,Gas,Power Outage,Ward 1,Critical,Monitoring ongoing,2026-10-30 03:00:00,Repair completed,EMP0002
+INC00079,Electricity,Power Outage,Ward 31,Critical,Crew assigned,2026-05-18 19:00:00,Monitoring ongoing,EMP0003
+INC00080,Gas,Power Outage,Ward 1,Critical,Monitoring ongoing,2026-04-19 01:00:00,Inspection started,EMP0003
+INC00081,Water,Power Outage,Ward 1,Medium,Monitoring ongoing,2026-05-11 05:00:00,Crew assigned,EMP0004
+INC00082,Water,Transformer Fault,Ward 23,Critical,Crew assigned,2026-07-26 09:00:00,Monitoring ongoing,EMP0001
+INC00083,Electricity,Waste Collection Delay,Ward 8,Critical,Monitoring ongoing,2026-07-03 21:00:00,Repair completed,EMP0003
+INC00084,Waste Management,Network Disruption,Ward 1,Critical,Crew assigned,2026-09-01 08:00:00,Monitoring ongoing,ADM0001
+INC00085,Telecom,Power Outage,Ward 31,High,Crew assigned,2026-08-11 20:00:00,Repair completed,EMP0001
+INC00086,Waste Management,Power Outage,Ward 15,Critical,Inspection started,2026-03-21 15:00:00,Repair completed,ADM0001
+INC00087,Water,Maintenance,Ward 15,Medium,Monitoring ongoing,2026-09-02 09:00:00,Resolved,EMP0002
+INC00088,Electricity,Power Outage,Ward 1,Low,Monitoring ongoing,2026-06-01 18:00:00,Resolved,ADM0001
+INC00089,Telecom,Transformer Fault,Ward 15,High,Inspection started,2026-07-31 03:00:00,Resolved,ADM0001
+INC00090,Electricity,Pipeline Leak,Ward 8,Critical,Inspection started,2026-09-15 00:00:00,Inspection started,EMP0004
+INC00091,Gas,Waste Collection Delay,Ward 23,Critical,Repair completed,2026-08-02 22:00:00,Resolved,EMP0003
+INC00092,Water,Power Outage,Ward 31,High,Monitoring ongoing,2026-06-24 05:00:00,Inspection started,EMP0002
+INC00093,Electricity,Power Outage,Ward 1,Medium,Monitoring ongoing,2026-10-01 00:00:00,Repair completed,EMP0004
+INC00094,Waste Management,Transformer Fault,Ward 31,High,Repair completed,2026-07-27 21:00:00,Repair completed,EMP0004
+INC00095,Water,Pipeline Leak,Ward 1,Low,Inspection started,2026-02-14 04:00:00,Crew assigned,EMP0001
+INC00096,Water,Network Disruption,Ward 31,Medium,Repair completed,2026-04-18 15:00:00,Inspection started,EMP0002
+INC00097,Telecom,Power Outage,Ward 1,Medium,Monitoring ongoing,2026-08-26 04:00:00,Crew assigned,EMP0004
+INC00098,Electricity,Waste Collection Delay,Ward 8,Medium,Monitoring ongoing,2026-09-06 15:00:00,Monitoring ongoing,EMP0004
+INC00099,Electricity,Maintenance,Ward 23,Critical,Repair completed,2026-01-27 10:00:00,Repair completed,EMP0001
+INC00100,Telecom,Waste Collection Delay,Ward 31,Critical,Inspection started,2026-01-19 15:00:00,Crew assigned,EMP0004

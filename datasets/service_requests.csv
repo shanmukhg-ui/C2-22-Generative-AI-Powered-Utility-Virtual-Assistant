@@ -1,0 +1,501 @@
+request_id,customer_id,utility,request_type,status,priority,created_at,updated_at,service_location,description,assigned_staff_id
+SR000001,CUST0010,Electricity,Billing Issue,Submitted,Low,2026-06-19 02:32:00,2026-06-19 02:32:00,"Ward 18, Rajahmundry",Issue reported through service portal,EMP0002
+SR000002,CUST0070,Water,Waste Collection,On Hold,Critical,2026-05-05 15:51:00,2026-05-05 15:51:00,"Ward 13, Vizag",Request submitted by customer,EMP0004
+SR000003,CUST0085,Telecom,Meter Complaint,Rejected,Critical,2026-08-28 23:03:00,2026-08-28 23:03:00,"Ward 4, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000004,CUST0014,Water,Billing Issue,In Progress,Critical,2026-03-13 13:11:00,2026-03-13 13:11:00,"Ward 30, Guntur",Request submitted by customer,EMP0003
+SR000005,CUST0057,Waste Management,New Connection,Submitted,Low,2026-02-17 07:10:00,2026-02-17 07:10:00,"Ward 32, Rajahmundry",Issue reported through service portal,EMP0004
+SR000006,CUST0052,Electricity,Billing Issue,Rejected,Low,2026-07-19 08:59:00,2026-07-19 08:59:00,"Ward 19, Rajahmundry",Information update required,EMP0004
+SR000007,CUST0085,Telecom,Billing Issue,In Progress,High,2026-04-22 01:37:00,2026-04-22 01:37:00,"Ward 4, Vijayawada",Request submitted by customer,ADM0001
+SR000008,CUST0007,Waste Management,Outage Report,On Hold,Medium,2026-01-30 16:05:00,2026-01-30 16:05:00,"Ward 5, Vizag",Issue reported through service portal,EMP0002
+SR000009,CUST0052,Electricity,Water Supply,In Progress,Low,2026-02-11 13:42:00,2026-02-11 13:42:00,"Ward 37, Vijayawada",Follow-up requested by customer,ADM0001
+SR000010,CUST0027,Gas,Billing Issue,Resolved,Critical,2026-03-09 21:41:00,2026-03-09 21:41:00,"Ward 30, Vijayawada",Request submitted by customer,EMP0003
+SR000011,CUST0002,Telecom,Water Supply,On Hold,Low,2026-02-07 17:13:00,2026-02-07 17:13:00,"Ward 17, Guntur",Follow-up requested by customer,ADM0001
+SR000012,CUST0009,Water,Meter Complaint,Resolved,Medium,2026-08-13 17:45:00,2026-08-13 17:45:00,"Ward 40, Vizag",Information update required,EMP0003
+SR000013,CUST0039,Electricity,Billing Issue,Resolved,Low,2026-02-24 23:35:00,2026-02-24 23:35:00,"Ward 18, Vijayawada",Information update required,EMP0002
+SR000014,CUST0027,Gas,Billing Issue,Resolved,Critical,2026-05-09 01:05:00,2026-05-09 01:05:00,"Ward 18, Vizag",Request submitted by customer,EMP0004
+SR000015,CUST0043,Water,Waste Collection,Resolved,Medium,2026-08-15 17:45:00,2026-08-15 17:45:00,"Ward 36, Vizag",Request submitted by customer,EMP0004
+SR000016,CUST0010,Water,Water Supply,Submitted,High,2026-10-26 17:09:00,2026-10-26 17:09:00,"Ward 9, Vizag",Follow-up requested by customer,EMP0004
+SR000017,CUST0047,Electricity,Meter Complaint,In Progress,Medium,2026-02-22 11:49:00,2026-02-22 11:49:00,"Ward 27, Guntur",Issue reported through service portal,ADM0001
+SR000018,CUST0021,Water,Outage Report,Submitted,Medium,2026-06-20 13:51:00,2026-06-20 13:51:00,"Ward 18, Guntur",Request submitted by customer,EMP0002
+SR000019,CUST0049,Electricity,Telecom Service,Rejected,Medium,2026-04-13 14:22:00,2026-04-13 14:22:00,"Ward 15, Guntur",Request submitted by customer,EMP0003
+SR000020,CUST0085,Water,Outage Report,Resolved,High,2026-02-05 08:22:00,2026-02-05 08:22:00,"Ward 26, Vijayawada",Request submitted by customer,ADM0001
+SR000021,CUST0015,Gas,Billing Issue,On Hold,High,2026-01-20 03:38:00,2026-01-20 03:38:00,"Ward 23, Vijayawada",Service visit requested,EMP0004
+SR000022,CUST0078,Waste Management,New Connection,Rejected,Medium,2026-05-11 01:45:00,2026-05-11 01:45:00,"Ward 1, Guntur",Follow-up requested by customer,EMP0004
+SR000023,CUST0056,Electricity,Waste Collection,Resolved,High,2026-03-05 23:57:00,2026-03-05 23:57:00,"Ward 33, Vijayawada",Service visit requested,EMP0003
+SR000024,CUST0042,Telecom,Waste Collection,Resolved,Medium,2026-04-09 13:42:00,2026-04-09 13:42:00,"Ward 12, Vijayawada",Service visit requested,EMP0004
+SR000025,CUST0071,Electricity,Meter Complaint,Resolved,Medium,2026-08-09 18:38:00,2026-08-09 18:38:00,"Ward 30, Rajahmundry",Service visit requested,EMP0003
+SR000026,CUST0087,Water,Water Supply,Rejected,Medium,2026-02-13 09:32:00,2026-02-13 09:32:00,"Ward 22, Vizag",Issue reported through service portal,ADM0001
+SR000027,CUST0087,Gas,Billing Issue,In Progress,Medium,2026-01-13 01:15:00,2026-01-13 01:15:00,"Ward 40, Vizag",Service visit requested,EMP0004
+SR000028,CUST0054,Waste Management,Billing Issue,Rejected,Critical,2026-07-24 07:09:00,2026-07-24 07:09:00,"Ward 7, Rajahmundry",Issue reported through service portal,EMP0001
+SR000029,CUST0023,Waste Management,Outage Report,Submitted,Medium,2026-03-04 14:08:00,2026-03-04 14:08:00,"Ward 34, Vijayawada",Service visit requested,EMP0004
+SR000030,CUST0079,Waste Management,Outage Report,On Hold,Critical,2026-03-23 23:55:00,2026-03-23 23:55:00,"Ward 29, Vijayawada",Issue reported through service portal,EMP0004
+SR000031,CUST0082,Gas,Telecom Service,On Hold,Critical,2026-05-03 08:28:00,2026-05-03 08:28:00,"Ward 19, Guntur",Follow-up requested by customer,EMP0001
+SR000032,CUST0043,Gas,Water Supply,Submitted,Medium,2026-03-19 07:24:00,2026-03-19 07:24:00,"Ward 14, Vizag",Service visit requested,EMP0002
+SR000033,CUST0053,Gas,Water Supply,Rejected,Critical,2026-02-01 06:53:00,2026-02-01 06:53:00,"Ward 25, Vizag",Information update required,EMP0004
+SR000034,CUST0049,Telecom,New Connection,Resolved,High,2026-07-19 13:34:00,2026-07-19 13:34:00,"Ward 39, Guntur",Service visit requested,ADM0001
+SR000035,CUST0029,Gas,Outage Report,Rejected,Low,2026-07-19 10:42:00,2026-07-19 10:42:00,"Ward 11, Rajahmundry",Issue reported through service portal,EMP0004
+SR000036,CUST0080,Waste Management,New Connection,Rejected,Low,2026-02-12 20:27:00,2026-02-12 20:27:00,"Ward 30, Guntur",Request submitted by customer,EMP0002
+SR000037,CUST0034,Telecom,Meter Complaint,In Progress,Critical,2026-06-17 10:48:00,2026-06-17 10:48:00,"Ward 18, Rajahmundry",Follow-up requested by customer,EMP0004
+SR000038,CUST0011,Telecom,New Connection,On Hold,Low,2026-06-29 07:41:00,2026-06-29 07:41:00,"Ward 3, Vizag",Issue reported through service portal,EMP0001
+SR000039,CUST0026,Electricity,Water Supply,In Progress,Medium,2026-03-06 15:42:00,2026-03-06 15:42:00,"Ward 37, Guntur",Service visit requested,EMP0001
+SR000040,CUST0090,Gas,Telecom Service,Resolved,Medium,2026-11-07 19:47:00,2026-11-07 19:47:00,"Ward 11, Vijayawada",Request submitted by customer,EMP0001
+SR000041,CUST0075,Electricity,Meter Complaint,On Hold,Critical,2026-07-23 22:12:00,2026-07-23 22:12:00,"Ward 38, Guntur",Request submitted by customer,EMP0001
+SR000042,CUST0090,Gas,Telecom Service,On Hold,Low,2026-10-17 01:22:00,2026-10-17 01:22:00,"Ward 28, Vijayawada",Request submitted by customer,ADM0001
+SR000043,CUST0065,Gas,New Connection,Rejected,Critical,2026-02-24 13:23:00,2026-02-24 13:23:00,"Ward 10, Rajahmundry",Issue reported through service portal,EMP0004
+SR000044,CUST0094,Waste Management,Waste Collection,Resolved,Critical,2026-08-27 13:52:00,2026-08-27 13:52:00,"Ward 18, Vijayawada",Issue reported through service portal,ADM0001
+SR000045,CUST0012,Gas,Outage Report,In Progress,Critical,2026-10-19 19:42:00,2026-10-19 19:42:00,"Ward 22, Vizag",Service visit requested,EMP0004
+SR000046,CUST0042,Water,Outage Report,In Progress,High,2026-05-13 10:17:00,2026-05-13 10:17:00,"Ward 18, Vizag",Information update required,ADM0001
+SR000047,CUST0025,Electricity,Billing Issue,Rejected,Critical,2026-10-12 07:44:00,2026-10-12 07:44:00,"Ward 32, Rajahmundry",Request submitted by customer,EMP0004
+SR000048,CUST0012,Gas,Billing Issue,Rejected,Medium,2026-06-06 21:37:00,2026-06-06 21:37:00,"Ward 31, Vijayawada",Service visit requested,EMP0003
+SR000049,CUST0096,Waste Management,Meter Complaint,Resolved,Critical,2026-05-19 09:16:00,2026-05-19 09:16:00,"Ward 8, Guntur",Follow-up requested by customer,EMP0002
+SR000050,CUST0016,Waste Management,Telecom Service,In Progress,Medium,2026-04-21 23:30:00,2026-04-21 23:30:00,"Ward 38, Vijayawada",Request submitted by customer,EMP0003
+SR000051,CUST0025,Gas,Billing Issue,Resolved,Medium,2026-06-04 00:45:00,2026-06-04 00:45:00,"Ward 9, Vijayawada",Request submitted by customer,ADM0001
+SR000052,CUST0007,Waste Management,Meter Complaint,In Progress,Critical,2026-02-22 00:36:00,2026-02-22 00:36:00,"Ward 31, Rajahmundry",Service visit requested,EMP0003
+SR000053,CUST0044,Water,New Connection,Resolved,Critical,2026-02-28 02:25:00,2026-02-28 02:25:00,"Ward 5, Vizag",Issue reported through service portal,EMP0004
+SR000054,CUST0020,Waste Management,Meter Complaint,Submitted,Medium,2026-03-02 17:48:00,2026-03-02 17:48:00,"Ward 39, Guntur",Information update required,EMP0004
+SR000055,CUST0049,Telecom,Outage Report,Resolved,Critical,2026-06-06 18:39:00,2026-06-06 18:39:00,"Ward 40, Vizag",Issue reported through service portal,EMP0001
+SR000056,CUST0081,Water,Meter Complaint,Submitted,Medium,2026-05-03 05:35:00,2026-05-03 05:35:00,"Ward 11, Vizag",Service visit requested,EMP0001
+SR000057,CUST0058,Waste Management,Outage Report,Resolved,Low,2026-04-29 09:45:00,2026-04-29 09:45:00,"Ward 30, Vizag",Issue reported through service portal,EMP0003
+SR000058,CUST0034,Waste Management,Waste Collection,In Progress,Critical,2026-02-28 17:14:00,2026-02-28 17:14:00,"Ward 18, Guntur",Request submitted by customer,EMP0002
+SR000059,CUST0008,Water,Telecom Service,Resolved,High,2026-08-13 03:29:00,2026-08-13 03:29:00,"Ward 26, Vijayawada",Information update required,EMP0003
+SR000060,CUST0070,Telecom,Outage Report,Submitted,Low,2026-08-10 23:20:00,2026-08-10 23:20:00,"Ward 17, Vizag",Request submitted by customer,ADM0001
+SR000061,CUST0030,Waste Management,Water Supply,Submitted,High,2026-10-23 01:48:00,2026-10-23 01:48:00,"Ward 31, Rajahmundry",Follow-up requested by customer,EMP0002
+SR000062,CUST0024,Waste Management,Outage Report,Rejected,Low,2026-08-29 11:26:00,2026-08-29 11:26:00,"Ward 21, Vizag",Issue reported through service portal,EMP0003
+SR000063,CUST0043,Telecom,Waste Collection,Rejected,High,2026-07-25 17:02:00,2026-07-25 17:02:00,"Ward 6, Vijayawada",Follow-up requested by customer,EMP0004
+SR000064,CUST0042,Electricity,Telecom Service,Rejected,Low,2026-10-05 14:26:00,2026-10-05 14:26:00,"Ward 13, Vijayawada",Information update required,EMP0001
+SR000065,CUST0097,Telecom,Waste Collection,Rejected,Low,2026-04-15 08:35:00,2026-04-15 08:35:00,"Ward 19, Rajahmundry",Service visit requested,EMP0002
+SR000066,CUST0016,Electricity,Waste Collection,On Hold,Medium,2026-03-23 09:35:00,2026-03-23 09:35:00,"Ward 36, Rajahmundry",Request submitted by customer,EMP0001
+SR000067,CUST0029,Electricity,Outage Report,Submitted,Medium,2026-09-13 22:18:00,2026-09-13 22:18:00,"Ward 18, Rajahmundry",Service visit requested,ADM0001
+SR000068,CUST0061,Water,Outage Report,On Hold,Medium,2026-07-16 06:58:00,2026-07-16 06:58:00,"Ward 33, Guntur",Request submitted by customer,ADM0001
+SR000069,CUST0036,Telecom,Meter Complaint,On Hold,High,2026-01-02 09:46:00,2026-01-02 09:46:00,"Ward 38, Rajahmundry",Issue reported through service portal,EMP0003
+SR000070,CUST0058,Waste Management,Outage Report,Resolved,High,2026-10-10 17:24:00,2026-10-10 17:24:00,"Ward 21, Guntur",Issue reported through service portal,EMP0004
+SR000071,CUST0074,Telecom,Billing Issue,Rejected,Low,2026-06-12 23:30:00,2026-06-12 23:30:00,"Ward 25, Guntur",Service visit requested,EMP0004
+SR000072,CUST0005,Water,Water Supply,On Hold,High,2026-02-21 14:06:00,2026-02-21 14:06:00,"Ward 30, Vizag",Issue reported through service portal,ADM0001
+SR000073,CUST0053,Water,New Connection,Rejected,High,2026-06-23 19:44:00,2026-06-23 19:44:00,"Ward 6, Vijayawada",Information update required,EMP0004
+SR000074,CUST0049,Gas,Waste Collection,Rejected,Low,2026-02-05 07:40:00,2026-02-05 07:40:00,"Ward 15, Vizag",Service visit requested,EMP0003
+SR000075,CUST0013,Electricity,Outage Report,In Progress,High,2026-01-15 01:20:00,2026-01-15 01:20:00,"Ward 19, Vijayawada",Follow-up requested by customer,EMP0001
+SR000076,CUST0056,Water,Billing Issue,On Hold,Critical,2026-10-17 21:50:00,2026-10-17 21:50:00,"Ward 11, Guntur",Request submitted by customer,EMP0002
+SR000077,CUST0079,Telecom,Water Supply,In Progress,Critical,2026-10-26 04:14:00,2026-10-26 04:14:00,"Ward 17, Rajahmundry",Follow-up requested by customer,EMP0004
+SR000078,CUST0086,Electricity,Telecom Service,Rejected,High,2026-10-07 05:04:00,2026-10-07 05:04:00,"Ward 23, Vijayawada",Service visit requested,EMP0004
+SR000079,CUST0089,Gas,Outage Report,Resolved,Medium,2026-07-16 15:06:00,2026-07-16 15:06:00,"Ward 25, Vijayawada",Information update required,EMP0002
+SR000080,CUST0038,Gas,New Connection,Rejected,High,2026-01-05 18:55:00,2026-01-05 18:55:00,"Ward 39, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000081,CUST0100,Water,Water Supply,Resolved,Medium,2026-04-08 19:16:00,2026-04-08 19:16:00,"Ward 7, Vizag",Follow-up requested by customer,EMP0002
+SR000082,CUST0057,Electricity,Water Supply,Resolved,Medium,2026-02-16 09:20:00,2026-02-16 09:20:00,"Ward 12, Guntur",Issue reported through service portal,EMP0004
+SR000083,CUST0070,Gas,Water Supply,On Hold,High,2026-03-26 08:58:00,2026-03-26 08:58:00,"Ward 19, Vijayawada",Request submitted by customer,EMP0004
+SR000084,CUST0060,Electricity,Billing Issue,In Progress,Critical,2026-10-13 11:05:00,2026-10-13 11:05:00,"Ward 1, Vijayawada",Information update required,EMP0004
+SR000085,CUST0016,Telecom,Meter Complaint,Resolved,Critical,2026-07-10 03:43:00,2026-07-10 03:43:00,"Ward 31, Vizag",Information update required,EMP0002
+SR000086,CUST0072,Gas,Water Supply,In Progress,Low,2026-08-26 22:19:00,2026-08-26 22:19:00,"Ward 8, Guntur",Request submitted by customer,EMP0004
+SR000087,CUST0005,Gas,Outage Report,Submitted,Low,2026-05-01 17:08:00,2026-05-01 17:08:00,"Ward 30, Vijayawada",Information update required,EMP0004
+SR000088,CUST0054,Waste Management,Waste Collection,In Progress,Critical,2026-02-20 15:39:00,2026-02-20 15:39:00,"Ward 18, Vizag",Follow-up requested by customer,EMP0004
+SR000089,CUST0028,Telecom,Outage Report,In Progress,High,2026-02-20 21:23:00,2026-02-20 21:23:00,"Ward 23, Vizag",Service visit requested,ADM0001
+SR000090,CUST0036,Water,New Connection,Rejected,Low,2026-04-19 20:40:00,2026-04-19 20:40:00,"Ward 2, Vizag",Follow-up requested by customer,ADM0001
+SR000091,CUST0032,Water,Telecom Service,On Hold,Medium,2026-02-05 17:13:00,2026-02-05 17:13:00,"Ward 14, Guntur",Follow-up requested by customer,ADM0001
+SR000092,CUST0100,Water,Telecom Service,On Hold,Low,2026-05-22 04:08:00,2026-05-22 04:08:00,"Ward 17, Guntur",Request submitted by customer,ADM0001
+SR000093,CUST0085,Electricity,Billing Issue,Submitted,High,2026-05-02 18:20:00,2026-05-02 18:20:00,"Ward 12, Vijayawada",Request submitted by customer,EMP0001
+SR000094,CUST0017,Telecom,Water Supply,Submitted,Low,2026-09-01 14:49:00,2026-09-01 14:49:00,"Ward 33, Vizag",Service visit requested,EMP0003
+SR000095,CUST0065,Water,Water Supply,Submitted,High,2026-08-23 20:01:00,2026-08-23 20:01:00,"Ward 31, Rajahmundry",Service visit requested,EMP0001
+SR000096,CUST0088,Electricity,Outage Report,Rejected,Low,2026-02-11 10:38:00,2026-02-11 10:38:00,"Ward 5, Guntur",Follow-up requested by customer,EMP0002
+SR000097,CUST0080,Waste Management,Water Supply,Resolved,Critical,2026-11-02 16:18:00,2026-11-02 16:18:00,"Ward 33, Rajahmundry",Request submitted by customer,EMP0004
+SR000098,CUST0090,Electricity,Telecom Service,On Hold,Medium,2026-08-09 14:56:00,2026-08-09 14:56:00,"Ward 27, Vijayawada",Service visit requested,EMP0002
+SR000099,CUST0052,Telecom,Waste Collection,Submitted,High,2026-08-07 10:42:00,2026-08-07 10:42:00,"Ward 24, Guntur",Service visit requested,EMP0003
+SR000100,CUST0009,Electricity,Telecom Service,Submitted,Low,2026-08-10 03:47:00,2026-08-10 03:47:00,"Ward 9, Vizag",Information update required,EMP0003
+SR000101,CUST0072,Waste Management,Meter Complaint,Submitted,Critical,2026-07-01 21:48:00,2026-07-01 21:48:00,"Ward 4, Vijayawada",Information update required,EMP0004
+SR000102,CUST0040,Gas,New Connection,On Hold,Medium,2026-03-21 21:30:00,2026-03-21 21:30:00,"Ward 7, Vijayawada",Information update required,EMP0002
+SR000103,CUST0048,Electricity,Telecom Service,Resolved,Medium,2026-08-08 17:49:00,2026-08-08 17:49:00,"Ward 40, Vizag",Information update required,ADM0001
+SR000104,CUST0085,Gas,New Connection,In Progress,High,2026-06-08 10:22:00,2026-06-08 10:22:00,"Ward 12, Guntur",Information update required,EMP0001
+SR000105,CUST0085,Telecom,New Connection,In Progress,Low,2026-02-16 23:33:00,2026-02-16 23:33:00,"Ward 25, Rajahmundry",Service visit requested,EMP0002
+SR000106,CUST0044,Water,Meter Complaint,Resolved,High,2026-10-18 19:05:00,2026-10-18 19:05:00,"Ward 10, Guntur",Information update required,EMP0001
+SR000107,CUST0007,Electricity,Meter Complaint,Rejected,Critical,2026-09-06 19:28:00,2026-09-06 19:28:00,"Ward 18, Guntur",Information update required,EMP0004
+SR000108,CUST0015,Gas,Outage Report,Submitted,High,2026-10-31 15:33:00,2026-10-31 15:33:00,"Ward 3, Guntur",Service visit requested,EMP0003
+SR000109,CUST0077,Electricity,New Connection,In Progress,High,2026-04-19 04:48:00,2026-04-19 04:48:00,"Ward 19, Vijayawada",Request submitted by customer,EMP0003
+SR000110,CUST0001,Telecom,Waste Collection,Rejected,Medium,2026-03-08 12:34:00,2026-03-08 12:34:00,"Ward 33, Vijayawada",Request submitted by customer,EMP0002
+SR000111,CUST0051,Electricity,Outage Report,Submitted,Critical,2026-02-09 10:36:00,2026-02-09 10:36:00,"Ward 37, Rajahmundry",Service visit requested,EMP0004
+SR000112,CUST0038,Electricity,Outage Report,Submitted,High,2026-03-29 19:29:00,2026-03-29 19:29:00,"Ward 6, Rajahmundry",Request submitted by customer,EMP0003
+SR000113,CUST0032,Telecom,Water Supply,Rejected,Low,2026-07-22 09:47:00,2026-07-22 09:47:00,"Ward 15, Vijayawada",Issue reported through service portal,EMP0003
+SR000114,CUST0010,Waste Management,Waste Collection,Submitted,Medium,2026-06-28 11:46:00,2026-06-28 11:46:00,"Ward 16, Vizag",Issue reported through service portal,EMP0002
+SR000115,CUST0033,Water,Billing Issue,On Hold,Medium,2026-02-08 05:49:00,2026-02-08 05:49:00,"Ward 30, Rajahmundry",Information update required,EMP0004
+SR000116,CUST0083,Waste Management,Meter Complaint,Resolved,Medium,2026-08-14 02:30:00,2026-08-14 02:30:00,"Ward 20, Vijayawada",Information update required,EMP0004
+SR000117,CUST0008,Gas,Water Supply,Submitted,High,2026-08-25 14:02:00,2026-08-25 14:02:00,"Ward 24, Vijayawada",Request submitted by customer,EMP0001
+SR000118,CUST0083,Electricity,Water Supply,On Hold,Critical,2026-08-25 18:35:00,2026-08-25 18:35:00,"Ward 29, Guntur",Follow-up requested by customer,EMP0001
+SR000119,CUST0078,Telecom,Water Supply,In Progress,Low,2026-08-19 03:51:00,2026-08-19 03:51:00,"Ward 6, Guntur",Request submitted by customer,EMP0003
+SR000120,CUST0032,Telecom,Outage Report,On Hold,Medium,2026-07-06 11:58:00,2026-07-06 11:58:00,"Ward 25, Rajahmundry",Follow-up requested by customer,EMP0003
+SR000121,CUST0087,Waste Management,New Connection,Resolved,Low,2026-06-18 03:35:00,2026-06-18 03:35:00,"Ward 19, Vijayawada",Information update required,EMP0004
+SR000122,CUST0020,Gas,New Connection,On Hold,Medium,2026-06-29 09:41:00,2026-06-29 09:41:00,"Ward 9, Vizag",Follow-up requested by customer,EMP0004
+SR000123,CUST0072,Telecom,Waste Collection,Resolved,Medium,2026-09-27 02:41:00,2026-09-27 02:41:00,"Ward 33, Vijayawada",Request submitted by customer,EMP0004
+SR000124,CUST0047,Gas,Billing Issue,In Progress,High,2026-09-06 06:14:00,2026-09-06 06:14:00,"Ward 10, Vizag",Follow-up requested by customer,EMP0002
+SR000125,CUST0013,Waste Management,Telecom Service,On Hold,Low,2026-06-22 19:08:00,2026-06-22 19:08:00,"Ward 25, Guntur",Issue reported through service portal,ADM0001
+SR000126,CUST0024,Waste Management,Telecom Service,In Progress,Critical,2026-01-23 13:23:00,2026-01-23 13:23:00,"Ward 29, Vijayawada",Service visit requested,EMP0002
+SR000127,CUST0030,Waste Management,Billing Issue,Resolved,Critical,2026-04-10 11:43:00,2026-04-10 11:43:00,"Ward 29, Rajahmundry",Follow-up requested by customer,ADM0001
+SR000128,CUST0100,Telecom,Water Supply,On Hold,Critical,2026-03-24 06:51:00,2026-03-24 06:51:00,"Ward 9, Vijayawada",Request submitted by customer,ADM0001
+SR000129,CUST0083,Telecom,Telecom Service,Resolved,Low,2026-09-22 03:18:00,2026-09-22 03:18:00,"Ward 11, Vijayawada",Service visit requested,EMP0001
+SR000130,CUST0066,Water,Telecom Service,Rejected,Low,2026-04-24 14:56:00,2026-04-24 14:56:00,"Ward 2, Rajahmundry",Request submitted by customer,EMP0003
+SR000131,CUST0051,Waste Management,Meter Complaint,In Progress,Critical,2026-02-11 11:14:00,2026-02-11 11:14:00,"Ward 21, Vizag",Follow-up requested by customer,EMP0001
+SR000132,CUST0019,Water,New Connection,Resolved,Critical,2026-03-13 22:30:00,2026-03-13 22:30:00,"Ward 40, Vizag",Request submitted by customer,EMP0004
+SR000133,CUST0003,Gas,Billing Issue,In Progress,Critical,2026-02-26 09:15:00,2026-02-26 09:15:00,"Ward 8, Vizag",Issue reported through service portal,EMP0003
+SR000134,CUST0054,Waste Management,Outage Report,Submitted,Low,2026-09-13 19:34:00,2026-09-13 19:34:00,"Ward 33, Guntur",Issue reported through service portal,EMP0001
+SR000135,CUST0038,Telecom,New Connection,On Hold,High,2026-05-04 18:26:00,2026-05-04 18:26:00,"Ward 6, Vijayawada",Request submitted by customer,EMP0002
+SR000136,CUST0068,Waste Management,Water Supply,On Hold,Low,2026-07-19 15:02:00,2026-07-19 15:02:00,"Ward 24, Vijayawada",Request submitted by customer,EMP0004
+SR000137,CUST0046,Electricity,Meter Complaint,In Progress,Low,2026-10-25 23:48:00,2026-10-25 23:48:00,"Ward 9, Vizag",Follow-up requested by customer,EMP0003
+SR000138,CUST0070,Gas,Telecom Service,In Progress,Critical,2026-09-03 20:11:00,2026-09-03 20:11:00,"Ward 5, Rajahmundry",Request submitted by customer,EMP0002
+SR000139,CUST0038,Water,New Connection,In Progress,Low,2026-06-11 09:32:00,2026-06-11 09:32:00,"Ward 35, Rajahmundry",Follow-up requested by customer,EMP0004
+SR000140,CUST0005,Water,Meter Complaint,Resolved,Low,2026-06-19 08:07:00,2026-06-19 08:07:00,"Ward 28, Rajahmundry",Service visit requested,EMP0003
+SR000141,CUST0050,Gas,Billing Issue,Rejected,Critical,2026-07-08 16:17:00,2026-07-08 16:17:00,"Ward 28, Vizag",Service visit requested,EMP0001
+SR000142,CUST0078,Water,Water Supply,Resolved,High,2026-02-22 02:20:00,2026-02-22 02:20:00,"Ward 20, Rajahmundry",Information update required,EMP0003
+SR000143,CUST0092,Telecom,Billing Issue,Rejected,High,2026-08-17 01:46:00,2026-08-17 01:46:00,"Ward 40, Rajahmundry",Follow-up requested by customer,EMP0003
+SR000144,CUST0082,Electricity,New Connection,Rejected,High,2026-09-20 23:43:00,2026-09-20 23:43:00,"Ward 2, Guntur",Information update required,EMP0002
+SR000145,CUST0087,Telecom,New Connection,In Progress,Low,2026-05-01 20:23:00,2026-05-01 20:23:00,"Ward 25, Vizag",Information update required,EMP0003
+SR000146,CUST0020,Telecom,Meter Complaint,Resolved,Critical,2026-02-09 18:08:00,2026-02-09 18:08:00,"Ward 24, Rajahmundry",Follow-up requested by customer,ADM0001
+SR000147,CUST0084,Gas,Billing Issue,Submitted,Low,2026-04-06 15:33:00,2026-04-06 15:33:00,"Ward 36, Vizag",Follow-up requested by customer,EMP0004
+SR000148,CUST0100,Gas,Waste Collection,Rejected,Medium,2026-11-10 09:44:00,2026-11-10 09:44:00,"Ward 13, Vizag",Issue reported through service portal,EMP0004
+SR000149,CUST0010,Telecom,Billing Issue,Rejected,Low,2026-06-13 21:22:00,2026-06-13 21:22:00,"Ward 36, Vijayawada",Follow-up requested by customer,EMP0001
+SR000150,CUST0021,Water,Telecom Service,Resolved,Medium,2026-03-04 06:50:00,2026-03-04 06:50:00,"Ward 16, Rajahmundry",Request submitted by customer,EMP0002
+SR000151,CUST0047,Waste Management,Water Supply,Resolved,Critical,2026-10-10 04:39:00,2026-10-10 04:39:00,"Ward 5, Vijayawada",Service visit requested,EMP0001
+SR000152,CUST0092,Telecom,Water Supply,Rejected,Critical,2026-10-22 02:08:00,2026-10-22 02:08:00,"Ward 5, Rajahmundry",Service visit requested,EMP0003
+SR000153,CUST0088,Waste Management,Meter Complaint,In Progress,Medium,2026-03-08 13:32:00,2026-03-08 13:32:00,"Ward 8, Guntur",Follow-up requested by customer,EMP0001
+SR000154,CUST0022,Water,Meter Complaint,In Progress,High,2026-09-23 09:54:00,2026-09-23 09:54:00,"Ward 17, Guntur",Information update required,EMP0001
+SR000155,CUST0036,Water,Waste Collection,Resolved,Low,2026-09-15 20:10:00,2026-09-15 20:10:00,"Ward 38, Guntur",Issue reported through service portal,ADM0001
+SR000156,CUST0085,Waste Management,Waste Collection,On Hold,High,2026-10-16 01:52:00,2026-10-16 01:52:00,"Ward 6, Vizag",Information update required,EMP0001
+SR000157,CUST0034,Water,Telecom Service,On Hold,Critical,2026-01-16 15:56:00,2026-01-16 15:56:00,"Ward 19, Vijayawada",Service visit requested,ADM0001
+SR000158,CUST0032,Telecom,Meter Complaint,Rejected,Low,2026-01-31 05:28:00,2026-01-31 05:28:00,"Ward 31, Rajahmundry",Issue reported through service portal,EMP0004
+SR000159,CUST0044,Waste Management,Billing Issue,Resolved,High,2026-06-26 12:08:00,2026-06-26 12:08:00,"Ward 33, Vizag",Follow-up requested by customer,EMP0003
+SR000160,CUST0031,Telecom,New Connection,Resolved,Critical,2026-05-07 04:06:00,2026-05-07 04:06:00,"Ward 19, Rajahmundry",Information update required,EMP0001
+SR000161,CUST0054,Water,Telecom Service,In Progress,High,2026-10-23 23:20:00,2026-10-23 23:20:00,"Ward 11, Rajahmundry",Information update required,EMP0002
+SR000162,CUST0060,Telecom,Meter Complaint,Rejected,Low,2026-02-16 12:32:00,2026-02-16 12:32:00,"Ward 16, Guntur",Information update required,EMP0004
+SR000163,CUST0046,Electricity,New Connection,Resolved,Critical,2026-11-02 20:43:00,2026-11-02 20:43:00,"Ward 19, Vizag",Request submitted by customer,EMP0004
+SR000164,CUST0056,Water,Meter Complaint,Resolved,Critical,2026-07-07 01:25:00,2026-07-07 01:25:00,"Ward 37, Guntur",Follow-up requested by customer,EMP0001
+SR000165,CUST0071,Gas,New Connection,Rejected,Critical,2026-10-09 08:52:00,2026-10-09 08:52:00,"Ward 40, Vizag",Issue reported through service portal,ADM0001
+SR000166,CUST0013,Telecom,Meter Complaint,Resolved,High,2026-03-15 06:38:00,2026-03-15 06:38:00,"Ward 26, Vizag",Request submitted by customer,ADM0001
+SR000167,CUST0005,Water,Waste Collection,Resolved,Critical,2026-09-23 14:09:00,2026-09-23 14:09:00,"Ward 33, Guntur",Follow-up requested by customer,ADM0001
+SR000168,CUST0079,Gas,Billing Issue,Rejected,High,2026-10-31 10:32:00,2026-10-31 10:32:00,"Ward 35, Rajahmundry",Information update required,ADM0001
+SR000169,CUST0039,Telecom,Telecom Service,Submitted,High,2026-06-19 21:07:00,2026-06-19 21:07:00,"Ward 38, Vijayawada",Request submitted by customer,EMP0004
+SR000170,CUST0077,Telecom,Meter Complaint,On Hold,Medium,2026-01-27 18:30:00,2026-01-27 18:30:00,"Ward 34, Rajahmundry",Issue reported through service portal,EMP0002
+SR000171,CUST0088,Water,New Connection,On Hold,Low,2026-04-08 00:28:00,2026-04-08 00:28:00,"Ward 27, Guntur",Service visit requested,EMP0003
+SR000172,CUST0089,Water,Outage Report,On Hold,Critical,2026-02-01 22:08:00,2026-02-01 22:08:00,"Ward 14, Vijayawada",Service visit requested,ADM0001
+SR000173,CUST0068,Telecom,Meter Complaint,In Progress,Critical,2026-09-30 10:34:00,2026-09-30 10:34:00,"Ward 17, Rajahmundry",Issue reported through service portal,EMP0003
+SR000174,CUST0032,Gas,Water Supply,Resolved,Medium,2026-06-02 09:45:00,2026-06-02 09:45:00,"Ward 32, Vijayawada",Service visit requested,EMP0002
+SR000175,CUST0045,Waste Management,Telecom Service,Resolved,High,2026-03-04 18:43:00,2026-03-04 18:43:00,"Ward 25, Rajahmundry",Follow-up requested by customer,ADM0001
+SR000176,CUST0099,Water,Meter Complaint,Submitted,High,2026-02-10 11:59:00,2026-02-10 11:59:00,"Ward 17, Rajahmundry",Issue reported through service portal,EMP0004
+SR000177,CUST0026,Waste Management,Meter Complaint,On Hold,High,2026-03-12 03:39:00,2026-03-12 03:39:00,"Ward 16, Guntur",Request submitted by customer,ADM0001
+SR000178,CUST0086,Waste Management,Billing Issue,In Progress,Low,2026-02-21 13:21:00,2026-02-21 13:21:00,"Ward 7, Guntur",Request submitted by customer,EMP0004
+SR000179,CUST0071,Water,Outage Report,Rejected,Critical,2026-04-13 09:20:00,2026-04-13 09:20:00,"Ward 4, Vizag",Information update required,EMP0003
+SR000180,CUST0030,Waste Management,Waste Collection,Submitted,Medium,2026-08-02 05:59:00,2026-08-02 05:59:00,"Ward 26, Rajahmundry",Issue reported through service portal,EMP0001
+SR000181,CUST0096,Gas,New Connection,Submitted,High,2026-10-18 19:06:00,2026-10-18 19:06:00,"Ward 19, Rajahmundry",Information update required,EMP0003
+SR000182,CUST0068,Telecom,Billing Issue,On Hold,Critical,2026-05-20 06:51:00,2026-05-20 06:51:00,"Ward 22, Guntur",Service visit requested,EMP0001
+SR000183,CUST0083,Gas,Waste Collection,In Progress,Low,2026-06-22 09:36:00,2026-06-22 09:36:00,"Ward 12, Rajahmundry",Service visit requested,EMP0002
+SR000184,CUST0066,Gas,New Connection,Rejected,Low,2026-04-05 04:30:00,2026-04-05 04:30:00,"Ward 16, Vizag",Follow-up requested by customer,EMP0003
+SR000185,CUST0050,Water,Outage Report,Resolved,High,2026-06-04 18:46:00,2026-06-04 18:46:00,"Ward 1, Vijayawada",Follow-up requested by customer,ADM0001
+SR000186,CUST0089,Water,New Connection,Submitted,Critical,2026-06-07 05:25:00,2026-06-07 05:25:00,"Ward 20, Vizag",Follow-up requested by customer,ADM0001
+SR000187,CUST0048,Waste Management,Billing Issue,In Progress,Medium,2026-09-02 04:29:00,2026-09-02 04:29:00,"Ward 24, Rajahmundry",Information update required,ADM0001
+SR000188,CUST0061,Waste Management,Telecom Service,In Progress,Medium,2026-11-02 02:33:00,2026-11-02 02:33:00,"Ward 34, Vijayawada",Request submitted by customer,EMP0004
+SR000189,CUST0073,Electricity,New Connection,On Hold,Medium,2026-10-21 17:09:00,2026-10-21 17:09:00,"Ward 21, Rajahmundry",Request submitted by customer,EMP0002
+SR000190,CUST0088,Water,Waste Collection,On Hold,Critical,2026-02-16 16:28:00,2026-02-16 16:28:00,"Ward 30, Guntur",Information update required,EMP0001
+SR000191,CUST0054,Telecom,Water Supply,Submitted,Critical,2026-06-07 23:01:00,2026-06-07 23:01:00,"Ward 17, Vizag",Issue reported through service portal,EMP0004
+SR000192,CUST0075,Electricity,New Connection,Rejected,High,2026-02-02 17:03:00,2026-02-02 17:03:00,"Ward 31, Vizag",Follow-up requested by customer,EMP0001
+SR000193,CUST0053,Water,Telecom Service,In Progress,Critical,2026-07-11 12:28:00,2026-07-11 12:28:00,"Ward 25, Vizag",Information update required,EMP0004
+SR000194,CUST0018,Gas,New Connection,In Progress,Critical,2026-09-28 04:46:00,2026-09-28 04:46:00,"Ward 1, Vizag",Follow-up requested by customer,EMP0002
+SR000195,CUST0060,Waste Management,Outage Report,On Hold,Critical,2026-04-28 07:29:00,2026-04-28 07:29:00,"Ward 10, Vijayawada",Issue reported through service portal,EMP0003
+SR000196,CUST0093,Electricity,New Connection,Rejected,Low,2026-05-04 06:04:00,2026-05-04 06:04:00,"Ward 39, Vizag",Service visit requested,EMP0001
+SR000197,CUST0077,Electricity,Billing Issue,Submitted,Critical,2026-08-13 07:34:00,2026-08-13 07:34:00,"Ward 4, Guntur",Information update required,EMP0002
+SR000198,CUST0038,Water,Telecom Service,On Hold,High,2026-10-23 19:49:00,2026-10-23 19:49:00,"Ward 16, Vijayawada",Issue reported through service portal,EMP0003
+SR000199,CUST0085,Waste Management,Billing Issue,Rejected,High,2026-05-21 01:35:00,2026-05-21 01:35:00,"Ward 12, Rajahmundry",Information update required,ADM0001
+SR000200,CUST0064,Electricity,Meter Complaint,Rejected,High,2026-08-02 13:09:00,2026-08-02 13:09:00,"Ward 25, Guntur",Information update required,EMP0003
+SR000201,CUST0061,Water,Telecom Service,In Progress,High,2026-03-15 14:58:00,2026-03-15 14:58:00,"Ward 36, Rajahmundry",Service visit requested,EMP0001
+SR000202,CUST0072,Waste Management,Billing Issue,Rejected,Medium,2026-05-11 06:21:00,2026-05-11 06:21:00,"Ward 29, Vijayawada",Request submitted by customer,EMP0001
+SR000203,CUST0069,Water,New Connection,Resolved,Critical,2026-11-06 19:02:00,2026-11-06 19:02:00,"Ward 13, Guntur",Service visit requested,EMP0001
+SR000204,CUST0027,Gas,Meter Complaint,Submitted,Medium,2026-04-08 23:07:00,2026-04-08 23:07:00,"Ward 16, Guntur",Service visit requested,EMP0004
+SR000205,CUST0031,Waste Management,Meter Complaint,Resolved,Critical,2026-08-27 17:41:00,2026-08-27 17:41:00,"Ward 20, Vijayawada",Follow-up requested by customer,EMP0003
+SR000206,CUST0066,Telecom,Outage Report,Submitted,Critical,2026-06-13 06:23:00,2026-06-13 06:23:00,"Ward 27, Vizag",Information update required,EMP0003
+SR000207,CUST0029,Water,New Connection,Resolved,Critical,2026-06-01 04:12:00,2026-06-01 04:12:00,"Ward 15, Rajahmundry",Information update required,EMP0003
+SR000208,CUST0032,Telecom,Water Supply,Resolved,High,2026-09-08 23:41:00,2026-09-08 23:41:00,"Ward 30, Guntur",Follow-up requested by customer,EMP0004
+SR000209,CUST0022,Water,Waste Collection,On Hold,Critical,2026-04-05 17:41:00,2026-04-05 17:41:00,"Ward 34, Vizag",Request submitted by customer,EMP0001
+SR000210,CUST0086,Electricity,Telecom Service,Submitted,Critical,2026-03-12 20:14:00,2026-03-12 20:14:00,"Ward 10, Vizag",Issue reported through service portal,EMP0001
+SR000211,CUST0065,Telecom,Meter Complaint,Submitted,Critical,2026-09-07 00:00:00,2026-09-07 00:00:00,"Ward 36, Rajahmundry",Request submitted by customer,ADM0001
+SR000212,CUST0003,Waste Management,Waste Collection,Resolved,High,2026-01-09 16:52:00,2026-01-09 16:52:00,"Ward 12, Vizag",Request submitted by customer,EMP0004
+SR000213,CUST0068,Water,Billing Issue,In Progress,High,2026-07-01 08:50:00,2026-07-01 08:50:00,"Ward 6, Vijayawada",Service visit requested,EMP0004
+SR000214,CUST0059,Waste Management,Billing Issue,In Progress,High,2026-02-11 20:54:00,2026-02-11 20:54:00,"Ward 6, Rajahmundry",Service visit requested,EMP0001
+SR000215,CUST0049,Waste Management,Outage Report,Submitted,Low,2026-03-29 02:31:00,2026-03-29 02:31:00,"Ward 22, Vizag",Information update required,EMP0004
+SR000216,CUST0006,Water,Billing Issue,On Hold,Critical,2026-05-19 01:59:00,2026-05-19 01:59:00,"Ward 18, Vizag",Issue reported through service portal,EMP0001
+SR000217,CUST0041,Electricity,Billing Issue,On Hold,Medium,2026-07-23 02:19:00,2026-07-23 02:19:00,"Ward 37, Guntur",Information update required,EMP0002
+SR000218,CUST0050,Waste Management,Meter Complaint,Rejected,Medium,2026-02-10 16:47:00,2026-02-10 16:47:00,"Ward 4, Vizag",Service visit requested,EMP0003
+SR000219,CUST0030,Electricity,Meter Complaint,On Hold,Critical,2026-06-17 00:40:00,2026-06-17 00:40:00,"Ward 29, Rajahmundry",Issue reported through service portal,EMP0003
+SR000220,CUST0046,Waste Management,Outage Report,Rejected,Medium,2026-10-27 21:24:00,2026-10-27 21:24:00,"Ward 40, Vijayawada",Issue reported through service portal,EMP0001
+SR000221,CUST0092,Electricity,New Connection,Resolved,Medium,2026-07-14 22:50:00,2026-07-14 22:50:00,"Ward 25, Vijayawada",Follow-up requested by customer,EMP0002
+SR000222,CUST0014,Electricity,New Connection,Resolved,Critical,2026-07-04 08:06:00,2026-07-04 08:06:00,"Ward 6, Guntur",Service visit requested,EMP0002
+SR000223,CUST0058,Waste Management,Water Supply,On Hold,Critical,2026-02-22 00:05:00,2026-02-22 00:05:00,"Ward 36, Vizag",Information update required,EMP0003
+SR000224,CUST0077,Gas,Telecom Service,Rejected,Low,2026-05-30 13:24:00,2026-05-30 13:24:00,"Ward 36, Guntur",Information update required,EMP0001
+SR000225,CUST0067,Water,Waste Collection,Rejected,Medium,2026-03-13 08:19:00,2026-03-13 08:19:00,"Ward 32, Guntur",Request submitted by customer,EMP0003
+SR000226,CUST0022,Telecom,Meter Complaint,Rejected,High,2026-09-05 02:23:00,2026-09-05 02:23:00,"Ward 16, Rajahmundry",Information update required,EMP0003
+SR000227,CUST0079,Water,Outage Report,Submitted,Medium,2026-06-05 00:25:00,2026-06-05 00:25:00,"Ward 40, Rajahmundry",Follow-up requested by customer,EMP0003
+SR000228,CUST0057,Gas,Outage Report,On Hold,Medium,2026-06-03 10:38:00,2026-06-03 10:38:00,"Ward 31, Vijayawada",Issue reported through service portal,EMP0002
+SR000229,CUST0051,Gas,Meter Complaint,Rejected,Medium,2026-06-16 12:17:00,2026-06-16 12:17:00,"Ward 24, Vizag",Information update required,EMP0004
+SR000230,CUST0026,Waste Management,Water Supply,In Progress,Low,2026-08-25 22:13:00,2026-08-25 22:13:00,"Ward 19, Vizag",Service visit requested,EMP0004
+SR000231,CUST0087,Telecom,Billing Issue,Resolved,Medium,2026-05-10 21:09:00,2026-05-10 21:09:00,"Ward 25, Vizag",Service visit requested,EMP0004
+SR000232,CUST0077,Telecom,Water Supply,Rejected,Critical,2026-10-06 01:50:00,2026-10-06 01:50:00,"Ward 35, Vizag",Request submitted by customer,EMP0003
+SR000233,CUST0099,Water,Waste Collection,Resolved,Medium,2026-11-10 01:36:00,2026-11-10 01:36:00,"Ward 22, Rajahmundry",Request submitted by customer,EMP0004
+SR000234,CUST0002,Electricity,Meter Complaint,In Progress,Medium,2026-08-17 11:25:00,2026-08-17 11:25:00,"Ward 38, Guntur",Follow-up requested by customer,EMP0004
+SR000235,CUST0004,Telecom,New Connection,Resolved,Critical,2026-02-13 03:53:00,2026-02-13 03:53:00,"Ward 23, Vijayawada",Follow-up requested by customer,EMP0002
+SR000236,CUST0059,Water,Water Supply,Rejected,High,2026-09-01 03:28:00,2026-09-01 03:28:00,"Ward 21, Vizag",Follow-up requested by customer,EMP0004
+SR000237,CUST0006,Electricity,New Connection,Resolved,Low,2026-03-26 23:15:00,2026-03-26 23:15:00,"Ward 12, Guntur",Follow-up requested by customer,ADM0001
+SR000238,CUST0072,Telecom,Outage Report,In Progress,Critical,2026-04-05 05:40:00,2026-04-05 05:40:00,"Ward 26, Vizag",Information update required,EMP0004
+SR000239,CUST0026,Telecom,Water Supply,Rejected,Critical,2026-01-03 22:13:00,2026-01-03 22:13:00,"Ward 18, Vizag",Information update required,EMP0002
+SR000240,CUST0014,Waste Management,Billing Issue,Resolved,High,2026-04-11 14:07:00,2026-04-11 14:07:00,"Ward 32, Vijayawada",Information update required,EMP0003
+SR000241,CUST0050,Waste Management,Outage Report,On Hold,Low,2026-06-28 11:54:00,2026-06-28 11:54:00,"Ward 40, Guntur",Follow-up requested by customer,EMP0004
+SR000242,CUST0079,Waste Management,New Connection,In Progress,High,2026-03-02 07:19:00,2026-03-02 07:19:00,"Ward 12, Vijayawada",Issue reported through service portal,EMP0001
+SR000243,CUST0066,Telecom,Outage Report,On Hold,Medium,2026-10-22 12:27:00,2026-10-22 12:27:00,"Ward 32, Guntur",Information update required,EMP0002
+SR000244,CUST0022,Telecom,Meter Complaint,In Progress,Medium,2026-06-11 14:39:00,2026-06-11 14:39:00,"Ward 23, Vizag",Service visit requested,EMP0001
+SR000245,CUST0018,Water,Telecom Service,Rejected,Critical,2026-07-29 21:31:00,2026-07-29 21:31:00,"Ward 29, Rajahmundry",Issue reported through service portal,EMP0004
+SR000246,CUST0011,Waste Management,New Connection,In Progress,High,2026-01-17 08:14:00,2026-01-17 08:14:00,"Ward 19, Guntur",Service visit requested,ADM0001
+SR000247,CUST0073,Telecom,Water Supply,On Hold,Low,2026-10-21 03:17:00,2026-10-21 03:17:00,"Ward 24, Vizag",Service visit requested,ADM0001
+SR000248,CUST0070,Water,Outage Report,Submitted,Medium,2026-06-02 01:28:00,2026-06-02 01:28:00,"Ward 23, Vizag",Service visit requested,EMP0003
+SR000249,CUST0016,Water,Billing Issue,On Hold,High,2026-11-09 20:27:00,2026-11-09 20:27:00,"Ward 40, Guntur",Issue reported through service portal,EMP0002
+SR000250,CUST0027,Electricity,Water Supply,Resolved,High,2026-11-02 17:10:00,2026-11-02 17:10:00,"Ward 19, Vijayawada",Information update required,EMP0003
+SR000251,CUST0035,Waste Management,Waste Collection,Submitted,Medium,2026-07-30 01:17:00,2026-07-30 01:17:00,"Ward 9, Guntur",Issue reported through service portal,EMP0002
+SR000252,CUST0092,Gas,Telecom Service,In Progress,Critical,2026-09-08 04:36:00,2026-09-08 04:36:00,"Ward 27, Rajahmundry",Service visit requested,EMP0003
+SR000253,CUST0010,Electricity,Outage Report,On Hold,High,2026-07-08 14:31:00,2026-07-08 14:31:00,"Ward 38, Vizag",Request submitted by customer,EMP0003
+SR000254,CUST0094,Telecom,Waste Collection,Resolved,Low,2026-10-01 12:13:00,2026-10-01 12:13:00,"Ward 14, Rajahmundry",Follow-up requested by customer,EMP0004
+SR000255,CUST0042,Gas,Meter Complaint,On Hold,Medium,2026-10-17 15:50:00,2026-10-17 15:50:00,"Ward 4, Vizag",Request submitted by customer,EMP0003
+SR000256,CUST0081,Telecom,New Connection,Submitted,Medium,2026-08-14 14:00:00,2026-08-14 14:00:00,"Ward 13, Guntur",Follow-up requested by customer,EMP0004
+SR000257,CUST0021,Gas,New Connection,Resolved,High,2026-02-12 11:42:00,2026-02-12 11:42:00,"Ward 4, Rajahmundry",Follow-up requested by customer,EMP0002
+SR000258,CUST0093,Water,Outage Report,Submitted,Low,2026-01-01 06:30:00,2026-01-01 06:30:00,"Ward 9, Guntur",Information update required,EMP0001
+SR000259,CUST0088,Telecom,New Connection,Submitted,High,2026-03-03 13:44:00,2026-03-03 13:44:00,"Ward 31, Vizag",Issue reported through service portal,EMP0002
+SR000260,CUST0050,Electricity,Waste Collection,Submitted,Low,2026-06-10 11:56:00,2026-06-10 11:56:00,"Ward 9, Rajahmundry",Issue reported through service portal,EMP0003
+SR000261,CUST0083,Water,New Connection,On Hold,Low,2026-11-09 20:10:00,2026-11-09 20:10:00,"Ward 23, Guntur",Issue reported through service portal,EMP0004
+SR000262,CUST0053,Waste Management,Waste Collection,Rejected,Medium,2026-02-14 03:08:00,2026-02-14 03:08:00,"Ward 38, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000263,CUST0055,Gas,Telecom Service,In Progress,Medium,2026-05-22 20:05:00,2026-05-22 20:05:00,"Ward 36, Vijayawada",Request submitted by customer,EMP0002
+SR000264,CUST0085,Gas,Billing Issue,On Hold,Medium,2026-07-20 09:41:00,2026-07-20 09:41:00,"Ward 16, Rajahmundry",Service visit requested,EMP0001
+SR000265,CUST0015,Water,Outage Report,On Hold,Low,2026-09-28 00:23:00,2026-09-28 00:23:00,"Ward 9, Rajahmundry",Information update required,EMP0003
+SR000266,CUST0054,Gas,Water Supply,In Progress,Critical,2026-02-07 00:37:00,2026-02-07 00:37:00,"Ward 1, Vijayawada",Issue reported through service portal,EMP0001
+SR000267,CUST0006,Electricity,Telecom Service,Rejected,High,2026-09-14 13:27:00,2026-09-14 13:27:00,"Ward 6, Guntur",Follow-up requested by customer,EMP0004
+SR000268,CUST0011,Gas,New Connection,On Hold,Medium,2026-03-21 17:20:00,2026-03-21 17:20:00,"Ward 38, Vizag",Follow-up requested by customer,EMP0004
+SR000269,CUST0090,Telecom,Waste Collection,In Progress,Low,2026-05-06 02:59:00,2026-05-06 02:59:00,"Ward 8, Rajahmundry",Information update required,EMP0004
+SR000270,CUST0078,Electricity,Meter Complaint,In Progress,Low,2026-01-07 22:08:00,2026-01-07 22:08:00,"Ward 11, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000271,CUST0067,Waste Management,Telecom Service,Resolved,Medium,2026-07-10 04:47:00,2026-07-10 04:47:00,"Ward 8, Vizag",Follow-up requested by customer,EMP0003
+SR000272,CUST0055,Gas,Water Supply,Submitted,High,2026-10-23 20:04:00,2026-10-23 20:04:00,"Ward 30, Vijayawada",Request submitted by customer,EMP0004
+SR000273,CUST0064,Waste Management,Billing Issue,Resolved,Medium,2026-05-11 03:57:00,2026-05-11 03:57:00,"Ward 8, Guntur",Information update required,ADM0001
+SR000274,CUST0001,Electricity,Telecom Service,Submitted,Medium,2026-01-24 15:23:00,2026-01-24 15:23:00,"Ward 10, Guntur",Request submitted by customer,EMP0004
+SR000275,CUST0071,Telecom,Billing Issue,Resolved,Medium,2026-08-02 23:20:00,2026-08-02 23:20:00,"Ward 5, Vijayawada",Request submitted by customer,EMP0003
+SR000276,CUST0065,Electricity,Billing Issue,In Progress,Low,2026-07-25 02:56:00,2026-07-25 02:56:00,"Ward 19, Vijayawada",Follow-up requested by customer,EMP0004
+SR000277,CUST0012,Waste Management,Outage Report,Submitted,High,2026-04-13 09:36:00,2026-04-13 09:36:00,"Ward 40, Guntur",Service visit requested,EMP0003
+SR000278,CUST0048,Waste Management,Outage Report,In Progress,Medium,2026-03-19 00:59:00,2026-03-19 00:59:00,"Ward 2, Guntur",Information update required,EMP0004
+SR000279,CUST0045,Electricity,Meter Complaint,Submitted,Critical,2026-06-07 03:13:00,2026-06-07 03:13:00,"Ward 16, Rajahmundry",Service visit requested,ADM0001
+SR000280,CUST0008,Water,Waste Collection,Resolved,Low,2026-01-23 07:57:00,2026-01-23 07:57:00,"Ward 27, Vijayawada",Service visit requested,ADM0001
+SR000281,CUST0096,Electricity,Water Supply,Submitted,Medium,2026-07-21 02:37:00,2026-07-21 02:37:00,"Ward 4, Rajahmundry",Issue reported through service portal,ADM0001
+SR000282,CUST0031,Gas,Meter Complaint,Resolved,Critical,2026-06-17 10:28:00,2026-06-17 10:28:00,"Ward 15, Vizag",Issue reported through service portal,EMP0003
+SR000283,CUST0018,Waste Management,New Connection,In Progress,Low,2026-03-26 14:29:00,2026-03-26 14:29:00,"Ward 27, Vizag",Information update required,EMP0003
+SR000284,CUST0046,Water,Outage Report,Resolved,Critical,2026-05-16 03:05:00,2026-05-16 03:05:00,"Ward 20, Vizag",Issue reported through service portal,EMP0002
+SR000285,CUST0042,Water,New Connection,In Progress,High,2026-07-22 16:03:00,2026-07-22 16:03:00,"Ward 17, Guntur",Request submitted by customer,EMP0003
+SR000286,CUST0052,Telecom,Water Supply,On Hold,Medium,2026-02-18 14:06:00,2026-02-18 14:06:00,"Ward 8, Vizag",Request submitted by customer,EMP0002
+SR000287,CUST0100,Water,Billing Issue,In Progress,Critical,2026-07-10 21:40:00,2026-07-10 21:40:00,"Ward 38, Vijayawada",Request submitted by customer,EMP0001
+SR000288,CUST0003,Electricity,Billing Issue,Rejected,Medium,2026-02-17 10:07:00,2026-02-17 10:07:00,"Ward 30, Vizag",Issue reported through service portal,EMP0001
+SR000289,CUST0074,Telecom,Telecom Service,Rejected,Critical,2026-01-16 12:43:00,2026-01-16 12:43:00,"Ward 12, Vijayawada",Issue reported through service portal,EMP0004
+SR000290,CUST0024,Gas,Meter Complaint,Rejected,Medium,2026-01-18 19:39:00,2026-01-18 19:39:00,"Ward 16, Vijayawada",Service visit requested,ADM0001
+SR000291,CUST0053,Waste Management,Outage Report,Submitted,Low,2026-05-24 12:08:00,2026-05-24 12:08:00,"Ward 13, Guntur",Information update required,EMP0004
+SR000292,CUST0003,Telecom,Telecom Service,Resolved,Critical,2026-10-06 15:22:00,2026-10-06 15:22:00,"Ward 33, Vijayawada",Service visit requested,ADM0001
+SR000293,CUST0035,Water,New Connection,Resolved,Medium,2026-01-16 08:03:00,2026-01-16 08:03:00,"Ward 34, Vijayawada",Information update required,EMP0004
+SR000294,CUST0030,Water,New Connection,In Progress,Medium,2026-05-17 17:52:00,2026-05-17 17:52:00,"Ward 15, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000295,CUST0023,Water,Billing Issue,On Hold,High,2026-07-03 18:01:00,2026-07-03 18:01:00,"Ward 37, Guntur",Information update required,EMP0003
+SR000296,CUST0025,Telecom,Water Supply,Resolved,Medium,2026-09-09 01:05:00,2026-09-09 01:05:00,"Ward 15, Guntur",Request submitted by customer,EMP0001
+SR000297,CUST0068,Telecom,New Connection,Resolved,Medium,2026-03-08 10:45:00,2026-03-08 10:45:00,"Ward 21, Vizag",Request submitted by customer,EMP0002
+SR000298,CUST0019,Waste Management,Waste Collection,In Progress,Low,2026-09-27 11:04:00,2026-09-27 11:04:00,"Ward 26, Vizag",Follow-up requested by customer,EMP0003
+SR000299,CUST0039,Gas,Billing Issue,In Progress,Critical,2026-09-07 20:20:00,2026-09-07 20:20:00,"Ward 36, Vijayawada",Issue reported through service portal,EMP0002
+SR000300,CUST0086,Waste Management,Telecom Service,In Progress,Critical,2026-06-07 23:44:00,2026-06-07 23:44:00,"Ward 9, Guntur",Request submitted by customer,EMP0003
+SR000301,CUST0090,Waste Management,Outage Report,On Hold,Low,2026-04-04 19:20:00,2026-04-04 19:20:00,"Ward 15, Vizag",Service visit requested,ADM0001
+SR000302,CUST0019,Gas,Waste Collection,Submitted,Medium,2026-06-27 10:10:00,2026-06-27 10:10:00,"Ward 22, Rajahmundry",Request submitted by customer,EMP0001
+SR000303,CUST0034,Water,Billing Issue,Submitted,High,2026-05-12 03:46:00,2026-05-12 03:46:00,"Ward 4, Rajahmundry",Service visit requested,EMP0001
+SR000304,CUST0094,Telecom,Billing Issue,Rejected,Critical,2026-07-13 11:34:00,2026-07-13 11:34:00,"Ward 7, Rajahmundry",Information update required,EMP0004
+SR000305,CUST0084,Water,Billing Issue,Rejected,Low,2026-01-18 09:01:00,2026-01-18 09:01:00,"Ward 17, Vizag",Request submitted by customer,EMP0003
+SR000306,CUST0044,Water,Outage Report,In Progress,Low,2026-10-08 02:21:00,2026-10-08 02:21:00,"Ward 40, Rajahmundry",Request submitted by customer,ADM0001
+SR000307,CUST0056,Water,Water Supply,Rejected,Medium,2026-01-28 03:21:00,2026-01-28 03:21:00,"Ward 13, Rajahmundry",Information update required,EMP0002
+SR000308,CUST0093,Waste Management,Meter Complaint,Resolved,High,2026-05-02 03:03:00,2026-05-02 03:03:00,"Ward 37, Rajahmundry",Issue reported through service portal,EMP0004
+SR000309,CUST0007,Gas,New Connection,Rejected,Low,2026-05-31 21:40:00,2026-05-31 21:40:00,"Ward 31, Guntur",Request submitted by customer,ADM0001
+SR000310,CUST0004,Water,Billing Issue,Resolved,Low,2026-08-31 03:19:00,2026-08-31 03:19:00,"Ward 31, Rajahmundry",Follow-up requested by customer,EMP0004
+SR000311,CUST0012,Waste Management,Outage Report,In Progress,High,2026-07-15 11:11:00,2026-07-15 11:11:00,"Ward 3, Vijayawada",Service visit requested,EMP0004
+SR000312,CUST0060,Gas,Billing Issue,Resolved,Low,2026-03-19 22:42:00,2026-03-19 22:42:00,"Ward 6, Vijayawada",Information update required,EMP0001
+SR000313,CUST0053,Waste Management,Billing Issue,On Hold,Low,2026-07-18 16:26:00,2026-07-18 16:26:00,"Ward 31, Guntur",Service visit requested,ADM0001
+SR000314,CUST0039,Electricity,Outage Report,Submitted,Medium,2026-03-03 14:11:00,2026-03-03 14:11:00,"Ward 14, Guntur",Issue reported through service portal,EMP0002
+SR000315,CUST0006,Telecom,New Connection,Rejected,Medium,2026-03-17 19:16:00,2026-03-17 19:16:00,"Ward 5, Vizag",Service visit requested,EMP0003
+SR000316,CUST0072,Telecom,Water Supply,Resolved,High,2026-09-24 14:58:00,2026-09-24 14:58:00,"Ward 40, Rajahmundry",Request submitted by customer,EMP0001
+SR000317,CUST0054,Water,Billing Issue,On Hold,Low,2026-02-24 18:49:00,2026-02-24 18:49:00,"Ward 19, Vijayawada",Service visit requested,EMP0001
+SR000318,CUST0034,Telecom,Waste Collection,Rejected,Critical,2026-01-20 05:17:00,2026-01-20 05:17:00,"Ward 10, Rajahmundry",Request submitted by customer,EMP0004
+SR000319,CUST0051,Gas,Waste Collection,In Progress,Low,2026-09-01 08:57:00,2026-09-01 08:57:00,"Ward 2, Vijayawada",Follow-up requested by customer,EMP0003
+SR000320,CUST0040,Gas,Telecom Service,Rejected,Low,2026-04-27 04:19:00,2026-04-27 04:19:00,"Ward 21, Vijayawada",Service visit requested,EMP0004
+SR000321,CUST0078,Electricity,Billing Issue,Rejected,Medium,2026-07-28 23:31:00,2026-07-28 23:31:00,"Ward 24, Vizag",Information update required,ADM0001
+SR000322,CUST0021,Electricity,Meter Complaint,On Hold,Critical,2026-03-11 16:56:00,2026-03-11 16:56:00,"Ward 2, Guntur",Issue reported through service portal,ADM0001
+SR000323,CUST0026,Electricity,Billing Issue,Submitted,Critical,2026-01-26 11:45:00,2026-01-26 11:45:00,"Ward 18, Vijayawada",Service visit requested,EMP0002
+SR000324,CUST0065,Telecom,Waste Collection,Submitted,Low,2026-05-04 11:31:00,2026-05-04 11:31:00,"Ward 29, Guntur",Service visit requested,ADM0001
+SR000325,CUST0076,Waste Management,Meter Complaint,Resolved,Medium,2026-05-13 23:53:00,2026-05-13 23:53:00,"Ward 19, Vizag",Service visit requested,EMP0001
+SR000326,CUST0007,Water,Telecom Service,On Hold,Medium,2026-04-24 20:14:00,2026-04-24 20:14:00,"Ward 18, Rajahmundry",Information update required,EMP0002
+SR000327,CUST0003,Electricity,Outage Report,In Progress,Medium,2026-11-04 00:14:00,2026-11-04 00:14:00,"Ward 39, Vijayawada",Follow-up requested by customer,EMP0003
+SR000328,CUST0055,Telecom,Telecom Service,Resolved,Critical,2026-05-10 06:29:00,2026-05-10 06:29:00,"Ward 34, Rajahmundry",Information update required,EMP0003
+SR000329,CUST0014,Electricity,Water Supply,Resolved,High,2026-06-02 21:06:00,2026-06-02 21:06:00,"Ward 5, Vijayawada",Follow-up requested by customer,EMP0004
+SR000330,CUST0082,Gas,Telecom Service,Resolved,High,2026-06-02 06:09:00,2026-06-02 06:09:00,"Ward 16, Vizag",Information update required,ADM0001
+SR000331,CUST0052,Gas,Waste Collection,In Progress,Low,2026-09-12 09:16:00,2026-09-12 09:16:00,"Ward 26, Rajahmundry",Request submitted by customer,EMP0004
+SR000332,CUST0075,Waste Management,Telecom Service,In Progress,High,2026-04-24 21:34:00,2026-04-24 21:34:00,"Ward 23, Vijayawada",Issue reported through service portal,EMP0004
+SR000333,CUST0085,Waste Management,Billing Issue,Resolved,Low,2026-08-30 04:47:00,2026-08-30 04:47:00,"Ward 36, Guntur",Follow-up requested by customer,EMP0003
+SR000334,CUST0084,Electricity,Billing Issue,Resolved,Medium,2026-06-07 13:50:00,2026-06-07 13:50:00,"Ward 24, Vijayawada",Information update required,EMP0003
+SR000335,CUST0038,Telecom,Telecom Service,Submitted,Critical,2026-01-28 20:37:00,2026-01-28 20:37:00,"Ward 40, Vizag",Service visit requested,ADM0001
+SR000336,CUST0025,Waste Management,New Connection,Rejected,High,2026-07-31 01:55:00,2026-07-31 01:55:00,"Ward 9, Guntur",Follow-up requested by customer,EMP0002
+SR000337,CUST0053,Waste Management,Outage Report,In Progress,High,2026-04-03 02:31:00,2026-04-03 02:31:00,"Ward 12, Vijayawada",Request submitted by customer,EMP0003
+SR000338,CUST0001,Telecom,Meter Complaint,In Progress,Medium,2026-10-23 05:31:00,2026-10-23 05:31:00,"Ward 9, Rajahmundry",Service visit requested,EMP0001
+SR000339,CUST0052,Telecom,Outage Report,Rejected,Low,2026-01-20 17:12:00,2026-01-20 17:12:00,"Ward 1, Vijayawada",Information update required,EMP0003
+SR000340,CUST0025,Electricity,Waste Collection,Submitted,Medium,2026-04-26 22:56:00,2026-04-26 22:56:00,"Ward 20, Guntur",Request submitted by customer,EMP0003
+SR000341,CUST0050,Waste Management,Water Supply,Resolved,Medium,2026-02-03 01:19:00,2026-02-03 01:19:00,"Ward 30, Vijayawada",Service visit requested,EMP0003
+SR000342,CUST0088,Water,Meter Complaint,Rejected,High,2026-04-07 05:58:00,2026-04-07 05:58:00,"Ward 2, Guntur",Issue reported through service portal,EMP0004
+SR000343,CUST0094,Water,Billing Issue,Submitted,Medium,2026-03-05 11:45:00,2026-03-05 11:45:00,"Ward 25, Vijayawada",Information update required,EMP0001
+SR000344,CUST0080,Electricity,Water Supply,Submitted,Low,2026-01-11 01:44:00,2026-01-11 01:44:00,"Ward 27, Rajahmundry",Service visit requested,EMP0001
+SR000345,CUST0016,Waste Management,Meter Complaint,Rejected,Medium,2026-04-16 22:43:00,2026-04-16 22:43:00,"Ward 20, Rajahmundry",Request submitted by customer,EMP0001
+SR000346,CUST0085,Waste Management,Meter Complaint,On Hold,Medium,2026-08-03 03:32:00,2026-08-03 03:32:00,"Ward 8, Vijayawada",Request submitted by customer,ADM0001
+SR000347,CUST0014,Telecom,Billing Issue,On Hold,Medium,2026-05-15 16:12:00,2026-05-15 16:12:00,"Ward 27, Vijayawada",Issue reported through service portal,EMP0003
+SR000348,CUST0006,Waste Management,Outage Report,In Progress,Critical,2026-06-19 07:00:00,2026-06-19 07:00:00,"Ward 6, Vizag",Information update required,EMP0001
+SR000349,CUST0086,Telecom,Billing Issue,Submitted,Low,2026-02-21 08:41:00,2026-02-21 08:41:00,"Ward 30, Vijayawada",Follow-up requested by customer,EMP0002
+SR000350,CUST0060,Electricity,New Connection,In Progress,Low,2026-05-29 11:51:00,2026-05-29 11:51:00,"Ward 28, Vizag",Request submitted by customer,EMP0003
+SR000351,CUST0098,Electricity,New Connection,In Progress,Medium,2026-06-18 11:57:00,2026-06-18 11:57:00,"Ward 40, Vijayawada",Request submitted by customer,EMP0004
+SR000352,CUST0048,Gas,Billing Issue,Submitted,Critical,2026-07-24 14:17:00,2026-07-24 14:17:00,"Ward 31, Rajahmundry",Issue reported through service portal,EMP0004
+SR000353,CUST0015,Water,Waste Collection,Submitted,Medium,2026-02-23 13:58:00,2026-02-23 13:58:00,"Ward 31, Rajahmundry",Issue reported through service portal,ADM0001
+SR000354,CUST0079,Telecom,Telecom Service,Resolved,Low,2026-03-08 15:58:00,2026-03-08 15:58:00,"Ward 8, Rajahmundry",Service visit requested,EMP0004
+SR000355,CUST0006,Electricity,Meter Complaint,Resolved,Low,2026-09-26 23:36:00,2026-09-26 23:36:00,"Ward 15, Vijayawada",Information update required,ADM0001
+SR000356,CUST0067,Waste Management,New Connection,Rejected,Medium,2026-09-04 11:42:00,2026-09-04 11:42:00,"Ward 10, Vizag",Request submitted by customer,EMP0004
+SR000357,CUST0083,Water,Water Supply,Rejected,Critical,2026-03-26 02:48:00,2026-03-26 02:48:00,"Ward 21, Guntur",Follow-up requested by customer,EMP0004
+SR000358,CUST0036,Electricity,Water Supply,In Progress,Critical,2026-07-26 07:05:00,2026-07-26 07:05:00,"Ward 29, Rajahmundry",Request submitted by customer,EMP0004
+SR000359,CUST0064,Telecom,Meter Complaint,Submitted,Critical,2026-01-10 03:25:00,2026-01-10 03:25:00,"Ward 3, Vizag",Request submitted by customer,EMP0004
+SR000360,CUST0078,Waste Management,Waste Collection,Resolved,Medium,2026-08-22 10:23:00,2026-08-22 10:23:00,"Ward 15, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000361,CUST0072,Waste Management,Water Supply,Rejected,High,2026-08-20 03:06:00,2026-08-20 03:06:00,"Ward 1, Vijayawada",Follow-up requested by customer,EMP0002
+SR000362,CUST0082,Gas,Water Supply,On Hold,High,2026-02-24 01:57:00,2026-02-24 01:57:00,"Ward 32, Guntur",Service visit requested,EMP0002
+SR000363,CUST0014,Gas,Water Supply,In Progress,Medium,2026-03-03 12:13:00,2026-03-03 12:13:00,"Ward 13, Vijayawada",Request submitted by customer,EMP0004
+SR000364,CUST0097,Telecom,New Connection,On Hold,Low,2026-08-19 14:42:00,2026-08-19 14:42:00,"Ward 33, Guntur",Service visit requested,ADM0001
+SR000365,CUST0001,Waste Management,Waste Collection,Submitted,Critical,2026-10-27 15:59:00,2026-10-27 15:59:00,"Ward 12, Guntur",Issue reported through service portal,ADM0001
+SR000366,CUST0014,Telecom,Waste Collection,On Hold,High,2026-09-16 12:26:00,2026-09-16 12:26:00,"Ward 16, Vijayawada",Service visit requested,ADM0001
+SR000367,CUST0044,Gas,Outage Report,In Progress,Medium,2026-07-31 19:44:00,2026-07-31 19:44:00,"Ward 20, Vijayawada",Information update required,ADM0001
+SR000368,CUST0081,Water,Billing Issue,In Progress,High,2026-06-26 21:08:00,2026-06-26 21:08:00,"Ward 33, Vijayawada",Request submitted by customer,EMP0002
+SR000369,CUST0098,Gas,Water Supply,Rejected,Critical,2026-10-01 09:56:00,2026-10-01 09:56:00,"Ward 1, Vizag",Request submitted by customer,EMP0004
+SR000370,CUST0049,Water,New Connection,Submitted,Medium,2026-05-17 05:18:00,2026-05-17 05:18:00,"Ward 10, Vizag",Follow-up requested by customer,EMP0003
+SR000371,CUST0027,Waste Management,New Connection,Resolved,Critical,2026-02-22 19:55:00,2026-02-22 19:55:00,"Ward 15, Rajahmundry",Issue reported through service portal,ADM0001
+SR000372,CUST0066,Gas,Waste Collection,Submitted,Critical,2026-07-18 13:50:00,2026-07-18 13:50:00,"Ward 36, Vizag",Request submitted by customer,EMP0003
+SR000373,CUST0096,Gas,Billing Issue,On Hold,Critical,2026-04-26 20:45:00,2026-04-26 20:45:00,"Ward 38, Guntur",Issue reported through service portal,EMP0003
+SR000374,CUST0038,Telecom,Billing Issue,Submitted,Medium,2026-03-30 23:32:00,2026-03-30 23:32:00,"Ward 25, Vizag",Service visit requested,EMP0001
+SR000375,CUST0036,Waste Management,Meter Complaint,In Progress,Medium,2026-10-27 08:00:00,2026-10-27 08:00:00,"Ward 30, Guntur",Request submitted by customer,EMP0003
+SR000376,CUST0020,Gas,Water Supply,Submitted,High,2026-09-09 18:35:00,2026-09-09 18:35:00,"Ward 5, Vijayawada",Information update required,EMP0003
+SR000377,CUST0029,Water,Water Supply,Submitted,Medium,2026-08-01 17:34:00,2026-08-01 17:34:00,"Ward 6, Vijayawada",Issue reported through service portal,EMP0004
+SR000378,CUST0028,Gas,Meter Complaint,Resolved,High,2026-04-22 19:33:00,2026-04-22 19:33:00,"Ward 36, Vizag",Request submitted by customer,EMP0004
+SR000379,CUST0086,Gas,Outage Report,In Progress,Medium,2026-01-21 21:56:00,2026-01-21 21:56:00,"Ward 25, Vizag",Service visit requested,EMP0003
+SR000380,CUST0033,Waste Management,Waste Collection,Resolved,Low,2026-09-22 11:32:00,2026-09-22 11:32:00,"Ward 29, Rajahmundry",Request submitted by customer,ADM0001
+SR000381,CUST0038,Water,Meter Complaint,On Hold,Low,2026-02-19 05:49:00,2026-02-19 05:49:00,"Ward 35, Vizag",Request submitted by customer,ADM0001
+SR000382,CUST0027,Water,Telecom Service,Rejected,Low,2026-04-16 17:53:00,2026-04-16 17:53:00,"Ward 5, Guntur",Request submitted by customer,EMP0004
+SR000383,CUST0059,Gas,New Connection,Submitted,Low,2026-01-28 05:50:00,2026-01-28 05:50:00,"Ward 36, Vizag",Information update required,EMP0003
+SR000384,CUST0030,Gas,Outage Report,Rejected,Critical,2026-07-27 13:20:00,2026-07-27 13:20:00,"Ward 25, Vizag",Information update required,EMP0001
+SR000385,CUST0001,Waste Management,New Connection,On Hold,Low,2026-02-07 11:59:00,2026-02-07 11:59:00,"Ward 7, Vijayawada",Follow-up requested by customer,ADM0001
+SR000386,CUST0078,Electricity,Meter Complaint,Rejected,Critical,2026-07-22 21:01:00,2026-07-22 21:01:00,"Ward 11, Guntur",Issue reported through service portal,EMP0004
+SR000387,CUST0096,Telecom,Telecom Service,On Hold,High,2026-03-15 09:43:00,2026-03-15 09:43:00,"Ward 1, Guntur",Request submitted by customer,EMP0003
+SR000388,CUST0006,Electricity,Water Supply,On Hold,Critical,2026-10-03 17:05:00,2026-10-03 17:05:00,"Ward 14, Vijayawada",Issue reported through service portal,EMP0003
+SR000389,CUST0053,Waste Management,Billing Issue,In Progress,Medium,2026-04-24 19:53:00,2026-04-24 19:53:00,"Ward 13, Vizag",Issue reported through service portal,EMP0003
+SR000390,CUST0086,Waste Management,Telecom Service,Submitted,Critical,2026-10-09 02:18:00,2026-10-09 02:18:00,"Ward 17, Vizag",Issue reported through service portal,EMP0001
+SR000391,CUST0093,Waste Management,Outage Report,Resolved,High,2026-03-07 21:41:00,2026-03-07 21:41:00,"Ward 7, Vijayawada",Information update required,EMP0002
+SR000392,CUST0009,Water,Meter Complaint,Rejected,Critical,2026-06-18 19:42:00,2026-06-18 19:42:00,"Ward 38, Guntur",Information update required,EMP0003
+SR000393,CUST0073,Gas,Telecom Service,Resolved,Critical,2026-03-28 00:20:00,2026-03-28 00:20:00,"Ward 15, Rajahmundry",Follow-up requested by customer,EMP0002
+SR000394,CUST0047,Water,Waste Collection,Resolved,Critical,2026-08-25 14:22:00,2026-08-25 14:22:00,"Ward 32, Vizag",Issue reported through service portal,EMP0003
+SR000395,CUST0083,Waste Management,New Connection,Resolved,Medium,2026-10-03 06:16:00,2026-10-03 06:16:00,"Ward 5, Vizag",Information update required,EMP0001
+SR000396,CUST0081,Electricity,Telecom Service,On Hold,Critical,2026-10-30 06:58:00,2026-10-30 06:58:00,"Ward 36, Vijayawada",Information update required,EMP0001
+SR000397,CUST0070,Telecom,Waste Collection,In Progress,High,2026-07-20 07:57:00,2026-07-20 07:57:00,"Ward 19, Guntur",Service visit requested,ADM0001
+SR000398,CUST0065,Waste Management,New Connection,Rejected,High,2026-09-15 00:42:00,2026-09-15 00:42:00,"Ward 40, Guntur",Information update required,EMP0002
+SR000399,CUST0018,Telecom,Billing Issue,In Progress,Medium,2026-09-05 11:02:00,2026-09-05 11:02:00,"Ward 32, Guntur",Request submitted by customer,EMP0002
+SR000400,CUST0034,Gas,Billing Issue,Submitted,Medium,2026-09-23 11:24:00,2026-09-23 11:24:00,"Ward 30, Vizag",Request submitted by customer,EMP0004
+SR000401,CUST0084,Gas,New Connection,On Hold,High,2026-05-15 18:34:00,2026-05-15 18:34:00,"Ward 12, Rajahmundry",Service visit requested,ADM0001
+SR000402,CUST0047,Waste Management,Waste Collection,Submitted,High,2026-07-12 07:33:00,2026-07-12 07:33:00,"Ward 23, Vijayawada",Service visit requested,EMP0004
+SR000403,CUST0062,Waste Management,New Connection,On Hold,Medium,2026-08-14 05:14:00,2026-08-14 05:14:00,"Ward 33, Vijayawada",Issue reported through service portal,EMP0001
+SR000404,CUST0020,Water,Billing Issue,Resolved,Low,2026-04-28 13:51:00,2026-04-28 13:51:00,"Ward 8, Rajahmundry",Service visit requested,EMP0003
+SR000405,CUST0062,Water,Water Supply,In Progress,Critical,2026-01-12 07:02:00,2026-01-12 07:02:00,"Ward 37, Guntur",Issue reported through service portal,EMP0002
+SR000406,CUST0081,Waste Management,New Connection,On Hold,Medium,2026-01-29 05:16:00,2026-01-29 05:16:00,"Ward 34, Rajahmundry",Information update required,EMP0002
+SR000407,CUST0073,Electricity,Waste Collection,Resolved,Low,2026-04-21 14:38:00,2026-04-21 14:38:00,"Ward 31, Guntur",Issue reported through service portal,EMP0004
+SR000408,CUST0053,Waste Management,Billing Issue,On Hold,Medium,2026-09-19 08:10:00,2026-09-19 08:10:00,"Ward 30, Vizag",Issue reported through service portal,EMP0003
+SR000409,CUST0049,Telecom,Billing Issue,Submitted,Low,2026-04-14 16:55:00,2026-04-14 16:55:00,"Ward 27, Guntur",Information update required,ADM0001
+SR000410,CUST0013,Water,Outage Report,On Hold,Low,2026-09-30 16:48:00,2026-09-30 16:48:00,"Ward 6, Rajahmundry",Issue reported through service portal,EMP0001
+SR000411,CUST0078,Waste Management,Telecom Service,Submitted,Critical,2026-09-25 13:23:00,2026-09-25 13:23:00,"Ward 34, Rajahmundry",Issue reported through service portal,EMP0001
+SR000412,CUST0062,Telecom,Meter Complaint,On Hold,Low,2026-08-06 04:16:00,2026-08-06 04:16:00,"Ward 15, Vizag",Follow-up requested by customer,EMP0004
+SR000413,CUST0077,Waste Management,Outage Report,Resolved,Medium,2026-01-03 22:47:00,2026-01-03 22:47:00,"Ward 37, Vizag",Information update required,EMP0001
+SR000414,CUST0001,Telecom,Waste Collection,In Progress,High,2026-07-29 11:06:00,2026-07-29 11:06:00,"Ward 28, Vijayawada",Follow-up requested by customer,EMP0002
+SR000415,CUST0069,Telecom,Water Supply,Resolved,High,2026-07-23 06:26:00,2026-07-23 06:26:00,"Ward 36, Rajahmundry",Issue reported through service portal,ADM0001
+SR000416,CUST0048,Waste Management,Water Supply,Rejected,High,2026-06-07 18:22:00,2026-06-07 18:22:00,"Ward 9, Vizag",Issue reported through service portal,EMP0004
+SR000417,CUST0058,Water,New Connection,In Progress,Critical,2026-06-23 17:39:00,2026-06-23 17:39:00,"Ward 11, Rajahmundry",Request submitted by customer,EMP0001
+SR000418,CUST0012,Water,Outage Report,On Hold,Critical,2026-02-15 02:16:00,2026-02-15 02:16:00,"Ward 24, Vizag",Information update required,EMP0002
+SR000419,CUST0005,Telecom,Outage Report,On Hold,High,2026-11-02 01:49:00,2026-11-02 01:49:00,"Ward 32, Rajahmundry",Request submitted by customer,EMP0002
+SR000420,CUST0026,Waste Management,Meter Complaint,In Progress,Low,2026-11-03 16:33:00,2026-11-03 16:33:00,"Ward 40, Guntur",Request submitted by customer,EMP0002
+SR000421,CUST0047,Water,Waste Collection,Submitted,Medium,2026-02-14 08:49:00,2026-02-14 08:49:00,"Ward 23, Rajahmundry",Service visit requested,EMP0004
+SR000422,CUST0076,Water,Water Supply,Submitted,Low,2026-02-16 17:18:00,2026-02-16 17:18:00,"Ward 38, Vijayawada",Follow-up requested by customer,ADM0001
+SR000423,CUST0036,Water,Water Supply,In Progress,Critical,2026-07-26 18:00:00,2026-07-26 18:00:00,"Ward 12, Rajahmundry",Information update required,EMP0003
+SR000424,CUST0014,Waste Management,New Connection,On Hold,High,2026-06-24 03:51:00,2026-06-24 03:51:00,"Ward 17, Vijayawada",Service visit requested,ADM0001
+SR000425,CUST0049,Waste Management,Outage Report,In Progress,High,2026-08-23 21:29:00,2026-08-23 21:29:00,"Ward 2, Rajahmundry",Request submitted by customer,ADM0001
+SR000426,CUST0034,Electricity,Outage Report,In Progress,Medium,2026-06-11 13:22:00,2026-06-11 13:22:00,"Ward 35, Vizag",Follow-up requested by customer,ADM0001
+SR000427,CUST0032,Gas,New Connection,Rejected,High,2026-02-08 17:59:00,2026-02-08 17:59:00,"Ward 31, Vijayawada",Follow-up requested by customer,EMP0002
+SR000428,CUST0028,Waste Management,Meter Complaint,In Progress,Medium,2026-09-13 23:12:00,2026-09-13 23:12:00,"Ward 16, Vijayawada",Issue reported through service portal,EMP0002
+SR000429,CUST0030,Water,Telecom Service,In Progress,High,2026-03-21 03:07:00,2026-03-21 03:07:00,"Ward 32, Vizag",Information update required,EMP0001
+SR000430,CUST0006,Telecom,Meter Complaint,On Hold,High,2026-09-10 18:55:00,2026-09-10 18:55:00,"Ward 32, Guntur",Information update required,EMP0003
+SR000431,CUST0036,Telecom,Billing Issue,On Hold,Medium,2026-01-28 16:51:00,2026-01-28 16:51:00,"Ward 31, Vizag",Information update required,EMP0004
+SR000432,CUST0045,Telecom,Telecom Service,In Progress,Critical,2026-03-03 22:33:00,2026-03-03 22:33:00,"Ward 21, Vizag",Request submitted by customer,EMP0004
+SR000433,CUST0087,Water,Outage Report,On Hold,Low,2026-06-16 11:39:00,2026-06-16 11:39:00,"Ward 12, Vijayawada",Issue reported through service portal,EMP0003
+SR000434,CUST0035,Telecom,Water Supply,Resolved,High,2026-04-05 15:27:00,2026-04-05 15:27:00,"Ward 27, Vijayawada",Follow-up requested by customer,EMP0002
+SR000435,CUST0052,Gas,Outage Report,In Progress,Medium,2026-10-22 21:14:00,2026-10-22 21:14:00,"Ward 18, Guntur",Information update required,EMP0001
+SR000436,CUST0056,Telecom,Billing Issue,In Progress,Medium,2026-08-31 00:11:00,2026-08-31 00:11:00,"Ward 32, Guntur",Information update required,EMP0004
+SR000437,CUST0069,Gas,Telecom Service,Rejected,High,2026-05-09 17:54:00,2026-05-09 17:54:00,"Ward 4, Rajahmundry",Request submitted by customer,ADM0001
+SR000438,CUST0089,Water,New Connection,In Progress,High,2026-09-01 20:06:00,2026-09-01 20:06:00,"Ward 22, Vijayawada",Follow-up requested by customer,EMP0004
+SR000439,CUST0047,Waste Management,Water Supply,Resolved,High,2026-01-11 13:07:00,2026-01-11 13:07:00,"Ward 39, Guntur",Information update required,EMP0003
+SR000440,CUST0074,Waste Management,Billing Issue,Resolved,High,2026-06-16 21:32:00,2026-06-16 21:32:00,"Ward 29, Vizag",Service visit requested,EMP0004
+SR000441,CUST0079,Gas,Outage Report,In Progress,Medium,2026-06-22 13:40:00,2026-06-22 13:40:00,"Ward 37, Rajahmundry",Request submitted by customer,ADM0001
+SR000442,CUST0011,Water,Meter Complaint,In Progress,High,2026-06-12 20:18:00,2026-06-12 20:18:00,"Ward 39, Rajahmundry",Follow-up requested by customer,EMP0003
+SR000443,CUST0057,Gas,Waste Collection,On Hold,Critical,2026-07-31 05:11:00,2026-07-31 05:11:00,"Ward 9, Guntur",Follow-up requested by customer,EMP0001
+SR000444,CUST0096,Electricity,Billing Issue,In Progress,Critical,2026-02-22 03:04:00,2026-02-22 03:04:00,"Ward 36, Vizag",Request submitted by customer,EMP0004
+SR000445,CUST0099,Telecom,Water Supply,Submitted,Low,2026-05-15 19:09:00,2026-05-15 19:09:00,"Ward 25, Vijayawada",Issue reported through service portal,EMP0001
+SR000446,CUST0032,Gas,Outage Report,In Progress,Medium,2026-09-27 05:01:00,2026-09-27 05:01:00,"Ward 23, Vijayawada",Service visit requested,EMP0001
+SR000447,CUST0060,Waste Management,Meter Complaint,On Hold,Critical,2026-03-11 22:34:00,2026-03-11 22:34:00,"Ward 38, Rajahmundry",Information update required,EMP0002
+SR000448,CUST0056,Waste Management,Waste Collection,On Hold,High,2026-06-27 15:34:00,2026-06-27 15:34:00,"Ward 6, Rajahmundry",Follow-up requested by customer,EMP0002
+SR000449,CUST0047,Telecom,Meter Complaint,In Progress,High,2026-01-06 00:33:00,2026-01-06 00:33:00,"Ward 23, Vijayawada",Service visit requested,EMP0002
+SR000450,CUST0069,Electricity,Waste Collection,Rejected,Critical,2026-06-03 00:49:00,2026-06-03 00:49:00,"Ward 19, Guntur",Request submitted by customer,EMP0004
+SR000451,CUST0071,Gas,Billing Issue,Rejected,Critical,2026-07-22 07:10:00,2026-07-22 07:10:00,"Ward 25, Guntur",Follow-up requested by customer,EMP0004
+SR000452,CUST0011,Telecom,Waste Collection,In Progress,High,2026-05-26 20:47:00,2026-05-26 20:47:00,"Ward 18, Rajahmundry",Issue reported through service portal,ADM0001
+SR000453,CUST0009,Water,Billing Issue,Resolved,Low,2026-08-22 19:28:00,2026-08-22 19:28:00,"Ward 40, Rajahmundry",Issue reported through service portal,EMP0003
+SR000454,CUST0042,Electricity,Billing Issue,Submitted,Low,2026-04-06 03:18:00,2026-04-06 03:18:00,"Ward 9, Rajahmundry",Request submitted by customer,EMP0003
+SR000455,CUST0030,Electricity,Billing Issue,Submitted,Critical,2026-04-22 10:26:00,2026-04-22 10:26:00,"Ward 32, Vijayawada",Service visit requested,EMP0003
+SR000456,CUST0090,Electricity,Meter Complaint,Submitted,Medium,2026-01-29 08:49:00,2026-01-29 08:49:00,"Ward 5, Rajahmundry",Issue reported through service portal,EMP0004
+SR000457,CUST0025,Gas,Telecom Service,Rejected,Low,2026-03-04 22:15:00,2026-03-04 22:15:00,"Ward 29, Guntur",Request submitted by customer,EMP0004
+SR000458,CUST0026,Telecom,Waste Collection,Submitted,Medium,2026-08-31 12:43:00,2026-08-31 12:43:00,"Ward 21, Guntur",Request submitted by customer,EMP0003
+SR000459,CUST0096,Waste Management,Water Supply,Submitted,High,2026-09-04 20:19:00,2026-09-04 20:19:00,"Ward 24, Vizag",Issue reported through service portal,EMP0002
+SR000460,CUST0015,Water,Waste Collection,Rejected,High,2026-01-08 05:50:00,2026-01-08 05:50:00,"Ward 38, Vizag",Service visit requested,EMP0003
+SR000461,CUST0032,Electricity,New Connection,On Hold,Critical,2026-11-02 04:23:00,2026-11-02 04:23:00,"Ward 16, Guntur",Service visit requested,EMP0001
+SR000462,CUST0012,Waste Management,Meter Complaint,Submitted,Low,2026-07-02 20:09:00,2026-07-02 20:09:00,"Ward 7, Guntur",Service visit requested,ADM0001
+SR000463,CUST0030,Gas,Water Supply,Resolved,Critical,2026-04-09 00:44:00,2026-04-09 00:44:00,"Ward 23, Guntur",Follow-up requested by customer,EMP0004
+SR000464,CUST0006,Telecom,Waste Collection,Rejected,High,2026-10-05 22:31:00,2026-10-05 22:31:00,"Ward 37, Guntur",Information update required,EMP0002
+SR000465,CUST0045,Gas,Waste Collection,Rejected,High,2026-11-03 17:10:00,2026-11-03 17:10:00,"Ward 34, Guntur",Service visit requested,EMP0001
+SR000466,CUST0038,Gas,Water Supply,Resolved,Critical,2026-01-01 20:32:00,2026-01-01 20:32:00,"Ward 12, Vizag",Information update required,EMP0004
+SR000467,CUST0047,Waste Management,Billing Issue,Resolved,Low,2026-10-03 12:12:00,2026-10-03 12:12:00,"Ward 32, Guntur",Information update required,ADM0001
+SR000468,CUST0037,Gas,Outage Report,Resolved,Low,2026-02-19 16:42:00,2026-02-19 16:42:00,"Ward 3, Guntur",Issue reported through service portal,EMP0001
+SR000469,CUST0005,Water,New Connection,Rejected,Medium,2026-02-20 01:36:00,2026-02-20 01:36:00,"Ward 32, Vijayawada",Request submitted by customer,EMP0004
+SR000470,CUST0047,Water,Water Supply,Submitted,Low,2026-04-17 20:31:00,2026-04-17 20:31:00,"Ward 30, Vizag",Follow-up requested by customer,EMP0001
+SR000471,CUST0072,Telecom,Telecom Service,Resolved,Low,2026-05-17 16:02:00,2026-05-17 16:02:00,"Ward 20, Vizag",Issue reported through service portal,EMP0001
+SR000472,CUST0067,Electricity,New Connection,In Progress,Critical,2026-04-08 06:33:00,2026-04-08 06:33:00,"Ward 37, Guntur",Information update required,EMP0002
+SR000473,CUST0096,Waste Management,Outage Report,Submitted,High,2026-08-23 22:42:00,2026-08-23 22:42:00,"Ward 7, Guntur",Issue reported through service portal,EMP0004
+SR000474,CUST0071,Telecom,Water Supply,Resolved,Medium,2026-10-01 19:28:00,2026-10-01 19:28:00,"Ward 21, Vijayawada",Follow-up requested by customer,EMP0003
+SR000475,CUST0053,Telecom,Telecom Service,Resolved,Medium,2026-10-16 17:13:00,2026-10-16 17:13:00,"Ward 36, Vijayawada",Follow-up requested by customer,EMP0004
+SR000476,CUST0058,Telecom,Outage Report,Submitted,Low,2026-05-26 19:01:00,2026-05-26 19:01:00,"Ward 9, Vijayawada",Request submitted by customer,ADM0001
+SR000477,CUST0039,Water,Billing Issue,Resolved,Low,2026-05-22 17:32:00,2026-05-22 17:32:00,"Ward 37, Guntur",Request submitted by customer,ADM0001
+SR000478,CUST0005,Telecom,Meter Complaint,In Progress,Medium,2026-05-16 11:56:00,2026-05-16 11:56:00,"Ward 16, Guntur",Follow-up requested by customer,ADM0001
+SR000479,CUST0039,Electricity,Water Supply,Rejected,Medium,2026-02-09 23:20:00,2026-02-09 23:20:00,"Ward 12, Rajahmundry",Information update required,EMP0004
+SR000480,CUST0013,Waste Management,Waste Collection,Resolved,Low,2026-10-23 12:05:00,2026-10-23 12:05:00,"Ward 22, Vijayawada",Service visit requested,EMP0001
+SR000481,CUST0054,Electricity,Telecom Service,In Progress,Low,2026-07-15 01:19:00,2026-07-15 01:19:00,"Ward 3, Vijayawada",Information update required,ADM0001
+SR000482,CUST0073,Water,Meter Complaint,On Hold,Medium,2026-03-20 01:43:00,2026-03-20 01:43:00,"Ward 29, Vizag",Issue reported through service portal,EMP0004
+SR000483,CUST0056,Gas,Telecom Service,Rejected,Medium,2026-03-09 10:05:00,2026-03-09 10:05:00,"Ward 37, Vizag",Information update required,EMP0004
+SR000484,CUST0052,Gas,New Connection,Rejected,Critical,2026-03-08 04:30:00,2026-03-08 04:30:00,"Ward 13, Rajahmundry",Service visit requested,ADM0001
+SR000485,CUST0084,Waste Management,Billing Issue,On Hold,Medium,2026-05-05 02:17:00,2026-05-05 02:17:00,"Ward 21, Vizag",Request submitted by customer,EMP0004
+SR000486,CUST0086,Telecom,Outage Report,Resolved,High,2026-04-08 10:22:00,2026-04-08 10:22:00,"Ward 2, Vijayawada",Issue reported through service portal,ADM0001
+SR000487,CUST0045,Waste Management,Telecom Service,Rejected,Medium,2026-08-14 01:59:00,2026-08-14 01:59:00,"Ward 13, Vijayawada",Issue reported through service portal,EMP0002
+SR000488,CUST0097,Electricity,New Connection,Submitted,Medium,2026-03-17 09:00:00,2026-03-17 09:00:00,"Ward 8, Vijayawada",Service visit requested,EMP0003
+SR000489,CUST0061,Electricity,Meter Complaint,In Progress,Medium,2026-04-15 17:33:00,2026-04-15 17:33:00,"Ward 36, Rajahmundry",Information update required,EMP0003
+SR000490,CUST0094,Water,Waste Collection,Submitted,Critical,2026-10-26 21:33:00,2026-10-26 21:33:00,"Ward 17, Guntur",Request submitted by customer,EMP0001
+SR000491,CUST0037,Water,Telecom Service,On Hold,High,2026-01-28 14:41:00,2026-01-28 14:41:00,"Ward 5, Rajahmundry",Follow-up requested by customer,EMP0001
+SR000492,CUST0085,Gas,Telecom Service,Submitted,Low,2026-05-30 20:24:00,2026-05-30 20:24:00,"Ward 25, Vizag",Follow-up requested by customer,EMP0002
+SR000493,CUST0063,Waste Management,Water Supply,Submitted,Medium,2026-04-12 16:29:00,2026-04-12 16:29:00,"Ward 2, Vizag",Issue reported through service portal,ADM0001
+SR000494,CUST0068,Gas,Meter Complaint,Rejected,Critical,2026-03-22 00:22:00,2026-03-22 00:22:00,"Ward 23, Vijayawada",Issue reported through service portal,EMP0003
+SR000495,CUST0065,Gas,Telecom Service,Submitted,High,2026-07-18 00:35:00,2026-07-18 00:35:00,"Ward 15, Guntur",Follow-up requested by customer,EMP0003
+SR000496,CUST0051,Water,New Connection,Rejected,Medium,2026-08-02 07:36:00,2026-08-02 07:36:00,"Ward 28, Vijayawada",Information update required,EMP0002
+SR000497,CUST0043,Telecom,Water Supply,In Progress,Medium,2026-03-12 18:34:00,2026-03-12 18:34:00,"Ward 9, Vijayawada",Information update required,EMP0002
+SR000498,CUST0018,Telecom,Telecom Service,In Progress,Medium,2026-06-12 02:35:00,2026-06-12 02:35:00,"Ward 8, Guntur",Follow-up requested by customer,ADM0001
+SR000499,CUST0019,Electricity,Telecom Service,Resolved,Critical,2026-07-30 09:28:00,2026-07-30 09:28:00,"Ward 10, Guntur",Request submitted by customer,EMP0003
+SR000500,CUST0017,Water,New Connection,On Hold,High,2026-11-07 18:39:00,2026-11-07 18:39:00,"Ward 39, Guntur",Issue reported through service portal,EMP0002

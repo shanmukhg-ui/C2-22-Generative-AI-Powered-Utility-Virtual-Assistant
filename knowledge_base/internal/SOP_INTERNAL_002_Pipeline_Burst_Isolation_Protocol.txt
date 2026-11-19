@@ -1,0 +1,13 @@
+CONFIDENTIAL // INTERNAL UTILITY STAFF ONLY
+MUNICIPAL WATER INFRASTRUCTURE DIVISION
+EMERGENCY SHUTOFF & SLUICE VALVE CONTROL SOP
+Document ID: INTERNAL-SOP-002 | Classification: RESTRICTED / INTERNAL STAFF ONLY
+
+1. PURPOSE & RBAC
+Restricted to municipal hydraulic engineers and field operations crew. Details sluice valve coordinates and pipeline isolation sequences across Ward pumping stations.
+
+2. EMERGENCY BURST RESPONSE
+- Step 1: Identify burst zone using telemetry flow sensors or customer complaint concentration in Ward clusters.
+- Step 2: Close upstream sluice valves SV-14A and SV-14B within 15 minutes of burst detection to prevent roadway subsidence.
+- Step 3: Deploy trailer-mounted diesel dewatering pumps to clear valve chambers.
+- Step 4: Notify the control room to reroute gravity water feed from secondary reservoirs.

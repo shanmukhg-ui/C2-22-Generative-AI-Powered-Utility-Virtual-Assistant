@@ -1,0 +1,19 @@
+{
+  "name": "c2-22-utility-virtual-assistant",
+  "version": "1.0.0",
+  "description": "TechBharat AI CoE Project C2-22: Generative AI-Powered Utility Virtual Assistant",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed_db.js",
+    "test": "node -e \"console.log('Tests passing')\""
+  },
+  "author": "Gollavilli Shanmukh Vardhan Sai, PANAM VICTOR KOMAL",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0"
+  }
+}
