@@ -3,7 +3,7 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime
 from app.schemas.requests import ChatRequest
 from app.schemas.responses import ChatResponse, Citation
-from app.security.firebase_auth import get_current_user
+from app.security.firebase_auth import get_current_user, require_verified_user
 from app.agents.router import AgentQueryRouter
 from app.database.mongo import get_database
 
@@ -11,7 +11,7 @@ router = APIRouter(prefix="/chat", tags=["Chat"])
 
 @router.post("", response_model=ChatResponse)
 @router.post("/message", response_model=ChatResponse)
-async def chat_endpoint(payload: ChatRequest, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def chat_endpoint(payload: ChatRequest, current_user: Dict[str, Any] = Depends(require_verified_user)):
     user_id = current_user["user_id"]
     role = current_user["role"]
 
@@ -63,7 +63,7 @@ async def chat_endpoint(payload: ChatRequest, current_user: Dict[str, Any] = Dep
 @router.get("/history")
 async def get_chat_history(
     session_id: Optional[str] = Query(None),
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     db = get_database()
     query = {"user_id": current_user["user_id"]}

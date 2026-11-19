@@ -37,6 +37,7 @@ class UserResponse(BaseModel):
     emergency_contact: Optional[str] = None
     preferred_language: Optional[str] = "English"
     notifications: Optional[Dict[str, bool]] = None
+    email_verified: bool = True
 
 class ServiceRequestResponse(BaseModel):
     request_id: str

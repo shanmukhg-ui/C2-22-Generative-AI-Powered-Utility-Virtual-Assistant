@@ -21,6 +21,7 @@ export interface User {
     email?: boolean;
     whatsapp?: boolean;
   };
+  email_verified?: boolean;
 }
 
 export interface Citation {

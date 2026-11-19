@@ -31,8 +31,10 @@ class Settings:
     MONGODB_DATABASE: str = os.getenv("MONGODB_DATABASE", "utility_virtual_assistant")
     USE_MOCK_MONGO: bool = os.getenv("USE_MOCK_MONGO", "true").lower() in ("true", "1", "yes")
 
-    # Firebase Auth
-    FIREBASE_PROJECT_ID: str = os.getenv("FIREBASE_PROJECT_ID", "techbharat-c222-utility")
+    # Firebase Auth & Admin SDK
+    FIREBASE_PROJECT_ID: str = os.getenv("FIREBASE_PROJECT_ID", "c2-22-utility-assistant")
+    FIREBASE_CREDENTIALS_PATH: str = os.getenv("FIREBASE_CREDENTIALS_PATH", "")
+    FIREBASE_SERVICE_ACCOUNT_JSON: str = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON", "")
 
     # Directories
     CHROMA_PERSIST_DIRECTORY: str = os.getenv("CHROMA_PERSIST_DIRECTORY", str(BASE_DIR / "chroma_db"))

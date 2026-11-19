@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-from app.security.firebase_auth import get_current_user
+from app.security.firebase_auth import get_current_user, require_verified_user, require_role
 from app.security.rbac import UserRole, RBACManager
 from app.schemas.requests import ServiceRequestCreate, TechnicianDispatchUpdate, ServiceRequestUpdate
 from app.schemas.responses import ServiceRequestResponse
@@ -18,7 +18,7 @@ async def list_service_requests(
     q: Optional[str] = Query(None),
     limit: int = Query(25, ge=1, le=100),
     offset: int = Query(0, ge=0),
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     db = get_database()
     query: Dict[str, Any] = {}
@@ -62,7 +62,7 @@ async def list_service_requests(
     }
 
 @router.get("/{request_id}", response_model=Dict[str, Any])
-async def get_service_request(request_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def get_service_request(request_id: str, current_user: Dict[str, Any] = Depends(require_verified_user)):
     db = get_database()
     req = db.service_requests.find_one({"request_id": request_id.upper()})
     if not req:
@@ -88,7 +88,7 @@ async def get_service_request(request_id: str, current_user: Dict[str, Any] = De
     return req
 
 @router.post("", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
-async def create_service_request(payload: ServiceRequestCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def create_service_request(payload: ServiceRequestCreate, current_user: Dict[str, Any] = Depends(require_verified_user)):
     db = get_database()
 
     # RBAC check: Customers cannot create tickets on behalf of other customers
@@ -154,7 +154,7 @@ async def create_service_request(payload: ServiceRequestCreate, current_user: Di
     }
 
 @router.get("/{request_id}/tracking", response_model=Dict[str, Any])
-async def get_service_request_tracking(request_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def get_service_request_tracking(request_id: str, current_user: Dict[str, Any] = Depends(require_verified_user)):
     """
     Returns real-time GPS telemetry for the assigned field technician and customer destination.
     """
@@ -196,7 +196,7 @@ async def get_service_request_tracking(request_id: str, current_user: Dict[str, 
 async def update_technician_dispatch(
     request_id: str,
     payload: TechnicianDispatchUpdate,
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_role([UserRole.EMPLOYEE, UserRole.ADMINISTRATOR]))
 ):
     """
     Operations endpoint for field technicians and dispatch operators to update live GPS, ETA, and progress.
@@ -259,7 +259,7 @@ async def update_technician_dispatch(
 async def update_service_request(
     request_id: str,
     payload: ServiceRequestUpdate,
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_role([UserRole.EMPLOYEE, UserRole.ADMINISTRATOR]))
 ):
     """
     Operations endpoint for operations staff to Accept, Assign, and Update service requests.

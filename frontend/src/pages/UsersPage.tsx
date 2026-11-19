@@ -35,7 +35,13 @@ export const UsersPage: React.FC<{ onNavigate?: (page: string) => void }> = ({ o
   const handleSwitch = async (uid: string) => {
     setSwitchingId(uid);
     try {
-      await switchPersona(uid);
+      const res = await switchPersona(uid);
+      if (!res.success && res.requiresPassword) {
+        const pass = window.prompt(res.message || `Enter password for ${res.email}:`);
+        if (pass) {
+          await switchPersona(uid, pass);
+        }
+      }
     } finally {
       setSwitchingId(null);
     }
