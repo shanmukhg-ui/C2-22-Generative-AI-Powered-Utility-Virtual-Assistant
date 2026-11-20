@@ -78,11 +78,6 @@ VITE_FIREBASE_STORAGE_BUCKET=c2-22-utility-assistant.firebasestorage.app
 VITE_FIREBASE_MESSAGING_SENDER_ID=1013417581459
 VITE_FIREBASE_APP_ID=1:1013417581459:web:e9c819d68929248c1e2666
 VITE_FIREBASE_MEASUREMENT_ID=G-KN2G3DT33J
-
-# Optional Demo Persona Password for 1-Click Evaluation Login
-# If set, clicking a persona card automatically logs in via Firebase Auth with this password.
-# If unset or authentication fails, a password prompt is displayed to the user.
-VITE_DEMO_PASSWORD=DemoUser@2026
 ```
 
 ---
@@ -184,7 +179,7 @@ When a user authenticates with Firebase:
   - **Priya Patel** (`CUST0010` - High-Volume Citizen)
 - Selecting a persona **authenticates directly through Firebase Authentication** using `signInWithEmailAndPassword`.
 - Simulated tokens (`dev-token-*`) and automatic fallbacks to `CUST0001` have been **completely eliminated** from both backend and frontend.
-- If `VITE_DEMO_PASSWORD` matches the password set in Firebase Console for that email, authentication completes in 1 click. If not set or incorrect, the UI provides a modal allowing password entry.
+- Selecting a persona opens a secure modal requiring password entry and authenticates directly through Firebase Authentication using `signInWithEmailAndPassword`. Zero credentials or demo passwords are hardcoded in the frontend bundle or environment templates.
 
 ---
 

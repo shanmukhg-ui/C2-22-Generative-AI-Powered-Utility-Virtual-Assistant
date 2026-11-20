@@ -44,15 +44,15 @@ export const ProfilePage: React.FC = () => {
     if (user) {
       setName(user.name || '');
       setEmail(user.email || '');
-      setPhone(user.phone || '+91 98765 43210');
-      setDob(user.dob || '1994-05-15');
+      setPhone(user.phone || '');
+      setDob(user.dob || '');
       setGender(user.gender || 'Prefer not to say');
       setPhotoUrl(user.photo_url || '');
-      setAddress(user.address || 'Plot 42, Green Park Avenue, Ward 12');
-      setCity(user.city || 'Vizag');
-      setDepartment(user.department || (user.role === 'Customer' ? 'Electricity Department' : 'Operations'));
-      setMeterNumber(user.meter_number || 'MTR-EL-884920');
-      setEmergencyContact(user.emergency_contact || '+91 98765 12345');
+      setAddress(user.address || '');
+      setCity(user.city || '');
+      setDepartment(user.department || (user.role === 'Customer' ? 'Citizen' : 'Operations'));
+      setMeterNumber(user.meter_number || '');
+      setEmergencyContact(user.emergency_contact || '');
       setPreferredLanguage(user.preferred_language || 'English');
       if (user.notifications) {
         setSmsNotif(user.notifications.sms ?? true);
@@ -154,17 +154,19 @@ export const ProfilePage: React.FC = () => {
         {/* User Identity Details */}
         <div className="flex-1 text-center md:text-left space-y-2">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
-            <h2 className="text-xl font-black text-[#171642]">{name || 'John Doe'}</h2>
+            <h2 className="text-xl font-black text-[#171642]">{name || user?.name || 'Citizen'}</h2>
             <span className="px-3 py-0.5 rounded-full text-xs font-bold bg-[#F3EEFF] text-[#6D28F5] border border-purple-200">
-              {user?.role || 'Customer'}
+              {user?.role || 'User'}
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-slate-100 text-slate-700">
-              {user?.user_id || 'CUST0001'}
-            </span>
+            {user?.user_id && (
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-slate-100 text-slate-700">
+                {user.user_id}
+              </span>
+            )}
           </div>
 
           <p className="text-xs text-slate-500 font-medium">
-            {email} • {phone} • {city}
+            {[email, phone, city].filter(Boolean).join(' • ') || 'Citizen Account'}
           </p>
 
           <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs text-slate-600">

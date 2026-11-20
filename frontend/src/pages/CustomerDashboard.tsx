@@ -28,11 +28,12 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
   const [selectedTrackingId, setSelectedTrackingId] = useState<string | null>(null);
 
   const loadData = async () => {
+    if (!user) return;
     setLoading(true);
     try {
       const [reqRes, compRes] = await Promise.all([
-        requestsApi.listRequests({ customer_id: user?.user_id || 'CUST0001', limit: 8 }),
-        complaintsApi.listComplaints({ customer_id: user?.user_id || 'CUST0001', limit: 8 })
+        requestsApi.listRequests({ customer_id: user.user_id, limit: 8 }),
+        complaintsApi.listComplaints({ customer_id: user.user_id, limit: 8 })
       ]);
       setRequests(reqRes.requests || reqRes.records || []);
       setComplaints(compRes.complaints || compRes.records || []);
@@ -44,7 +45,9 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
   };
 
   useEffect(() => {
-    loadData();
+    if (user) {
+      loadData();
+    }
   }, [user]);
 
   // Derived KPI Counts

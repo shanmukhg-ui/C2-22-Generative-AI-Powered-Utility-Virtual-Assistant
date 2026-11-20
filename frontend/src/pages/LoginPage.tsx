@@ -157,23 +157,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
     }
   };
 
-  const handleDemoSelect = async (demo: DemoPersona) => {
+  const handleDemoSelect = (demo: DemoPersona) => {
     setError(null);
     setDemoError(null);
-    setLoading(true);
-
-    const result = await switchPersona(demo.id);
-    setLoading(false);
-
-    if (result.success) {
-      onLoginSuccess();
-    } else if (result.requiresPassword) {
-      setSelectedDemo(demo);
-      setDemoPasswordInput('');
-      setDemoError(result.message || null);
-    } else {
-      setError(result.message || 'Demo persona authentication failed.');
-    }
+    setSelectedDemo(demo);
+    setDemoPasswordInput('');
   };
 
   const handleDemoPasswordSubmit = async (e: React.FormEvent) => {
@@ -643,10 +631,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   {demoLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <span>Sign In</span>}
                 </button>
               </div>
-
-              <p className="text-[10px] text-slate-400 text-center pt-1">
-                Tip: Set <code className="text-blue-300">VITE_DEMO_PASSWORD</code> in <code className="text-blue-300">frontend/.env</code> for 1-click login.
-              </p>
             </form>
           </div>
         </div>

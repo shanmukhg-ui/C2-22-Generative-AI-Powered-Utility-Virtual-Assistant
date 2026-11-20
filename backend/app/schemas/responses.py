@@ -26,8 +26,8 @@ class UserResponse(BaseModel):
     name: str
     email: str
     role: str
-    city: Optional[str] = "Vizag"
-    department: Optional[str] = "Citizen"
+    city: Optional[str] = None
+    department: Optional[str] = None
     phone: Optional[str] = None
     dob: Optional[str] = None
     photo_url: Optional[str] = None

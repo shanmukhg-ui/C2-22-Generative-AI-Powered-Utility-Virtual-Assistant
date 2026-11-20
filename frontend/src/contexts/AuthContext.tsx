@@ -168,7 +168,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: false, message: `Unknown persona ID: ${personaId}` };
     }
 
-    const passwordToTry = customPassword || import.meta.env.VITE_DEMO_PASSWORD;
+    const passwordToTry = customPassword;
 
     if (!passwordToTry) {
       return {
