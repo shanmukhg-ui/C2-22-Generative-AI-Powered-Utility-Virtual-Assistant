@@ -21,6 +21,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { UsersPage } from './pages/UsersPage';
 import { NewRequestModal, NewComplaintModal, IngestDocModal } from './components/Modals';
 import { IntroOverlay } from './components/intro/IntroOverlay';
+import { DashboardChat } from './components/DashboardChat';
 import { useIntroPreference } from './hooks/useIntroPreference';
 import { CheckCircle2, Shield, Zap } from 'lucide-react';
 
@@ -236,10 +237,42 @@ const AppContent: React.FC = () => {
           onNavigateProfile={() => setCurrentPage('profile')}
         />
 
-        {/* Dynamic Page Container */}
-        <main className="flex-1 overflow-y-auto bg-surface-page pb-12">
-          {renderPage()}
-        </main>
+        {/* Dynamic Page Container with Docked Right-Side AI Assistant on Dashboards */}
+        {['customer-dash', 'employee-dash', 'admin-dash'].includes(currentPage) ? (
+          <div className="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0 bg-surface-page">
+            {/* Dashboard Content: stays on left, shrinks to fit, own scroll */}
+            <main className="flex-1 overflow-y-auto pb-8 min-w-0">
+              {renderPage()}
+              {/* Mobile/Tablet: AI Assistant moves to a full-width card at the bottom of the dashboard */}
+              <div className="block lg:hidden px-4 md:px-6 mt-6 pb-12">
+                <div className="h-[520px] rounded-2xl border border-surface-border overflow-hidden shadow-xs">
+                  <DashboardChat
+                    role={user?.role || 'Customer'}
+                    onNavigate={handleNavigate}
+                    onOpenNewRequest={() => setIsNewRequestOpen(true)}
+                    onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+                    onOpenUploadDoc={() => setIsIngestDocOpen(true)}
+                  />
+                </div>
+              </div>
+            </main>
+
+            {/* Desktop: Docked right-side AI Assistant panel (beside main cards, full height, own scroll) */}
+            <div className="hidden lg:flex h-full flex-shrink-0">
+              <DashboardChat
+                role={user?.role || 'Customer'}
+                onNavigate={handleNavigate}
+                onOpenNewRequest={() => setIsNewRequestOpen(true)}
+                onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+                onOpenUploadDoc={() => setIsIngestDocOpen(true)}
+              />
+            </div>
+          </div>
+        ) : (
+          <main className="flex-1 overflow-y-auto bg-surface-page pb-12">
+            {renderPage()}
+          </main>
+        )}
       </div>
 
       {/* Global Command Palette */}

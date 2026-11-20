@@ -6,6 +6,8 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = Field(None, description="Conversation session ID")
     role: Optional[str] = Field(None, description="User role (extracted from verified token claims)")
     user_id: Optional[str] = Field(None, description="User identifier (extracted from verified token claims)")
+    history: Optional[List[Dict[str, Any]]] = Field(None, description="Recent conversation history")
+    stream: Optional[bool] = Field(False, description="Whether to stream response via SSE")
 
 class ServiceRequestCreate(BaseModel):
     customer_id: Optional[str] = None

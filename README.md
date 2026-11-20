@@ -54,7 +54,7 @@ Open your browser at:
 ## 🔑 Environment Configuration
 The `.env` file in `c:\C2-22\backend\.env` contains:
 ```env
-OPENAI_API_KEY=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
+OPENAI_API_KEY=your_openrouter_api_key_here
 OPENAI_BASE_URL=https://openrouter.ai/api/v1
 OPENAI_MODEL=google/gemini-2.5-flash
 OPENAI_EMBEDDING_MODEL=text-embedding-3-small

@@ -5,7 +5,9 @@ import {
   OperationalLog, KnowledgeDocument, AuditLog
 } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`
+  : '/api';
 
 const client = axios.create({
   baseURL: API_BASE,
@@ -38,7 +40,6 @@ client.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 export const authApi = {
   getMe: async (): Promise<User> => {
     const res = await client.get('/auth/me');
