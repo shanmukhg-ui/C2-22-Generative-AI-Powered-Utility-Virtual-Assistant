@@ -101,8 +101,11 @@ class KnowledgeVectorStore:
         scores = []
 
         for chunk in self.chunks:
-            # RBAC Role Filter: Customers cannot see internal scope documents
-            if role == "Customer" and chunk["scope"] == "internal":
+            # RBAC Visibility Filter: public / internal / admin-only
+            chunk_scope = (chunk.get("scope") or "public").lower()
+            if role == "Customer" and chunk_scope != "public":
+                continue
+            if role == "Employee" and chunk_scope in ["admin", "admin-only"]:
                 continue
 
             doc_tokens = chunk.get("_tokens", [])

@@ -4,8 +4,10 @@ from typing import Optional, List, Dict, Any
 class ChatRequest(BaseModel):
     message: str = Field(..., description="Natural language query from user")
     session_id: Optional[str] = Field(None, description="Conversation session ID")
-    role: Optional[str] = Field("Customer", description="User role: Customer, Employee, Administrator")
-    user_id: Optional[str] = Field("CUST0001", description="User identifier")
+    role: Optional[str] = Field(None, description="User role (overridden server-side via verified JWT)")
+    user_id: Optional[str] = Field(None, description="User identifier (overridden server-side via verified JWT)")
+    history: Optional[List[Dict[str, Any]]] = Field(None, description="Recent conversation history")
+    stream: Optional[bool] = Field(False, description="Whether to stream response via SSE")
 
 class ServiceRequestCreate(BaseModel):
     customer_id: Optional[str] = None
