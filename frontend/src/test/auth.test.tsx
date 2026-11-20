@@ -3,7 +3,9 @@ import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { LoginPage } from '../pages/LoginPage';
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { LandingPage } from '../pages/LandingPage';
+import { AuthProvider } from '../contexts/AuthContext';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 // Mock Firebase Auth module
 vi.mock('../config/firebase', () => ({
@@ -51,7 +53,7 @@ describe('Firebase Authentication UI & Flows', () => {
     vi.clearAllMocks();
   });
 
-  it('renders application branding, 4 demo persona buttons, and Sign In form', () => {
+  it('renders application branding, 3 demo persona buttons, Google Sign-In, and Sign In form', () => {
     render(
       <AuthProvider>
         <LoginPage onLoginSuccess={onLoginSuccess} />
@@ -62,22 +64,20 @@ describe('Firebase Authentication UI & Flows', () => {
     expect(screen.getByText('TechBharat C2-22')).toBeInTheDocument();
     expect(screen.getByText(/Generative AI-Powered Utility Virtual Assistant/i)).toBeInTheDocument();
 
-    // 4 Preserved Demo Personas
+    // 3 Preserved Demo Personas (Requirement 1)
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('Priya Singh')).toBeInTheDocument();
     expect(screen.getByText('Amit Kumar')).toBeInTheDocument();
-    expect(screen.getByText('Priya Patel')).toBeInTheDocument();
 
     // Persona IDs and Badges
     expect(screen.getByText(/ID: CUST0001/i)).toBeInTheDocument();
     expect(screen.getByText(/ID: EMP0001/i)).toBeInTheDocument();
     expect(screen.getByText(/ID: ADM0001/i)).toBeInTheDocument();
-    expect(screen.getByText(/ID: CUST0010/i)).toBeInTheDocument();
 
-    // Google Sign-In button
+    // Google Sign-In button (Requirement 3)
     expect(screen.getByText('Continue with Google')).toBeInTheDocument();
 
-    // Sign In form elements
+    // Sign In form elements (Requirement 2)
     expect(screen.getByPlaceholderText('user@example.com')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('••••••••••••')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /^Sign In$/i }).length).toBe(2);
@@ -91,7 +91,7 @@ describe('Firebase Authentication UI & Flows', () => {
       </AuthProvider>
     );
 
-    // Switch to Create Account
+    // Switch to Create Account (Requirement 4)
     const createAccountTab = screen.getByRole('button', { name: /Create Account/i });
     fireEvent.click(createAccountTab);
 
@@ -140,5 +140,142 @@ describe('Firebase Authentication UI & Flows', () => {
     expect(screen.getByText('Reset Password')).toBeInTheDocument();
     expect(screen.getByText(/Firebase will send you a password reset link/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Send Reset Link/i })).toBeInTheDocument();
+  });
+
+  it('clicking a demo persona requires password and does not bypass Firebase (Requirements 6 & 7)', async () => {
+    render(
+      <AuthProvider>
+        <LoginPage onLoginSuccess={onLoginSuccess} />
+      </AuthProvider>
+    );
+
+    // Click John Doe persona card
+    const johnDoeButton = screen.getByText('John Doe').closest('button');
+    expect(johnDoeButton).toBeInTheDocument();
+    fireEvent.click(johnDoeButton!);
+
+    // Persona password modal opens immediately
+    expect(screen.getByText('Authenticate Demo Persona')).toBeInTheDocument();
+    expect(screen.getByText(/Authenticating as/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Enter password...')).toBeInTheDocument();
+
+    // Enter password and submit
+    vi.mocked(signInWithEmailAndPassword).mockResolvedValueOnce({} as any);
+
+    fireEvent.change(screen.getByPlaceholderText('Enter password...'), {
+      target: { value: 'DemoPass123' },
+    });
+
+    const modalSignInButton = screen.getAllByRole('button', { name: /^Sign In$/i });
+    // The modal submit button
+    fireEvent.click(modalSignInButton[modalSignInButton.length - 1]);
+
+    await waitFor(() => {
+      expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
+        expect.anything(),
+        'john.doe@example.com',
+        'DemoPass123'
+      );
+      expect(onLoginSuccess).toHaveBeenCalled();
+    });
+  });
+
+  it('Google Sign-In button calls Firebase signInWithPopup (Requirement 3)', async () => {
+    render(
+      <AuthProvider>
+        <LoginPage onLoginSuccess={onLoginSuccess} />
+      </AuthProvider>
+    );
+
+    vi.mocked(signInWithPopup).mockResolvedValueOnce({} as any);
+
+    const googleBtn = screen.getByText('Continue with Google');
+    fireEvent.click(googleBtn);
+
+    await waitFor(() => {
+      expect(signInWithPopup).toHaveBeenCalled();
+      expect(onLoginSuccess).toHaveBeenCalled();
+    });
+  });
+
+  it('LandingPage login modal renders the complete authentication interface (All Requirements)', async () => {
+    const onGetStarted = vi.fn();
+    const onLogin = vi.fn();
+
+    render(
+      <AuthProvider>
+        <LandingPage onGetStarted={onGetStarted} onLogin={onLogin} />
+      </AuthProvider>
+    );
+
+    // Click header Login button
+    const loginHeaderBtn = screen.getByRole('button', { name: /^Login$/i });
+    fireEvent.click(loginHeaderBtn);
+
+    // Modal appears with complete Auth UI
+    expect(screen.getByText('Welcome to UtilityAI')).toBeInTheDocument();
+    expect(screen.getByText('Sign in to access your authorized utility services')).toBeInTheDocument();
+
+    // 3 Demo Personas in modal
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('Priya Singh')).toBeInTheDocument();
+    expect(screen.getByText('Amit Kumar')).toBeInTheDocument();
+
+    // Standard Email & Password inputs in modal
+    expect(screen.getByPlaceholderText('user@example.com')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('••••••••••••')).toBeInTheDocument();
+
+    // Google Sign-In in modal
+    expect(screen.getByText('Continue with Google')).toBeInTheDocument();
+
+    // Register / Create Account tab in modal
+    expect(screen.getByRole('button', { name: /Create Account/i })).toBeInTheDocument();
+
+    // Forgot password in modal
+    expect(screen.getByText('Forgot password?')).toBeInTheDocument();
+  });
+
+  it('displays appropriate Firebase authentication errors to user (Requirement 10)', async () => {
+    render(
+      <AuthProvider>
+        <LoginPage onLoginSuccess={onLoginSuccess} />
+      </AuthProvider>
+    );
+
+    // Mock invalid credential error
+    vi.mocked(signInWithEmailAndPassword).mockRejectedValueOnce({
+      code: 'auth/invalid-credential',
+      message: 'Firebase: Error (auth/invalid-credential).',
+    });
+
+    fireEvent.change(screen.getByPlaceholderText('user@example.com'), {
+      target: { value: 'wrong@example.com' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('••••••••••••'), {
+      target: { value: 'WrongPass' },
+    });
+
+    const signInBtns = screen.getAllByRole('button', { name: /^Sign In$/i });
+    fireEvent.click(signInBtns[signInBtns.length - 1]);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Invalid email or password. Please verify your credentials.')
+      ).toBeInTheDocument();
+    });
+
+    // Mock popup closed by user for Google sign in
+    vi.mocked(signInWithPopup).mockRejectedValueOnce({
+      code: 'auth/popup-closed-by-user',
+      message: 'Popup closed',
+    });
+
+    fireEvent.click(screen.getByText('Continue with Google'));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Google Sign-In was closed before completing.')
+      ).toBeInTheDocument();
+    });
   });
 });
