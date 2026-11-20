@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from typing import Dict, Any
 import time
 from datetime import datetime
-from app.security.firebase_auth import get_current_user
+from app.security.firebase_auth import get_current_user, require_verified_user
 from app.schemas.requests import UserProfileUpdate
 from app.schemas.responses import UserResponse
 from app.database.mongo import get_database
@@ -30,11 +30,12 @@ async def get_me(current_user: Dict[str, Any] = Depends(get_current_user)):
         meter_number=current_user.get("meter_number"),
         emergency_contact=current_user.get("emergency_contact"),
         preferred_language=current_user.get("preferred_language", "English"),
-        notifications=current_user.get("notifications")
+        notifications=current_user.get("notifications"),
+        email_verified=current_user.get("email_verified", True)
     )
 
 @router.put("/profile")
-async def update_profile(payload: UserProfileUpdate, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def update_profile(payload: UserProfileUpdate, current_user: Dict[str, Any] = Depends(require_verified_user)):
     """
     Updates the authenticated user's profile details and persists directly to MongoDB Atlas.
     """

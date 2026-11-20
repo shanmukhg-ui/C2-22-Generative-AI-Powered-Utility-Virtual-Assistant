@@ -8,11 +8,12 @@ export const PrivacySettings: React.FC = () => {
   const [deleteSuccess, setDeleteSuccess] = useState(false);
 
   const handleDownloadData = () => {
+    if (!user) return;
     const citizenData = {
-      user_id: user?.user_id || 'CUST0001',
-      name: user?.name || 'John Doe',
-      email: user?.email || 'customer0001@example.test',
-      role: 'Customer',
+      user_id: user.user_id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
       exported_at: new Date().toISOString(),
       service_requests_count: 6,
       complaints_count: 3,
@@ -23,7 +24,7 @@ export const PrivacySettings: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `utilityai_data_${user?.user_id || 'CUST0001'}.json`;
+    a.download = `utilityai_data_${user.user_id}.json`;
     a.click();
     URL.revokeObjectURL(url);
 

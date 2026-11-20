@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Dict, Any, List
-from app.security.firebase_auth import get_current_user, require_role
+from app.security.firebase_auth import get_current_user, require_verified_user, require_role
 from app.security.rbac import UserRole
 from app.schemas.settings import UserPreferencesSchema, SystemSettingsSchema, IntegrationHealthSchema
 from app.services.settings_service import SettingsService
@@ -18,14 +18,14 @@ async def get_my_settings(current_user: Dict[str, Any] = Depends(get_current_use
 @router.put("/me", response_model=Dict[str, Any])
 async def update_my_settings(
     payload: Dict[str, Any],
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     """Updates the authenticated user's own preferences with schema validation."""
     user_id = current_user["user_id"]
     return SettingsService.update_user_settings(user_id, payload)
 
 @router.get("/me/export", response_model=Dict[str, Any])
-async def export_my_data(current_user: Dict[str, Any] = Depends(get_current_user)):
+async def export_my_data(current_user: Dict[str, Any] = Depends(require_verified_user)):
     """Exports the caller's complete profile, settings, and activity record as JSON."""
     user_id = current_user["user_id"]
     prefs = SettingsService.get_user_settings(user_id)

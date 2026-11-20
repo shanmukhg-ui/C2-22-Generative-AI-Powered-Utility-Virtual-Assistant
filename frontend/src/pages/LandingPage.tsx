@@ -7,10 +7,12 @@ import {
   Search, Check, Eye, HelpCircle, Layers, Server, MessageSquare
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { AuthCard } from '../components/AuthCard';
 
 interface LandingPageProps {
   onGetStarted: () => void;
   onLogin: () => void;
+  onLoginSuccess?: () => void;
   onTryChatWithPrompt?: (prompt: string) => void;
   onReplayIntro?: () => void;
 }
@@ -18,6 +20,7 @@ interface LandingPageProps {
 export const LandingPage: React.FC<LandingPageProps> = ({
   onGetStarted,
   onLogin,
+  onLoginSuccess,
   onTryChatWithPrompt,
   onReplayIntro
 }) => {
@@ -78,10 +81,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     }
   };
 
-  const handleQuickLogin = (userId: string) => {
-    switchPersona(userId);
-    setIsLoginModalOpen(false);
-    onGetStarted();
+  const handleQuickLogin = (_userId?: string) => {
+    setIsLoginModalOpen(true);
   };
 
   return (
@@ -755,96 +756,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </footer>
 
-      {/* 10. Interactive Professional Login Modal */}
+      {/* 10. Interactive Complete Firebase Authentication Modal */}
       {isLoginModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl p-6 md:p-8 space-y-6 relative border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
-            {/* Close Button */}
-            <button
-              onClick={() => setIsLoginModalOpen(false)}
-              className="absolute top-5 right-5 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="text-center space-y-1">
-              <div className="w-12 h-12 rounded-2xl bg-[#F3EEFF] text-[#6D28F5] flex items-center justify-center mx-auto mb-3 shadow-xs">
-                <Zap className="w-6 h-6 fill-current" />
-              </div>
-              <h3 className="text-xl font-extrabold text-[#171642]">Welcome to UtilityAI</h3>
-              <p className="text-xs text-slate-500">Sign in to access your authorized utility dashboard</p>
-            </div>
-
-            {/* One-Click Quick Role Switchers */}
-            <div className="space-y-2.5">
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                Select Persona (One-Click RBAC Sign In)
-              </label>
-
-              {/* Citizen Card */}
-              <button
-                onClick={() => handleQuickLogin('CUST0001')}
-                className="w-full p-3.5 rounded-xl border border-slate-200 hover:border-[#6D28F5] bg-[#F8F9FC] hover:bg-[#F3EEFF]/40 transition text-left flex items-center justify-between group"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
-                    <User className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-[#171642] group-hover:text-[#6D28F5] transition">
-                      John Doe (Citizen / Customer)
-                    </div>
-                    <div className="text-[11px] text-slate-400">View own tickets & lodge complaints</div>
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#6D28F5] transition" />
-              </button>
-
-              {/* Employee Card */}
-              <button
-                onClick={() => handleQuickLogin('EMP0001')}
-                className="w-full p-3.5 rounded-xl border border-slate-200 hover:border-[#6D28F5] bg-[#F8F9FC] hover:bg-[#F3EEFF]/40 transition text-left flex items-center justify-between group"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-lg bg-purple-50 text-[#6D28F5] flex items-center justify-center font-bold text-xs">
-                    <Briefcase className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-[#171642] group-hover:text-[#6D28F5] transition">
-                      Priya Singh (Operations Staff)
-                    </div>
-                    <div className="text-[11px] text-slate-400">Field telemetry, SOPs & outage summaries</div>
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#6D28F5] transition" />
-              </button>
-
-              {/* Administrator Card */}
-              <button
-                onClick={() => handleQuickLogin('ADM0001')}
-                className="w-full p-3.5 rounded-xl border border-slate-200 hover:border-[#6D28F5] bg-[#F8F9FC] hover:bg-[#F3EEFF]/40 transition text-left flex items-center justify-between group"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-lg bg-slate-900 text-purple-400 flex items-center justify-center font-bold text-xs">
-                    <Shield className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-[#171642] group-hover:text-[#6D28F5] transition">
-                      Amit Kumar (System Administrator)
-                    </div>
-                    <div className="text-[11px] text-slate-400">Ingest documents, manage 105+ users & audit</div>
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#6D28F5] transition" />
-              </button>
-            </div>
-
-            <div className="pt-2 border-t border-slate-100 text-center">
-              <span className="text-[11px] text-slate-400">
-                Protected by Firebase Authentication & MongoDB RBAC Middleware
-              </span>
-            </div>
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg my-8">
+            <AuthCard
+              isModal={true}
+              title="Welcome to UtilityAI"
+              subtitle="Sign in to access your authorized utility services"
+              onClose={() => setIsLoginModalOpen(false)}
+              onSuccess={() => {
+                setIsLoginModalOpen(false);
+                if (onLoginSuccess) {
+                  onLoginSuccess();
+                } else {
+                  onGetStarted();
+                }
+              }}
+            />
           </div>
         </div>
       )}
