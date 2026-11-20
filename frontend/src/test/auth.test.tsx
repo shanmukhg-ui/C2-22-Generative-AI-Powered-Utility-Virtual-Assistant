@@ -56,7 +56,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('renders application branding, 3 demo persona buttons, Google Sign-In, and Sign In form', () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 
@@ -87,7 +87,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('switches between Sign In and Create Account modes with full field validation', () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 
@@ -108,7 +108,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('validates password mismatch on registration', async () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 
@@ -131,7 +131,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('opens Forgot Password mode and renders reset form', () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 
@@ -145,7 +145,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('clicking a demo persona requires password and does not bypass Firebase (Requirements 6 & 7)', async () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 
@@ -183,7 +183,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('Google Sign-In button calls Firebase signInWithPopup (Requirement 3)', async () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 
@@ -238,7 +238,7 @@ describe('Firebase Authentication UI & Flows', () => {
   it('displays appropriate Firebase authentication errors to user (Requirement 10)', async () => {
     render(
       <AuthProvider>
-        <LoginPage onLoginSuccess={onLoginSuccess} />
+        <LoginPage onLoginSuccess={onLoginSuccess} initialStep="direct" />
       </AuthProvider>
     );
 

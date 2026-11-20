@@ -10,6 +10,7 @@ import {
 
 interface LoginPageProps {
   onLoginSuccess: () => void;
+  initialStep?: 'step1' | 'step2' | 'step4' | 'direct';
 }
 
 interface PersonaDetails {
@@ -72,7 +73,7 @@ const PERSONA_CONFIGS: Record<string, PersonaDetails> = {
   }
 };
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, initialStep = 'step1' }) => {
   const {
     loginWithEmail,
     registerWithEmail,
@@ -81,8 +82,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
     switchPersona
   } = useAuth();
 
-  // View state: 'direct' (default for test & unified compatibility) | 'step1' | 'step2' | 'step4'
-  const [activeStep, setActiveStep] = useState<'step1' | 'step2' | 'step4' | 'direct'>('direct');
+  // View state: 'step1' (default for persona-guided RBAC flow) | 'step2' | 'step4' | 'direct'
+  const [activeStep, setActiveStep] = useState<'step1' | 'step2' | 'step4' | 'direct'>(initialStep);
   const [selectedPersona, setSelectedPersona] = useState<PersonaDetails>(PERSONA_CONFIGS.citizen);
   const [authTab, setAuthTab] = useState<'signin' | 'signup'>('signin');
 

@@ -170,8 +170,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span>Replay intro</span>
               </button>
             )}
+            <a
+              href="/auth.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex items-center space-x-1 px-3 py-2 text-xs font-semibold text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition border border-purple-200"
+              title="Open Standalone Single-Page Auth UI"
+            >
+              <span>Auth Portal UI</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
             <button
-              onClick={() => setIsLoginModalOpen(true)}
+              onClick={() => {
+                if (onLogin) onLogin();
+                setIsLoginModalOpen(true);
+              }}
               className="px-6 py-2.5 text-xs font-bold text-[#111827] hover:text-[#6D28F5] border border-slate-200 hover:border-[#6D28F5] rounded-xl transition shadow-xs bg-white hover:bg-slate-50"
             >
               Login
