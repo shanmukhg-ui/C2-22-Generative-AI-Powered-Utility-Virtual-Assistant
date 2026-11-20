@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth, PRESET_USERS } from '../contexts/AuthContext';
+import { useAuth, PRESET_USERS, DemoPersona } from '../contexts/AuthContext';
 import {
   Shield, Sparkles, User, Database, CheckCircle2, Zap,
   ArrowRight, Search, Bell, ExternalLink, ChevronDown, Check,
-  Radio, ShieldCheck, Activity, LogOut
+  Radio, ShieldCheck, Activity, LogOut, KeyRound, X, RefreshCw
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -17,6 +17,40 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
+  // Secure Persona Switching Dialog State
+  const [switchTargetDemo, setSwitchTargetDemo] = useState<DemoPersona | null>(null);
+  const [switchPasswordInput, setSwitchPasswordInput] = useState('');
+  const [switchError, setSwitchError] = useState<string | null>(null);
+  const [switchLoading, setSwitchLoading] = useState(false);
+
+  const handleSelectSwitchPersona = (demo: DemoPersona) => {
+    if (user?.user_id === demo.id) {
+      setShowRoleDropdown(false);
+      return;
+    }
+    setShowRoleDropdown(false);
+    setSwitchTargetDemo(demo);
+    setSwitchPasswordInput('');
+    setSwitchError(null);
+  };
+
+  const handleConfirmPersonaSwitch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!switchTargetDemo || !switchPasswordInput) return;
+
+    setSwitchLoading(true);
+    setSwitchError(null);
+
+    const result = await switchPersona(switchTargetDemo.id, switchPasswordInput);
+    setSwitchLoading(false);
+
+    if (result.success) {
+      setSwitchTargetDemo(null);
+    } else {
+      setSwitchError(result.message || 'Authentication failed. Please verify demo password.');
+    }
+  };
+
   const roleBadgeColor = () => {
     switch (user?.role) {
       case 'Administrator':
@@ -29,7 +63,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
   };
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs transition-all">
+    <>
+      <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs transition-all">
       {/* Left: Project Badge & Command Search */}
       <div className="flex items-center gap-4">
         {/* Brand Home Button */}
@@ -136,81 +171,45 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
             <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 animate-in fade-in duration-150">
               <div className="px-3 py-2 border-b border-slate-100">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Switch Role / Persona (One-Click RBAC)
+                  Switch Demo Persona
                 </span>
                 <span className="text-[11px] text-slate-500">
-                  Instantly tests authorization and data isolation.
+                  Select a persona to authenticate and switch context.
                 </span>
               </div>
 
               <div className="py-1 space-y-1">
-                {/* Customer */}
-                <button
-                  onClick={() => { switchPersona('CUST0001'); setShowRoleDropdown(false); }}
-                  className={`w-full text-left p-2.5 rounded-xl flex items-center justify-between transition ${
-                    user?.user_id === 'CUST0001' ? 'bg-[#F3EEFF] text-[#6D28F5] font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5">
-                    <span className="w-2 h-2 rounded-full bg-blue-500" />
-                    <div>
-                      <div className="text-xs font-bold">John Doe</div>
-                      <div className="text-[10px] text-slate-400">Citizen / Customer (CUST0001)</div>
-                    </div>
-                  </div>
-                  {user?.user_id === 'CUST0001' && <Check className="w-4 h-4 text-[#6D28F5]" />}
-                </button>
-
-                {/* Employee */}
-                <button
-                  onClick={() => { switchPersona('EMP0001'); setShowRoleDropdown(false); }}
-                  className={`w-full text-left p-2.5 rounded-xl flex items-center justify-between transition ${
-                    user?.user_id === 'EMP0001' ? 'bg-[#F3EEFF] text-[#6D28F5] font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5">
-                    <span className="w-2 h-2 rounded-full bg-purple-500" />
-                    <div>
-                      <div className="text-xs font-bold">Priya Singh</div>
-                      <div className="text-[10px] text-slate-400">Operations Staff (EMP0001)</div>
-                    </div>
-                  </div>
-                  {user?.user_id === 'EMP0001' && <Check className="w-4 h-4 text-[#6D28F5]" />}
-                </button>
-
-                {/* Admin */}
-                <button
-                  onClick={() => { switchPersona('ADM0001'); setShowRoleDropdown(false); }}
-                  className={`w-full text-left p-2.5 rounded-xl flex items-center justify-between transition ${
-                    user?.user_id === 'ADM0001' ? 'bg-[#F3EEFF] text-[#6D28F5] font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5">
-                    <span className="w-2 h-2 rounded-full bg-slate-900" />
-                    <div>
-                      <div className="text-xs font-bold">Amit Kumar</div>
-                      <div className="text-[10px] text-slate-400">System Administrator (ADM0001)</div>
-                    </div>
-                  </div>
-                  {user?.user_id === 'ADM0001' && <Check className="w-4 h-4 text-[#6D28F5]" />}
-                </button>
-
-                {/* Customer 2 */}
-                <button
-                  onClick={() => { switchPersona('CUST0010'); setShowRoleDropdown(false); }}
-                  className={`w-full text-left p-2.5 rounded-xl flex items-center justify-between transition ${
-                    user?.user_id === 'CUST0010' ? 'bg-[#F3EEFF] text-[#6D28F5] font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5">
-                    <span className="w-2 h-2 rounded-full bg-teal-500" />
-                    <div>
-                      <div className="text-xs font-bold">Priya Patel</div>
-                      <div className="text-[10px] text-slate-400">Citizen / Customer (CUST0010)</div>
-                    </div>
-                  </div>
-                  {user?.user_id === 'CUST0010' && <Check className="w-4 h-4 text-[#6D28F5]" />}
-                </button>
+                {PRESET_USERS.map((demo) => {
+                  const isCurrent = user?.user_id === demo.id;
+                  return (
+                    <button
+                      key={demo.id}
+                      onClick={() => handleSelectSwitchPersona(demo)}
+                      className={`w-full text-left p-2.5 rounded-xl flex items-center justify-between transition ${
+                        isCurrent ? 'bg-[#F3EEFF] text-[#6D28F5] font-bold' : 'hover:bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5">
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            demo.role === 'Administrator'
+                              ? 'bg-slate-900'
+                              : demo.role === 'Employee'
+                              ? 'bg-purple-500'
+                              : 'bg-blue-500'
+                          }`}
+                        />
+                        <div>
+                          <div className="text-xs font-bold">{demo.name}</div>
+                          <div className="text-[10px] text-slate-400">
+                            {demo.role} ({demo.id})
+                          </div>
+                        </div>
+                      </div>
+                      {isCurrent && <Check className="w-4 h-4 text-[#6D28F5]" />}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* View & Edit Profile Link & Sign Out */}
@@ -243,5 +242,70 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
         </div>
       </div>
     </header>
+
+    {/* Secure Persona Switch Password Modal */}
+    {switchTargetDemo && (
+      <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="bg-slate-800 rounded-2xl max-w-sm w-full p-6 space-y-4 border border-slate-700 shadow-2xl relative text-slate-100">
+          <button
+            type="button"
+            onClick={() => setSwitchTargetDemo(null)}
+            aria-label="Close dialog"
+            className="absolute top-4 right-4 text-slate-400 hover:text-white"
+          >
+            <X className="w-4 h-4" />
+          </button>
+
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-purple-600/30 text-purple-400 flex items-center justify-center mb-2">
+              <KeyRound className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-white">Switch Demo Persona</h3>
+            <p className="text-xs text-slate-300 mt-1">
+              Authenticating as <strong>{switchTargetDemo.name}</strong> ({switchTargetDemo.email}).
+            </p>
+          </div>
+
+          {switchError && (
+            <div className="p-2.5 rounded-lg bg-rose-950/70 border border-rose-800 text-rose-200 text-xs">
+              {switchError}
+            </div>
+          )}
+
+          <form onSubmit={handleConfirmPersonaSwitch} className="space-y-3">
+            <div>
+              <label className="block text-xs font-semibold text-slate-300">Firebase Account Password</label>
+              <input
+                type="password"
+                value={switchPasswordInput}
+                onChange={(e) => setSwitchPasswordInput(e.target.value)}
+                placeholder="Enter password..."
+                required
+                autoFocus
+                className="w-full mt-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => setSwitchTargetDemo(null)}
+                className="flex-1 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={switchLoading}
+                className="flex-1 py-2 bg-[#6D28F5] hover:bg-[#5B21D6] text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center space-x-1"
+              >
+                {switchLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <span>Switch User</span>}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
+  </>
   );
 };

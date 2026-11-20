@@ -27,7 +27,6 @@ export const PRESET_USERS: DemoPersona[] = [
   { id: 'CUST0001', name: 'John Doe', email: 'john.doe@example.com', role: 'Customer', city: 'Riverside', dept: 'Customer' },
   { id: 'EMP0001', name: 'Priya Singh', email: 'priya.singh@utilityai.org', role: 'Employee', city: 'Green Park', dept: 'Operations' },
   { id: 'ADM0001', name: 'Amit Kumar', email: 'amit.kumar@utilityai.org', role: 'Administrator', city: 'Central Office', dept: 'Administrator' },
-  { id: 'CUST0010', name: 'Priya Patel', email: 'customer0010@example.test', role: 'Customer', city: 'Lakeview', dept: 'Customer' },
 ];
 
 interface SwitchPersonaResult {

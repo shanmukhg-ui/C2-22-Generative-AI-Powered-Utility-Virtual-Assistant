@@ -126,6 +126,11 @@ const AppContent: React.FC = () => {
             setCurrentPage('chat');
           }}
           onLogin={() => setCurrentPage('login')}
+          onLoginSuccess={() => {
+            if (user?.role === 'Employee') setCurrentPage('employee-dash');
+            else if (user?.role === 'Administrator') setCurrentPage('admin-dash');
+            else setCurrentPage('customer-dash');
+          }}
           onTryChatWithPrompt={(prompt) => {
             setChatInitialQuery(prompt);
             setCurrentPage('chat');
