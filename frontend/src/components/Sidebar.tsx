@@ -19,7 +19,7 @@ interface NavItem {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onNavigate }) => {
-  const { user, switchPersona } = useAuth();
+  const { user, switchPersona, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const role = user?.role || 'Customer';
 
@@ -189,17 +189,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onNavigate }) => 
             )}
           </div>
 
-          <button
-            onClick={() => {
-              if (role === 'Customer') switchPersona('EMP0001');
-              else if (role === 'Employee') switchPersona('ADM0001');
-              else switchPersona('CUST0001');
-            }}
-            title="Cycle persona (Customer → Employee → Admin)"
-            className="p-1.5 rounded-xl bg-white/10 hover:bg-[#6D28F5] text-slate-300 hover:text-white transition flex-shrink-0 shadow-xs"
-          >
-            <Zap className="w-3.5 h-3.5 text-purple-300 hover:text-white" />
-          </button>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <button
+              onClick={() => {
+                if (role === 'Customer') switchPersona('EMP0001');
+                else if (role === 'Employee') switchPersona('ADM0001');
+                else switchPersona('CUST0001');
+              }}
+              title="Cycle persona (Customer → Employee → Admin)"
+              className="p-1.5 rounded-xl bg-white/10 hover:bg-[#6D28F5] text-slate-300 hover:text-white transition shadow-xs"
+            >
+              <Zap className="w-3.5 h-3.5 text-purple-300 hover:text-white" />
+            </button>
+
+            <button
+              onClick={async () => {
+                await logout();
+                onNavigate('landing');
+              }}
+              title="Sign Out"
+              className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-600/80 text-slate-300 hover:text-white transition shadow-xs"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </aside>

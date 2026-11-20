@@ -4,8 +4,8 @@ from typing import Optional, List, Dict, Any
 class ChatRequest(BaseModel):
     message: str = Field(..., description="Natural language query from user")
     session_id: Optional[str] = Field(None, description="Conversation session ID")
-    role: Optional[str] = Field(None, description="User role (overridden server-side via verified JWT)")
-    user_id: Optional[str] = Field(None, description="User identifier (overridden server-side via verified JWT)")
+    role: Optional[str] = Field(None, description="User role (extracted from verified token claims)")
+    user_id: Optional[str] = Field(None, description="User identifier (extracted from verified token claims)")
     history: Optional[List[Dict[str, Any]]] = Field(None, description="Recent conversation history")
     stream: Optional[bool] = Field(False, description="Whether to stream response via SSE")
 

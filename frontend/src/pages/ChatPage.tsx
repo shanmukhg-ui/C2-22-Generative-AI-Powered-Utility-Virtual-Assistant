@@ -115,8 +115,8 @@ export const ChatPage: React.FC<{ initialQuery?: string }> = ({ initialQuery }) 
       const res = await chatApi.sendMessage(
         textToSend,
         undefined,
-        user?.role || 'Customer',
-        user?.user_id || 'CUST0001'
+        user?.role,
+        user?.user_id
       );
 
       const assistantMsg: ChatMessage = {

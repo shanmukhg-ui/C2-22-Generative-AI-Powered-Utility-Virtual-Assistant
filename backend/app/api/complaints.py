@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-from app.security.firebase_auth import get_current_user
+from app.security.firebase_auth import get_current_user, require_verified_user, require_role
 from app.security.rbac import UserRole, RBACManager
 from app.schemas.requests import ComplaintCreate, ComplaintUpdate
 from app.database.mongo import get_database
@@ -32,7 +32,7 @@ async def list_complaints(
     status_filter: Optional[str] = Query(None, alias="status"),
     priority: Optional[str] = Query(None),
     q: Optional[str] = Query(None),
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     db = get_database()
     effective_offset = offset if offset > 0 else (page - 1) * limit
@@ -79,7 +79,7 @@ async def list_complaints(
     }
 
 @router.get("/{complaint_id}", response_model=Dict[str, Any])
-async def get_complaint(complaint_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def get_complaint(complaint_id: str, current_user: Dict[str, Any] = Depends(require_verified_user)):
     db = get_database()
     cmp = db.complaints.find_one({"complaint_id": complaint_id.upper()})
     if not cmp:
@@ -98,7 +98,7 @@ async def get_complaint(complaint_id: str, current_user: Dict[str, Any] = Depend
     return cmp
 
 @router.post("", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
-async def create_complaint(payload: ComplaintCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
+async def create_complaint(payload: ComplaintCreate, current_user: Dict[str, Any] = Depends(require_verified_user)):
     db = get_database()
 
     # RBAC check
@@ -169,7 +169,7 @@ async def create_complaint(payload: ComplaintCreate, current_user: Dict[str, Any
 async def update_complaint(
     complaint_id: str,
     payload: ComplaintUpdate,
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_role([UserRole.EMPLOYEE, UserRole.ADMINISTRATOR]))
 ):
     """
     Operations endpoint for operations staff to Acknowledge, Investigate, and Resolve consumer complaints.

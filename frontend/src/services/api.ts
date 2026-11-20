@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from '../config/firebase';
 import {
   User, ChatMessage, ServiceRequest, Complaint,
   OperationalLog, KnowledgeDocument, AuditLog
@@ -15,13 +16,30 @@ const client = axios.create({
   }
 });
 
-// Interceptor to attach active token
-client.interceptors.request.use((config) => {
-  const token = localStorage.getItem('utility_auth_token') || 'dev-token-CUST0001';
-  config.headers.Authorization = `Bearer ${token}`;
+// Interceptor to attach verified Firebase ID token
+client.interceptors.request.use(async (config) => {
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    try {
+      const token = await currentUser.getIdToken();
+      config.headers.Authorization = `Bearer ${token}`;
+    } catch (err) {
+      console.warn('Could not retrieve active Firebase ID token', err);
+    }
+  }
   return config;
 });
 
+// Interceptor to handle unauthenticated (401) responses cleanly
+client.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      window.dispatchEvent(new CustomEvent('utilityai:unauthorized'));
+    }
+    return Promise.reject(error);
+  }
+);
 export const authApi = {
   getMe: async (): Promise<User> => {
     const res = await client.get('/auth/me');

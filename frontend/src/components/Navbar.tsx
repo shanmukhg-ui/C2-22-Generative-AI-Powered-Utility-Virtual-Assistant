@@ -3,7 +3,7 @@ import { useAuth, PRESET_USERS } from '../contexts/AuthContext';
 import {
   Shield, Sparkles, User, Database, CheckCircle2, Zap,
   ArrowRight, Search, Bell, ExternalLink, ChevronDown, Check,
-  Radio, ShieldCheck, Activity
+  Radio, ShieldCheck, Activity, LogOut
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -13,7 +13,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommandPalette, onNavigateProfile }) => {
-  const { user, switchPersona } = useAuth();
+  const { user, switchPersona, logout } = useAuth();
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
@@ -194,10 +194,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
                   </div>
                   {user?.user_id === 'ADM0001' && <Check className="w-4 h-4 text-[#6D28F5]" />}
                 </button>
+
+                {/* Customer 2 */}
+                <button
+                  onClick={() => { switchPersona('CUST0010'); setShowRoleDropdown(false); }}
+                  className={`w-full text-left p-2.5 rounded-xl flex items-center justify-between transition ${
+                    user?.user_id === 'CUST0010' ? 'bg-[#F3EEFF] text-[#6D28F5] font-bold' : 'hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <span className="w-2 h-2 rounded-full bg-teal-500" />
+                    <div>
+                      <div className="text-xs font-bold">Priya Patel</div>
+                      <div className="text-[10px] text-slate-400">Citizen / Customer (CUST0010)</div>
+                    </div>
+                  </div>
+                  {user?.user_id === 'CUST0010' && <Check className="w-4 h-4 text-[#6D28F5]" />}
+                </button>
               </div>
 
-              {/* View & Edit Profile Link */}
-              <div className="pt-2 border-t border-slate-100">
+              {/* View & Edit Profile Link & Sign Out */}
+              <div className="pt-2 border-t border-slate-100 space-y-1">
                 <button
                   onClick={() => {
                     setShowRoleDropdown(false);
@@ -207,6 +224,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
                 >
                   <User className="w-3.5 h-3.5" />
                   <span>View & Edit Profile</span>
+                </button>
+
+                <button
+                  onClick={async () => {
+                    setShowRoleDropdown(false);
+                    await logout();
+                    if (onNavigateLanding) onNavigateLanding();
+                  }}
+                  className="w-full py-2 px-3 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out</span>
                 </button>
               </div>
             </div>

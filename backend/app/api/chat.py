@@ -4,11 +4,11 @@ import time
 from collections import defaultdict
 from datetime import datetime
 from typing import Dict, Any, List, Optional
-from fastapi import APIRouter, Depends, Query, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, Query, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from app.schemas.requests import ChatRequest
 from app.schemas.responses import ChatResponse, Citation
-from app.security.firebase_auth import get_current_user
+from app.security.firebase_auth import require_verified_user
 from app.agents.router import AgentQueryRouter
 from app.database.mongo import get_database
 
@@ -31,7 +31,7 @@ def check_rate_limit(user_id: str, max_requests: int = 30, window_secs: int = 60
 async def chat_endpoint(
     request: Request,
     payload: ChatRequest,
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     user_id = current_user["user_id"]
     # Strict server-side role verification (ignoring any role from request payload)
@@ -122,7 +122,7 @@ async def chat_endpoint(
 @router.get("/history")
 async def get_chat_history(
     session_id: Optional[str] = Query(None),
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     db = get_database()
     query: Dict[str, Any] = {"user_id": current_user["user_id"]}

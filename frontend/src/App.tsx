@@ -65,7 +65,20 @@ const AppContent: React.FC = () => {
 
   // If user role changes, make sure page is accessible
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      if (currentPage !== 'landing' && currentPage !== 'login') {
+        setCurrentPage('login');
+      }
+      return;
+    }
+
+    if (currentPage === 'login') {
+      if (user.role === 'Employee') setCurrentPage('employee-dash');
+      else if (user.role === 'Administrator') setCurrentPage('admin-dash');
+      else setCurrentPage('customer-dash');
+      return;
+    }
+
     if (currentPage === 'customer-dash' && user.role !== 'Customer') {
       setCurrentPage(user.role === 'Employee' ? 'employee-dash' : 'admin-dash');
     } else if (currentPage === 'employee-dash' && user.role !== 'Employee') {
@@ -77,7 +90,7 @@ const AppContent: React.FC = () => {
     } else if (currentPage === 'operations' && user.role === 'Customer') {
       setCurrentPage('chat');
     }
-  }, [user?.role]);
+  }, [user, currentPage]);
 
   const handleModalSuccess = () => {
     setRefreshKey(k => k + 1);

@@ -78,10 +78,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     }
   };
 
-  const handleQuickLogin = (userId: string) => {
-    switchPersona(userId);
-    setIsLoginModalOpen(false);
-    onGetStarted();
+  const handleQuickLogin = async (userId: string) => {
+    const res = await switchPersona(userId);
+    if (res.success) {
+      setIsLoginModalOpen(false);
+      onGetStarted();
+    } else {
+      setIsLoginModalOpen(false);
+      onLogin();
+    }
   };
 
   return (
@@ -834,6 +839,25 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                       Amit Kumar (System Administrator)
                     </div>
                     <div className="text-[11px] text-slate-400">Ingest documents, manage 105+ users & audit</div>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#6D28F5] transition" />
+              </button>
+
+              {/* Citizen 2 Card */}
+              <button
+                onClick={() => handleQuickLogin('CUST0010')}
+                className="w-full p-3.5 rounded-xl border border-slate-200 hover:border-[#6D28F5] bg-[#F8F9FC] hover:bg-[#F3EEFF]/40 transition text-left flex items-center justify-between group"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center font-bold text-xs">
+                    <User className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-[#171642] group-hover:text-[#6D28F5] transition">
+                      Priya Patel (Citizen / Customer)
+                    </div>
+                    <div className="text-[11px] text-slate-400">Lakeview citizen application & complaints</div>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#6D28F5] transition" />

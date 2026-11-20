@@ -1,7 +1,7 @@
 import time
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from typing import Dict, Any, List
-from app.security.firebase_auth import get_current_user, require_role
+from app.security.firebase_auth import get_current_user, require_verified_user, require_role
 from app.security.rbac import UserRole
 from app.schemas.requests import DocumentIngestRequest, SearchQueryRequest
 from app.rag.vector_store import KnowledgeVectorStore
@@ -55,7 +55,7 @@ async def ingest_document(
 @router.post("/search", response_model=Dict[str, Any])
 async def search_knowledge(
     payload: SearchQueryRequest,
-    current_user: Dict[str, Any] = Depends(get_current_user)
+    current_user: Dict[str, Any] = Depends(require_verified_user)
 ):
     """
     Executes semantic similarity search over the knowledge base with role-filtered context.
@@ -72,7 +72,7 @@ async def search_knowledge(
     }
 
 @router.get("/documents", response_model=Dict[str, Any])
-async def list_documents(current_user: Dict[str, Any] = Depends(get_current_user)):
+async def list_documents(current_user: Dict[str, Any] = Depends(require_verified_user)):
     """
     Returns list of all official utility documents and ingestion status.
     """
