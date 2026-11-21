@@ -63,7 +63,7 @@ const DEFAULT_USER_PREFS: UserPreferences = {
   defaultLandingPage: 'dashboard',
   intro_mode: 'session',
   preferredLanguage: 'English',
-  phone: '+91 98765 43210',
+  phone: '',
   emailNotifications: true,
   inAppAlerts: true,
   criticalOutageAlerts: true,

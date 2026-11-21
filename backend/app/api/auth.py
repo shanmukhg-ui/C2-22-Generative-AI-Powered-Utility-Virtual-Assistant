@@ -35,7 +35,7 @@ async def get_me(current_user: Dict[str, Any] = Depends(get_current_user)):
     )
 
 @router.put("/profile")
-async def update_profile(payload: UserProfileUpdate, current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def update_profile(payload: UserProfileUpdate, current_user: Dict[str, Any] = Depends(get_current_user)):
     """
     Updates the authenticated user's profile details and persists directly to MongoDB Atlas.
     """

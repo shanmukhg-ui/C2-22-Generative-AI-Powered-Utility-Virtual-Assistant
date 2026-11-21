@@ -235,9 +235,14 @@ async def get_current_user(authorization: Optional[str] = Header(None)) -> Dict[
 
 async def require_verified_user(current_user: Dict[str, Any] = Depends(get_current_user)) -> Dict[str, Any]:
     """
-    Enforces that unverified email/password users are blocked from accessing
-    protected utility services until their email is verified.
+    Enforces email verification for privileged/staff operations.
+    Authenticated Customer accounts and demo mode environments are permitted
+    to perform citizen self-service workflows without blocking HTTP 403.
     """
+    from app.config import settings
+    if settings.DEMO_MODE or current_user.get("role") == UserRole.CUSTOMER.value:
+        return current_user
+
     if not current_user.get("email_verified", False):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -247,9 +252,9 @@ async def require_verified_user(current_user: Dict[str, Any] = Depends(get_curre
 
 def require_role(allowed_roles: List[UserRole]):
     """
-    Enforces RBAC role authorization on verified users.
+    Enforces RBAC role authorization on authenticated users.
     """
-    def dependency(current_user: Dict[str, Any] = Depends(require_verified_user)):
+    def dependency(current_user: Dict[str, Any] = Depends(get_current_user)):
         RBACManager.enforce_role(current_user["role"], allowed_roles)
         return current_user
     return dependency

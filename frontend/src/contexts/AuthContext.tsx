@@ -222,6 +222,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const refreshUser = async () => {
+    if (auth.currentUser) {
+      try {
+        await auth.currentUser.reload();
+        setFirebaseUser(auth.currentUser);
+        await auth.currentUser.getIdToken(true);
+      } catch (e) {
+        console.warn('Failed to reload firebase user', e);
+      }
+    }
     await syncBackendProfile();
   };
 

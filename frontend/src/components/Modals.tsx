@@ -67,7 +67,8 @@ export const NewRequestModal: React.FC<NewRequestModalProps> = ({ isOpen, onClos
       onSuccess();
       onClose();
     } catch (err: any) {
-      alert(`Failed to create request: ${err.message || 'API error'}`);
+      const detail = err?.response?.data?.detail || err.message || 'API error';
+      alert(`Failed to create request: ${detail}`);
     } finally {
       setSubmitting(false);
     }
@@ -294,7 +295,8 @@ export const NewComplaintModal: React.FC<NewComplaintModalProps> = ({ isOpen, on
       onSuccess();
       onClose();
     } catch (err: any) {
-      alert(`Failed to lodge complaint: ${err.message || 'API error'}`);
+      const detail = err?.response?.data?.detail || err.message || 'API error';
+      alert(`Failed to lodge complaint: ${detail}`);
     } finally {
       setSubmitting(false);
     }

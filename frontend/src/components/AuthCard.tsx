@@ -11,6 +11,7 @@ export interface AuthCardProps {
   onClose?: () => void;
   title?: string;
   subtitle?: string;
+  initialPersonaId?: string;
 }
 
 export const AuthCard: React.FC<AuthCardProps> = ({
@@ -18,7 +19,8 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   isModal = false,
   onClose,
   title,
-  subtitle
+  subtitle,
+  initialPersonaId
 }) => {
   const {
     user,
@@ -47,10 +49,26 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Demo Persona Password Modal State
-  const [selectedDemo, setSelectedDemo] = useState<DemoPersona | null>(null);
+  const [selectedDemo, setSelectedDemo] = useState<DemoPersona | null>(() => {
+    if (initialPersonaId) {
+      return PRESET_USERS.find(p => p.id === initialPersonaId) || null;
+    }
+    return null;
+  });
   const [demoPasswordInput, setDemoPasswordInput] = useState('');
   const [demoError, setDemoError] = useState<string | null>(null);
   const [demoLoading, setDemoLoading] = useState(false);
+
+  React.useEffect(() => {
+    if (initialPersonaId) {
+      const match = PRESET_USERS.find(p => p.id === initialPersonaId);
+      if (match) {
+        setSelectedDemo(match);
+        setDemoPasswordInput('');
+        setDemoError(null);
+      }
+    }
+  }, [initialPersonaId]);
 
   const formatFirebaseError = (err: any): string => {
     const code = err?.code || '';
