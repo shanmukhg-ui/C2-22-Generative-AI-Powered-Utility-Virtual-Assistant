@@ -181,7 +181,10 @@ async def get_current_user(authorization: Optional[str] = Header(None)) -> Dict[
                 "meter_number": None,
                 "emergency_contact": None,
                 "preferred_language": "English",
-                "notifications": {"sms": False, "email": True, "whatsapp": False}
+                "notifications": {"sms": False, "email": True, "whatsapp": False},
+                "is_active": True,
+                "status": "Active",
+                "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             }
 
             try:
@@ -197,7 +200,15 @@ async def get_current_user(authorization: Optional[str] = Header(None)) -> Dict[
                     break
                 logger.warning("Duplicate key collision on user_id '%s'. Retrying atomic allocation...", new_user_id)
 
-    # 5. Validate stored user_id and role integrity (zero silent fallbacks)
+    # 5. Check account activation status (block deactivated accounts)
+    if user.get("is_active") is False or user.get("status") == "Inactive" or user.get("transition_target") == "Inactive":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account has been deactivated. Please contact your system administrator.",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    # 6. Validate stored user_id and role integrity (zero silent fallbacks)
     user_id = user.get("user_id")
     if not user_id:
         raise HTTPException(
@@ -230,7 +241,10 @@ async def get_current_user(authorization: Optional[str] = Header(None)) -> Dict[
         "emergency_contact": user.get("emergency_contact"),
         "preferred_language": user.get("preferred_language", "English"),
         "notifications": user.get("notifications", {"sms": False, "email": True, "whatsapp": False}),
-        "email_verified": email_verified
+        "email_verified": email_verified,
+        "is_active": user.get("is_active", True) if user.get("status") != "Inactive" else False,
+        "status": user.get("status", "Active" if user.get("is_active", True) else "Inactive"),
+        "created_at": user.get("created_at")
     }
 
 async def require_verified_user(current_user: Dict[str, Any] = Depends(get_current_user)) -> Dict[str, Any]:

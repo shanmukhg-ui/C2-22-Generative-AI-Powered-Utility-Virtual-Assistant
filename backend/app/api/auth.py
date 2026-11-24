@@ -31,7 +31,10 @@ async def get_me(current_user: Dict[str, Any] = Depends(get_current_user)):
         emergency_contact=current_user.get("emergency_contact"),
         preferred_language=current_user.get("preferred_language", "English"),
         notifications=current_user.get("notifications"),
-        email_verified=current_user.get("email_verified", True)
+        email_verified=current_user.get("email_verified", True),
+        is_active=current_user.get("is_active", True),
+        status=current_user.get("status", "Active"),
+        created_at=current_user.get("created_at")
     )
 
 @router.put("/profile")
@@ -42,6 +45,13 @@ async def update_profile(payload: UserProfileUpdate, current_user: Dict[str, Any
     db = get_database()
     user_id = current_user["user_id"]
     update_data = {k: v for k, v in payload.dict().items() if v is not None}
+    # Security guard: never allow client-side role or identity tampering
+    update_data.pop("role", None)
+    update_data.pop("user_id", None)
+    update_data.pop("firebase_uid", None)
+    update_data.pop("is_active", None)
+    update_data.pop("status", None)
+
     
     if update_data:
         db.users.update_one({"user_id": user_id}, {"$set": update_data})
