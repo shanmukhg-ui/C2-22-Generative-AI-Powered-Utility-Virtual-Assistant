@@ -16,6 +16,14 @@ const PRESET_AVATARS = [
   'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
 ];
 
+const VALID_DEPARTMENTS = [
+  'Electricity Department',
+  'Water Supply & Sewerage Board',
+  'Natural Gas Distribution Network',
+  'Broadband & Telecom Infrastructure',
+  'Solid Waste & Sanitation'
+];
+
 export const ProfilePage: React.FC = () => {
   const { user, updateUserProfile } = useAuth();
 
@@ -24,11 +32,11 @@ export const ProfilePage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [dob, setDob] = useState('');
-  const [gender, setGender] = useState('Prefer not to say');
+  const [gender, setGender] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [address, setAddress] = useState('');
-  const [city, setCity] = useState('Vizag');
-  const [department, setDepartment] = useState('Electricity Department');
+  const [city, setCity] = useState('');
+  const [department, setDepartment] = useState('');
   const [meterNumber, setMeterNumber] = useState('');
   const [emergencyContact, setEmergencyContact] = useState('');
   const [preferredLanguage, setPreferredLanguage] = useState('English');
@@ -46,11 +54,15 @@ export const ProfilePage: React.FC = () => {
       setEmail(user.email || '');
       setPhone(user.phone || '');
       setDob(user.dob || '');
-      setGender(user.gender || 'Prefer not to say');
+      setGender(user.gender || '');
       setPhotoUrl(user.photo_url || '');
       setAddress(user.address || '');
       setCity(user.city || '');
-      setDepartment(user.department || (user.role === 'Customer' ? 'Citizen' : 'Operations'));
+      if (user.department && VALID_DEPARTMENTS.includes(user.department)) {
+        setDepartment(user.department);
+      } else {
+        setDepartment('');
+      }
       setMeterNumber(user.meter_number || '');
       setEmergencyContact(user.emergency_contact || '');
       setPreferredLanguage(user.preferred_language || 'English');
@@ -68,7 +80,7 @@ export const ProfilePage: React.FC = () => {
     setSaveSuccess(false);
 
     try {
-      await updateUserProfile({
+      const profileData: any = {
         name,
         email,
         phone,
@@ -77,7 +89,6 @@ export const ProfilePage: React.FC = () => {
         photo_url: photoUrl,
         address,
         city,
-        department,
         meter_number: meterNumber,
         emergency_contact: emergencyContact,
         preferred_language: preferredLanguage,
@@ -86,7 +97,14 @@ export const ProfilePage: React.FC = () => {
           email: emailNotif,
           whatsapp: whatsappNotif
         }
-      });
+      };
+
+      // Only save utility selection when user explicitly chooses one
+      if (department && VALID_DEPARTMENTS.includes(department)) {
+        profileData.department = department;
+      }
+
+      await updateUserProfile(profileData);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3500);
     } catch (err) {
@@ -170,14 +188,18 @@ export const ProfilePage: React.FC = () => {
           </p>
 
           <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs text-slate-600">
-            <div className="flex items-center space-x-1.5">
-              <Zap className="w-3.5 h-3.5 text-[#6D28F5]" />
-              <span className="font-semibold">{department}</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <MapPin className="w-3.5 h-3.5 text-blue-500" />
-              <span>{address}</span>
-            </div>
+            {department && (
+              <div className="flex items-center space-x-1.5">
+                <Zap className="w-3.5 h-3.5 text-[#6D28F5]" />
+                <span className="font-semibold">{department}</span>
+              </div>
+            )}
+            {address && (
+              <div className="flex items-center space-x-1.5">
+                <MapPin className="w-3.5 h-3.5 text-blue-500" />
+                <span>{address}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -282,15 +304,14 @@ export const ProfilePage: React.FC = () => {
 
             {/* Phone Number */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Phone Number *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Phone Number</label>
               <div className="relative">
                 <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="tel"
-                  required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91 98765 43210"
+                  placeholder="Enter your mobile number"
                   className="w-full pl-9 pr-3 py-2.5 bg-[#F8F9FC] border border-slate-200 rounded-xl text-xs font-medium text-[#111827] focus:outline-none focus:border-[#6D28F5] focus:bg-white transition"
                 />
               </div>
@@ -298,12 +319,11 @@ export const ProfilePage: React.FC = () => {
 
             {/* Date of Birth */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Date of Birth (DOB) *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Date of Birth (DOB)</label>
               <div className="relative">
                 <Calendar className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="date"
-                  required
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
                   className="w-full pl-9 pr-3 py-2.5 bg-[#F8F9FC] border border-slate-200 rounded-xl text-xs font-medium text-[#111827] focus:outline-none focus:border-[#6D28F5] focus:bg-white transition"
@@ -319,6 +339,7 @@ export const ProfilePage: React.FC = () => {
                 onChange={(e) => setGender(e.target.value)}
                 className="w-full px-3 py-2.5 bg-[#F8F9FC] border border-slate-200 rounded-xl text-xs font-medium text-[#111827] focus:outline-none focus:border-[#6D28F5] focus:bg-white transition"
               >
+                <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Non-Binary">Non-Binary</option>
@@ -335,7 +356,7 @@ export const ProfilePage: React.FC = () => {
                   type="tel"
                   value={emergencyContact}
                   onChange={(e) => setEmergencyContact(e.target.value)}
-                  placeholder="+91 98765 12345 (Family Member)"
+                  placeholder="Enter emergency contact number"
                   className="w-full pl-9 pr-3 py-2.5 bg-[#F8F9FC] border border-slate-200 rounded-xl text-xs font-medium text-[#111827] focus:outline-none focus:border-[#6D28F5] focus:bg-white transition"
                 />
               </div>
@@ -359,6 +380,7 @@ export const ProfilePage: React.FC = () => {
                 onChange={(e) => setDepartment(e.target.value)}
                 className="w-full px-3 py-2.5 bg-[#F8F9FC] border border-slate-200 rounded-xl text-xs font-medium text-[#111827] focus:outline-none focus:border-[#6D28F5] focus:bg-white transition"
               >
+                <option value="">Select Primary Utility Department</option>
                 <option value="Electricity Department">Electricity Distribution Corporation</option>
                 <option value="Water Supply & Sewerage Board">Water Supply & Sewerage Board</option>
                 <option value="Natural Gas Distribution Network">Natural Gas Distribution Network</option>
@@ -381,12 +403,11 @@ export const ProfilePage: React.FC = () => {
 
             {/* Service Address */}
             <div className="md:col-span-2">
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Premise Service Address *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Premise Service Address</label>
               <div className="relative">
                 <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="text"
-                  required
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Plot number, Street, Ward, Landmark"

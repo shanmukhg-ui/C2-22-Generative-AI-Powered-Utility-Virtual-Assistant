@@ -6,7 +6,7 @@ class UserPreferencesSchema(BaseModel):
     density: str = Field(default="comfortable", description="comfortable | compact")
     default_landing_page: str = Field(default="dashboard")
     preferred_language: str = Field(default="English")
-    phone: str = Field(default="+91 98765 43210")
+    phone: str = Field(default="")
     email_notifications: bool = Field(default=True)
     in_app_alerts: bool = Field(default=True)
     critical_outage_alerts: bool = Field(default=True)

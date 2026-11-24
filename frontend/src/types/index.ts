@@ -22,6 +22,9 @@ export interface User {
     whatsapp?: boolean;
   };
   email_verified?: boolean;
+  is_active?: boolean;
+  status?: string;
+  created_at?: string;
 }
 
 export interface Citation {

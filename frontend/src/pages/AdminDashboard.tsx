@@ -90,11 +90,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
-  // Metrics matching Screen 5: Total Users 128 (or live 105+), Customers 96, Employees 24, Documents 37
-  const totalUsersCount = users.length > 0 ? (users.length >= 105 ? 128 : users.length) : 128;
-  const customersCount = users.filter(u => u.role === 'Customer').length || 96;
-  const employeesCount = users.filter(u => u.role === 'Employee').length || 24;
-  const documentsCount = documents.length > 0 ? (documents.length >= 6 ? 37 : documents.length) : 37;
+  // Metrics reflecting live Atlas counts with fallback
+  const totalUsersCount = users.length > 0 ? users.length : 105;
+  const customersCount = users.length > 0 ? users.filter(u => u.role === 'Customer').length : 100;
+  const employeesCount = users.length > 0 ? users.filter(u => u.role === 'Employee').length : 4;
+  const documentsCount = documents.length > 0 ? documents.length : 6;
 
   // Filtered users
   const filteredUsers = users.filter(u => {
@@ -120,6 +120,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         <div className="flex items-center space-x-2">
+          <button
+            onClick={() => onNavigate('users')}
+            className="px-4 py-2 bg-[#6D28F5] hover:bg-[#5b20d4] text-white font-semibold text-xs rounded-xl shadow-sm transition flex items-center space-x-2"
+          >
+            <Users className="w-4 h-4" />
+            <span>User Management</span>
+          </button>
           <button
             onClick={() => onNavigate('knowledge')}
             className="px-4 py-2 bg-white hover:bg-slate-50 text-[#171642] font-semibold text-xs rounded-xl border border-slate-200 shadow-sm transition flex items-center space-x-2"
@@ -481,15 +488,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       {u.user_id}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className="inline-flex items-center space-x-1 text-emerald-600 text-[11px] font-semibold">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        <span>Active</span>
-                      </span>
+                      {u.is_active !== false && u.status !== 'Inactive' ? (
+                        <span className="inline-flex items-center space-x-1 text-emerald-600 text-[11px] font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span>Active</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center space-x-1 text-rose-600 text-[11px] font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                          <span>Inactive</span>
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <div className="p-3 bg-slate-50 border-t border-slate-100 text-right">
+              <button
+                onClick={() => onNavigate('users')}
+                className="text-xs font-semibold text-[#6D28F5] hover:underline inline-flex items-center space-x-1"
+              >
+                <span>Open Full User Directory & Provisioning</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         )}
 

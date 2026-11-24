@@ -55,7 +55,7 @@ async def ingest_document(
 @router.post("/search", response_model=Dict[str, Any])
 async def search_knowledge(
     payload: SearchQueryRequest,
-    current_user: Dict[str, Any] = Depends(require_verified_user)
+    current_user: Dict[str, Any] = Depends(get_current_user)
 ):
     """
     Executes semantic similarity search over the knowledge base with role-filtered context.
@@ -72,7 +72,7 @@ async def search_knowledge(
     }
 
 @router.get("/documents", response_model=Dict[str, Any])
-async def list_documents(current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def list_documents(current_user: Dict[str, Any] = Depends(get_current_user)):
     """
     Returns list of all official utility documents and ingestion status.
     """

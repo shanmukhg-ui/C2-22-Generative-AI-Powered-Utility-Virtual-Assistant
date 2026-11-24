@@ -41,8 +41,8 @@ def test_expired_token_returns_401(client: TestClient):
         assert res.status_code == 401
         assert "expired" in res.json()["detail"].lower()
 
-def test_unverified_email_blocked_from_protected_service(client: TestClient):
-    """Unverified email/password accounts must be blocked from protected service endpoints."""
+def test_authenticated_customer_can_access_service_endpoints(client: TestClient):
+    """Authenticated customer accounts can access their own service endpoints without HTTP 403."""
     token_claims = {
         "uid": "fb_unverified_user_1",
         "email": "unverified@example.com",
@@ -55,10 +55,9 @@ def test_unverified_email_blocked_from_protected_service(client: TestClient):
         assert me_res.status_code == 200
         assert me_res.json()["email_verified"] is False
 
-        # Protected operational endpoints reject with 403 Forbidden
+        # Authenticated customer can access their own requests list without 403
         req_res = client.get("/api/requests", headers={"Authorization": "Bearer valid_token"})
-        assert req_res.status_code == 403
-        assert "Email address must be verified" in req_res.json()["detail"]
+        assert req_res.status_code == 200
 
 def test_google_sign_in_is_automatically_email_verified(client: TestClient):
     """Google Sign-In accounts are pre-verified by Google."""

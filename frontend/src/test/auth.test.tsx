@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { LoginPage } from '../pages/LoginPage';
 import { LandingPage } from '../pages/LandingPage';
+import App from '../App';
 import { AuthProvider } from '../contexts/AuthContext';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
@@ -277,5 +278,151 @@ describe('Firebase Authentication UI & Flows', () => {
         screen.getByText('Google Sign-In was closed before completing.')
       ).toBeInTheDocument();
     });
+  });
+
+  it('LoginPage opens persona password prompt directly when initialPersonaId is provided', () => {
+    render(
+      <AuthProvider>
+        <LoginPage onLoginSuccess={onLoginSuccess} initialPersonaId="EMP0001" />
+      </AuthProvider>
+    );
+
+    expect(screen.getByText('Authenticate Demo Persona')).toBeInTheDocument();
+    expect(screen.getAllByText(/Priya Singh/i).length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByPlaceholderText('Enter password...')).toBeInTheDocument();
+  });
+
+  it('LandingPage calls onSelectPersona when persona preview item is clicked', () => {
+    const onGetStarted = vi.fn();
+    const onLogin = vi.fn();
+    const onSelectPersona = vi.fn();
+
+    render(
+      <AuthProvider>
+        <LandingPage
+          onGetStarted={onGetStarted}
+          onLogin={onLogin}
+          onSelectPersona={onSelectPersona}
+        />
+      </AuthProvider>
+    );
+
+    const operationsItem = screen.getByText('Operations');
+    fireEvent.click(operationsItem);
+
+    expect(onSelectPersona).toHaveBeenCalledWith('EMP0001');
+  });
+
+  it('LandingPage calls onLogin when header Login button is clicked', () => {
+    const onGetStarted = vi.fn();
+    const onLogin = vi.fn();
+
+    render(
+      <AuthProvider>
+        <LandingPage onGetStarted={onGetStarted} onLogin={onLogin} />
+      </AuthProvider>
+    );
+
+    const loginHeaderBtn = screen.getByRole('button', { name: /^Login$/i });
+    fireEvent.click(loginHeaderBtn);
+
+    expect(onLogin).toHaveBeenCalled();
+  });
+
+  it('LandingPage interactive demo renders all 4 grounded scenarios without regression', () => {
+    const onGetStarted = vi.fn();
+    const onLogin = vi.fn();
+
+    render(
+      <AuthProvider>
+        <LandingPage onGetStarted={onGetStarted} onLogin={onLogin} />
+      </AuthProvider>
+    );
+
+    // Scenario 1: Check service request
+    fireEvent.click(screen.getByText('Check service request'));
+    expect(screen.getByText(/Found service request 'SR000365'/i)).toBeInTheDocument();
+    expect(screen.getByText('MongoDB Ownership Verified')).toBeInTheDocument();
+    expect(screen.getByText('Service Requests Database [SR000365]')).toBeInTheDocument();
+
+    // Reset demo
+    fireEvent.click(screen.getByText('Reset'));
+
+    // Scenario 2: Track complaint
+    fireEvent.click(screen.getByText('Track complaint'));
+    expect(screen.getByText(/Found grievance 'CMP000251'/i)).toBeInTheDocument();
+    expect(screen.getByText('Consumer Protection SLA Active')).toBeInTheDocument();
+    expect(screen.getByText('Complaints Registry [CMP000251]')).toBeInTheDocument();
+
+    // Reset demo
+    fireEvent.click(screen.getByText('Reset'));
+
+    // Scenario 3: Utility procedures
+    fireEvent.click(screen.getByText('Utility procedures'));
+    expect(screen.getByText(/Mandatory documents for new electricity connection/i)).toBeInTheDocument();
+    expect(screen.getByText('Grounded RAG Verified')).toBeInTheDocument();
+    expect(screen.getByText('Electricity Connection SOP.pdf (Page 4)')).toBeInTheDocument();
+
+    // Reset demo
+    fireEvent.click(screen.getByText('Reset'));
+
+    // Scenario 4: Operational summary
+    fireEvent.click(screen.getByText('Operational summary'));
+    expect(screen.getByText(/Daily Operational Summary: 6 active outages/i)).toBeInTheDocument();
+    expect(screen.getByText('Operational Dispatch Copilot')).toBeInTheDocument();
+    expect(screen.getByText('Daily Incident Telemetry (24 Jan 2025)')).toBeInTheDocument();
+  });
+
+  it('App navigates from LandingPage to full-screen LoginPage and back to LandingPage', async () => {
+    render(<App />);
+
+    // Landing page is displayed initially
+    expect(screen.getByText('Your Utility Services.')).toBeInTheDocument();
+
+    // Click Login button in LandingPage header
+    const loginBtn = screen.getByRole('button', { name: /^Login$/i });
+    fireEvent.click(loginBtn);
+
+    // Transitions to full-screen LoginPage
+    expect(screen.getByText('← Back to home')).toBeInTheDocument();
+    expect(screen.getByText('TechBharat C2-22')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('user@example.com')).toBeInTheDocument();
+
+    // Click "← Back to home"
+    const backBtn = screen.getByRole('button', { name: /← Back to home/i });
+    fireEvent.click(backBtn);
+
+    // Transitions back to LandingPage
+    expect(screen.getByText('Your Utility Services.')).toBeInTheDocument();
+    expect(screen.queryByText('← Back to home')).not.toBeInTheDocument();
+  });
+
+  it('App navigates to LoginPage with persona modal pre-opened when persona preview is clicked on LandingPage', async () => {
+    render(<App />);
+
+    // Click Operations persona link in LandingPage demo preview
+    const operationsItem = screen.getByText('Operations');
+    fireEvent.click(operationsItem);
+
+    // Transitions to full-screen LoginPage with Priya Singh password prompt open
+    expect(screen.getByText('← Back to home')).toBeInTheDocument();
+    expect(screen.getByText('Authenticate Demo Persona')).toBeInTheDocument();
+    expect(screen.getAllByText(/Priya Singh/i).length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByPlaceholderText('Enter password...')).toBeInTheDocument();
+
+    // Close demo modal with Cancel button
+    const cancelBtns = screen.getAllByRole('button', { name: /Cancel/i });
+    fireEvent.click(cancelBtns[cancelBtns.length - 1]);
+
+    // Persona dialog is closed, but still on LoginPage AuthCard
+    expect(screen.queryByText('Authenticate Demo Persona')).not.toBeInTheDocument();
+    expect(screen.getByText('TechBharat C2-22')).toBeInTheDocument();
+
+    // Click "← Back to home"
+    const backBtn = screen.getByRole('button', { name: /← Back to home/i });
+    fireEvent.click(backBtn);
+
+    // Returns to LandingPage
+    expect(screen.getByText('Your Utility Services.')).toBeInTheDocument();
   });
 });

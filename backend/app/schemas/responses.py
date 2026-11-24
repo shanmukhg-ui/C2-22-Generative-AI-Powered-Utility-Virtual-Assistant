@@ -38,6 +38,17 @@ class UserResponse(BaseModel):
     preferred_language: Optional[str] = "English"
     notifications: Optional[Dict[str, bool]] = None
     email_verified: bool = True
+    is_active: bool = True
+    status: Optional[str] = "Active"
+    created_at: Optional[str] = None
+
+class AdminCreateUserResponse(BaseModel):
+    success: bool = True
+    message: str
+    user: Dict[str, Any]
+    activation_link: Optional[str] = None
+    email_delivery: str = "not_configured"
+
 
 class ServiceRequestResponse(BaseModel):
     request_id: str
