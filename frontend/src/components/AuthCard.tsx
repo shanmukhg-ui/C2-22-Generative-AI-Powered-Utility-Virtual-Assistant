@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useAuth, PRESET_USERS, DemoPersona } from '../contexts/AuthContext';
 import {
   ShieldCheck, Lock, User, Mail, ArrowRight, CheckCircle2,
-  Zap, KeyRound, AlertCircle, RefreshCw, X, HelpCircle
+  Zap, KeyRound, AlertCircle, RefreshCw, X, HelpCircle,
+  Briefcase, Shield, ArrowLeft, Eye, EyeOff, ChevronRight, Phone
 } from 'lucide-react';
 
 export interface AuthCardProps {
@@ -11,6 +12,7 @@ export interface AuthCardProps {
   onClose?: () => void;
   title?: string;
   subtitle?: string;
+  initialPersonaId?: string;
 }
 
 export const AuthCard: React.FC<AuthCardProps> = ({
@@ -18,7 +20,8 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   isModal = false,
   onClose,
   title,
-  subtitle
+  subtitle,
+  initialPersonaId
 }) => {
   const {
     user,
@@ -47,8 +50,22 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Demo Persona Password Modal State
-  const [selectedDemo, setSelectedDemo] = useState<DemoPersona | null>(null);
+  const [selectedDemo, setSelectedDemo] = useState<DemoPersona | null>(() => {
+    if (initialPersonaId) {
+      return PRESET_USERS.find(p => p.id === initialPersonaId) || null;
+    }
+    return null;
+  });
+  const [demoTab, setDemoTab] = useState<'signin' | 'signup'>('signin');
   const [demoPasswordInput, setDemoPasswordInput] = useState('');
+  const [demoFullName, setDemoFullName] = useState('');
+  const [demoPhone, setDemoPhone] = useState('9876543210');
+  const [demoConnectionNum, setDemoConnectionNum] = useState('EB-9824-7102');
+  const [demoEmpId, setDemoEmpId] = useState('EMP-4029');
+  const [demoDept, setDemoDept] = useState('Field Operations');
+  const [demoInviteCode, setDemoInviteCode] = useState('ADM-SEC-2026');
+  const [demoOrg, setDemoOrg] = useState('TechBharat Smart Grid Authority');
+  const [demoShowPassword, setDemoShowPassword] = useState(false);
   const [demoError, setDemoError] = useState<string | null>(null);
   const [demoLoading, setDemoLoading] = useState(false);
 
@@ -172,24 +189,82 @@ export const AuthCard: React.FC<AuthCardProps> = ({
     setDemoError(null);
     setSelectedDemo(demo);
     setDemoPasswordInput('');
+    setDemoTab('signin');
+    setDemoFullName(demo.name);
+    setEmail(demo.email);
   };
 
   const handleDemoPasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedDemo || !demoPasswordInput) return;
+    if (!selectedDemo) return;
 
     setDemoLoading(true);
     setDemoError(null);
 
-    const result = await switchPersona(selectedDemo.id, demoPasswordInput);
-    setDemoLoading(false);
+    // 1. Try Firebase Authentication
+    try {
+      if (demoPasswordInput) {
+        await loginWithEmail(selectedDemo.email, demoPasswordInput);
+      }
+      const result = await switchPersona(selectedDemo.id, demoPasswordInput || 'DemoPass123');
+      setDemoLoading(false);
+      if (result.success) {
+        setSelectedDemo(null);
+        if (onSuccess) onSuccess();
+      } else {
+        setDemoError(result.message || 'Authentication failed. Please verify credentials.');
+      }
+    } catch (err: any) {
+      // Seamless fallback for local demo mode
+      const result = await switchPersona(selectedDemo.id, demoPasswordInput || 'DemoPass123');
+      setDemoLoading(false);
+      if (result.success) {
+        setSelectedDemo(null);
+        if (onSuccess) onSuccess();
+      } else {
+        setDemoError(result.message || 'Authentication failed. Please verify credentials.');
+      }
+    }
+  };
 
-    if (result.success) {
+  const handleDemoSignUpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedDemo) return;
+
+    if (!demoFullName.trim()) {
+      setDemoError('Full name is required');
+      return;
+    }
+    if (demoPasswordInput.length < 6) {
+      setDemoError('Password must be at least 6 characters long');
+      return;
+    }
+
+    setDemoLoading(true);
+    setDemoError(null);
+
+    try {
+      await registerWithEmail(demoFullName, selectedDemo.email, demoPasswordInput);
+      await switchPersona(selectedDemo.id, demoPasswordInput);
+      setDemoLoading(false);
       setSelectedDemo(null);
       if (onSuccess) onSuccess();
-    } else {
-      setDemoError(result.message || 'Authentication failed. Please verify the demo password in Firebase Console.');
+    } catch (err: any) {
+      // Seamless fallback for local demo registration
+      await switchPersona(selectedDemo.id, demoPasswordInput);
+      setDemoLoading(false);
+      setSelectedDemo(null);
+      if (onSuccess) onSuccess();
     }
+  };
+
+  const handleDemoQuickBypass = async () => {
+    if (!selectedDemo) return;
+    setDemoLoading(true);
+    await switchPersona(selectedDemo.id);
+    setDemoLoading(false);
+    setSelectedDemo(null);
+    if (onSuccess) onSuccess();
   };
 
   const handleResendVerification = async () => {
@@ -596,64 +671,384 @@ export const AuthCard: React.FC<AuthCardProps> = ({
 
       {/* Demo Persona Password Dialog (Prompted on Persona selection) */}
       {selectedDemo && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-800 rounded-2xl max-w-sm w-full p-6 space-y-4 border border-slate-700 shadow-2xl relative">
-            <button
-              type="button"
-              onClick={() => setSelectedDemo(null)}
-              aria-label="Close demo modal"
-              className="absolute top-4 right-4 text-slate-400 hover:text-white"
-            >
-              <X className="w-4 h-4" />
-            </button>
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full p-6 sm:p-7 space-y-4 shadow-2xl relative text-slate-100 animate-in fade-in zoom-in-95 duration-200 my-8">
+            {/* Top Bar: Change persona & Close */}
+            <div className="flex items-center justify-between pb-1 border-b border-slate-800">
+              <button
+                type="button"
+                onClick={() => setSelectedDemo(null)}
+                className="inline-flex items-center text-xs font-bold text-blue-400 hover:text-blue-300 transition py-1 px-2 rounded-lg hover:bg-slate-800"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
+                Change persona
+              </button>
 
-            <div>
-              <div className="w-10 h-10 rounded-xl bg-blue-600/30 text-blue-400 flex items-center justify-center mb-2">
-                <KeyRound className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-white">Authenticate Demo Persona</h3>
-              <p className="text-xs text-slate-300 mt-1">
-                Authenticating as <strong>{selectedDemo.name}</strong> ({selectedDemo.email}).
-              </p>
+              <button
+                type="button"
+                onClick={() => setSelectedDemo(null)}
+                aria-label="Close demo modal"
+                className="p-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
 
+            {/* Persona Header Banner */}
+            <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/90 flex items-center space-x-3.5">
+              <div
+                className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border shadow-xs ${
+                  selectedDemo.role === 'Administrator'
+                    ? 'bg-slate-950 text-purple-400 border-purple-900/60'
+                    : selectedDemo.role === 'Employee'
+                    ? 'bg-purple-950/70 text-purple-400 border-purple-800/60'
+                    : 'bg-blue-950/70 text-blue-400 border-blue-800/60'
+                }`}
+              >
+                {selectedDemo.role === 'Administrator' ? (
+                  <Shield className="w-5 h-5" />
+                ) : selectedDemo.role === 'Employee' ? (
+                  <Briefcase className="w-5 h-5" />
+                ) : (
+                  <User className="w-5 h-5" />
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-black text-white truncate">Authenticate Demo Persona</h3>
+                  <span
+                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase ${
+                      selectedDemo.role === 'Administrator'
+                        ? 'bg-purple-900 text-purple-300'
+                        : selectedDemo.role === 'Employee'
+                        ? 'bg-indigo-900 text-indigo-300'
+                        : 'bg-blue-900 text-blue-300'
+                    }`}
+                  >
+                    {selectedDemo.role}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-300 mt-0.5 truncate">
+                  Authenticating as <strong>{selectedDemo.name}</strong> ({selectedDemo.email}).
+                </p>
+                <p className="text-[10px] text-slate-400 mt-0.5">
+                  {selectedDemo.role === 'Customer'
+                    ? 'Citizen Self-Service Portal • Tickets & Grievances'
+                    : selectedDemo.role === 'Employee'
+                    ? 'Operations Staff • Outage Telemetry & SCADA'
+                    : 'System Administrator • Users & RAG Ingestion'}
+                </p>
+              </div>
+            </div>
+
+            {/* Segmented Tab Switcher: Sign In vs Create Account */}
+            <div className="flex rounded-xl bg-slate-950 p-1 border border-slate-800">
+              <button
+                type="button"
+                onClick={() => {
+                  setDemoTab('signin');
+                  setDemoError(null);
+                }}
+                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                  demoTab === 'signin'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDemoTab('signup');
+                  setDemoError(null);
+                }}
+                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                  demoTab === 'signup'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Create Account
+              </button>
+            </div>
+
+            {/* Error Alert */}
             {demoError && (
-              <div className="p-2.5 rounded-lg bg-rose-950/70 border border-rose-800 text-rose-200 text-xs">
-                {demoError}
+              <div className="p-2.5 rounded-xl bg-rose-950/70 border border-rose-800 text-rose-200 text-xs flex items-center space-x-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                <span>{demoError}</span>
               </div>
             )}
 
-            <form onSubmit={handleDemoPasswordSubmit} className="space-y-3">
-              <div>
-                <label className="block text-xs font-semibold text-slate-300">Firebase Account Password</label>
-                <input
-                  type="password"
-                  value={demoPasswordInput}
-                  onChange={(e) => setDemoPasswordInput(e.target.value)}
-                  placeholder="Enter password..."
-                  required
-                  autoFocus
-                  className="w-full mt-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+            {/* TAB 1: SIGN IN FORM */}
+            {demoTab === 'signin' && (
+              <form onSubmit={handleDemoPasswordSubmit} className="space-y-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    {selectedDemo.role === 'Customer' ? 'Email address' : 'Work email'}
+                  </label>
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                    <input
+                      type="email"
+                      value={selectedDemo.email}
+                      disabled
+                      className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-slate-400 font-mono"
+                    />
+                  </div>
+                </div>
 
-              <div className="flex gap-2 pt-1">
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-300">Firebase Account Password</label>
+                    <button
+                      type="button"
+                      onClick={() => handlePasswordReset({ preventDefault: () => {} } as any)}
+                      className="text-[11px] font-semibold text-blue-400 hover:underline"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                    <input
+                      type={demoShowPassword ? 'text' : 'password'}
+                      value={demoPasswordInput}
+                      onChange={(e) => setDemoPasswordInput(e.target.value)}
+                      placeholder="Enter password..."
+                      required
+                      autoFocus
+                      className="w-full pl-9 pr-10 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setDemoShowPassword(!demoShowPassword)}
+                      className="absolute right-3 top-2 text-slate-400 hover:text-white"
+                      title={demoShowPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {demoShowPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDemo(null)}
+                    className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={demoLoading}
+                    className="flex-1 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center space-x-1 disabled:opacity-50"
+                  >
+                    {demoLoading ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin mr-1" />
+                        <span>Verifying...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Sign In</span>
+                        <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Instant Demo 1-Click option */}
                 <button
                   type="button"
-                  onClick={() => setSelectedDemo(null)}
-                  className="flex-1 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition"
+                  onClick={handleDemoQuickBypass}
+                  className="w-full py-1.5 text-center text-[11px] text-blue-400 hover:text-blue-300 font-semibold hover:underline"
                 >
-                  Cancel
+                  ⚡ One-Click Instant Demo Login as {selectedDemo.name}
                 </button>
+              </form>
+            )}
+
+            {/* TAB 2: SIGN UP / REGISTRATION FORM */}
+            {demoTab === 'signup' && (
+              <form onSubmit={handleDemoSignUpSubmit} className="space-y-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Full name</label>
+                  <input
+                    type="text"
+                    value={demoFullName}
+                    onChange={(e) => setDemoFullName(e.target.value)}
+                    required
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    {selectedDemo.role === 'Customer' ? 'Email address' : 'Work email'}
+                  </label>
+                  <input
+                    type="email"
+                    value={selectedDemo.email}
+                    disabled
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-slate-400 font-mono"
+                  />
+                </div>
+
+                {/* Role Specific Registration Fields */}
+                {selectedDemo.role === 'Customer' && (
+                  <>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Mobile number</label>
+                      <div className="relative">
+                        <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                        <input
+                          type="tel"
+                          value={demoPhone}
+                          onChange={(e) => setDemoPhone(e.target.value)}
+                          placeholder="9876543210"
+                          className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        Consumer / Connection number
+                      </label>
+                      <input
+                        type="text"
+                        value={demoConnectionNum}
+                        onChange={(e) => setDemoConnectionNum(e.target.value)}
+                        placeholder="EB-9824-7102"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </>
+                )}
+
+                {selectedDemo.role === 'Employee' && (
+                  <>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Employee ID</label>
+                      <input
+                        type="text"
+                        value={demoEmpId}
+                        onChange={(e) => setDemoEmpId(e.target.value)}
+                        placeholder="EMP-4029"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Zone / Department</label>
+                      <select
+                        value={demoDept}
+                        onChange={(e) => setDemoDept(e.target.value)}
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="Field Operations">Field Operations</option>
+                        <option value="Outage Control">Outage Control</option>
+                        <option value="Meter & Telemetry">Meter & Telemetry</option>
+                        <option value="Billing & Support">Billing & Support</option>
+                      </select>
+                    </div>
+                  </>
+                )}
+
+                {selectedDemo.role === 'Administrator' && (
+                  <>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        Admin Security Invite Code
+                      </label>
+                      <input
+                        type="text"
+                        value={demoInviteCode}
+                        onChange={(e) => setDemoInviteCode(e.target.value)}
+                        placeholder="ADM-SEC-2026"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Organization Authority</label>
+                      <input
+                        type="text"
+                        value={demoOrg}
+                        onChange={(e) => setDemoOrg(e.target.value)}
+                        placeholder="TechBharat Smart Grid Authority"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </>
+                )}
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                    <input
+                      type={demoShowPassword ? 'text' : 'password'}
+                      value={demoPasswordInput}
+                      onChange={(e) => setDemoPasswordInput(e.target.value)}
+                      placeholder="Password (min 6 characters)..."
+                      required
+                      className="w-full pl-9 pr-10 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setDemoShowPassword(!demoShowPassword)}
+                      className="absolute right-3 top-2 text-slate-400 hover:text-white"
+                    >
+                      {demoShowPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={demoLoading}
-                  className="flex-1 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center space-x-1"
+                  className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center space-x-1 disabled:opacity-50"
                 >
-                  {demoLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <span>Sign In</span>}
+                  {demoLoading ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin mr-1" />
+                      <span>Creating Account...</span>
+                    </>
+                  ) : (
+                    <span>Create {selectedDemo.role} Account</span>
+                  )}
                 </button>
-              </div>
-            </form>
+              </form>
+            )}
+
+            {/* Google Sign In option */}
+            <div className="pt-2 border-t border-slate-800">
+              <button
+                type="button"
+                onClick={handleGoogleSignIn}
+                className="w-full py-2 px-3 rounded-xl border border-slate-700 bg-slate-950 hover:bg-slate-800 text-xs font-bold text-white transition flex items-center justify-center space-x-2"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24">
+                  <path
+                    fill="#4285F4"
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                  />
+                </svg>
+                <span>Continue with Google</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
