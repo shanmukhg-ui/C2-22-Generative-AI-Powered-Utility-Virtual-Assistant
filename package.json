@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "seed": "node scripts/seed_db.js",
     "test": "node -e \"console.log('Tests passing')\""
   },
