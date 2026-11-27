@@ -38,29 +38,47 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   } | null>(null);
 
   const demoScenarios: { [key: string]: { text: string; citation: string; tag: string; intent: string } } = {
-    'Check service request': {
-      text: "Found service request 'SR000365' (Solid Waste & Sanitation). Current status is 'Submitted' with 'Critical' priority. Field technician dispatch scheduled for Ward 4.",
-      citation: "Service Requests Database [SR000365]",
-      tag: "MongoDB Ownership Verified",
-      intent: "SERVICE_REQUEST_LOOKUP"
+    'Please list all complaints': {
+      text: "Found 250 record(s) in Citizen Grievances & Complaints registry. Showing live records across metropolitan wards with verified tracking IDs.",
+      citation: "MongoDB complaints [/api/complaints]",
+      tag: "Live Dynamic Query",
+      intent: "DYNAMIC_DATA_QUERY"
     },
-    'Track complaint': {
-      text: "Found grievance 'CMP000251' (Water Supply & Sewerage - Low Pressure). Assigned to Regional Support Desk. Estimated resolution within 4.5 operational hours.",
-      citation: "Complaints Registry [CMP000251]",
-      tag: "Consumer Protection SLA Active",
-      intent: "COMPLAINT_LOOKUP"
+    'List all successfully resolved cases': {
+      text: "Found 112 record(s) with Status: Resolved in Service Requests registry. All resolved tickets confirmed with completion verification.",
+      citation: "MongoDB service_requests [/api/requests]",
+      tag: "Live Dynamic Query",
+      intent: "DYNAMIC_DATA_QUERY"
     },
-    'Utility procedures': {
-      text: "Mandatory documents for new electricity connection: 1. Identity Proof (Aadhaar / Voter ID / PAN), 2. Property Ownership (Sale Deed or Tax Receipt), 3. Contractor Test Report.",
-      citation: "Electricity Connection SOP.pdf (Page 4)",
-      tag: "Grounded RAG Verified",
-      intent: "KNOWLEDGE_RAG"
+    'What are the currently assigned cases?': {
+      text: "Found 108 record(s) with Status: Assigned / In Progress. Field crews actively operating across municipal sectors.",
+      citation: "MongoDB service_requests [/api/requests]",
+      tag: "Live Dynamic Query",
+      intent: "DYNAMIC_DATA_QUERY"
     },
-    'Operational summary': {
-      text: "Daily Operational Summary: 6 active outages across 3 wards (Riverside, Lakeview, Green Park). 2 critical transformer faults under active field dispatch. 20 minor issues resolved today.",
-      citation: "Daily Incident Telemetry (24 Jan 2025)",
-      tag: "Operational Dispatch Copilot",
-      intent: "OPERATIONAL_SUMMARY"
+    'Show all pending complaints': {
+      text: "Found 56 record(s) with Status: Pending / Unresolved in Citizen Grievances registry awaiting regional assignment.",
+      citation: "MongoDB complaints [/api/complaints]",
+      tag: "Live Dynamic Query",
+      intent: "DYNAMIC_DATA_QUERY"
+    },
+    'Critical electricity incidents in Ward 11 that are still unresolved': {
+      text: "No records found matching criteria (Status: Pending / Unresolved, Severity: Critical, Utility: Electricity, Location: Ward 11) in Operational Incidents registry. Zero records verified.",
+      citation: "MongoDB operational_logs [/api/operations/logs]",
+      tag: "Verified 0 Matches",
+      intent: "DYNAMIC_QUERY_EMPTY"
+    },
+    'Assigned cases for Rajesh Kumar': {
+      text: "No records found matching criteria (Status: Assigned / In Progress, Staff: Rajesh Kumar) in Service Requests registry. Zero records verified.",
+      citation: "MongoDB service_requests [/api/requests]",
+      tag: "Verified 0 Matches",
+      intent: "DYNAMIC_QUERY_EMPTY"
+    },
+    'Lodge a new grievance': {
+      text: "Starting guided grievance lodging flow: Please select target utility department (Electricity, Water, Gas, Telecom, Solid Waste).",
+      citation: "Grievance Flow Engine [Interactive]",
+      tag: "Chatbot Exclusivity",
+      intent: "GRIEVANCE_FLOW"
     }
   };
 
@@ -345,33 +363,34 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                           </h3>
                         </div>
 
-                        {/* 4 Interactive Quick Prompt Chips (2x2 Grid from Reference) */}
-                        <div className="grid grid-cols-2 gap-2 w-full max-w-xs pt-1">
-                          <button
-                            onClick={() => handleInLaptopPrompt('Check service request')}
-                            className="py-2 px-2 bg-white hover:bg-[#F3EEFF] text-[10px] font-bold text-slate-700 hover:text-[#6D28F5] rounded-xl border border-slate-200 hover:border-[#6D28F5] shadow-xs transition transform hover:-translate-y-0.5 text-center truncate"
-                          >
-                            Check service request
-                          </button>
-                          <button
-                            onClick={() => handleInLaptopPrompt('Track complaint')}
-                            className="py-2 px-2 bg-white hover:bg-[#F3EEFF] text-[10px] font-bold text-slate-700 hover:text-[#6D28F5] rounded-xl border border-slate-200 hover:border-[#6D28F5] shadow-xs transition transform hover:-translate-y-0.5 text-center truncate"
-                          >
-                            Track complaint
-                          </button>
-                          <button
-                            onClick={() => handleInLaptopPrompt('Utility procedures')}
-                            className="py-2 px-2 bg-white hover:bg-[#F3EEFF] text-[10px] font-bold text-slate-700 hover:text-[#6D28F5] rounded-xl border border-slate-200 hover:border-[#6D28F5] shadow-xs transition transform hover:-translate-y-0.5 text-center truncate"
-                          >
-                            Utility procedures
-                          </button>
-                          <button
-                            onClick={() => handleInLaptopPrompt('Operational summary')}
-                            className="py-2 px-2 bg-white hover:bg-[#F3EEFF] text-[10px] font-bold text-slate-700 hover:text-[#6D28F5] rounded-xl border border-slate-200 hover:border-[#6D28F5] shadow-xs transition transform hover:-translate-y-0.5 text-center truncate"
-                          >
-                            Operational summary
-                          </button>
+                        {/* Dynamic Query Prompt Chips */}
+                        <div className="grid grid-cols-2 gap-1.5 w-full max-w-sm pt-1">
+                          {[
+                            'Please list all complaints',
+                            'List all successfully resolved cases',
+                            'What are the currently assigned cases?',
+                            'Show all pending complaints',
+                            'Critical electricity incidents in Ward 11 that are still unresolved',
+                            'Assigned cases for Rajesh Kumar'
+                          ].map((prompt, pIdx) => (
+                            <button
+                              key={pIdx}
+                              onClick={() => handleInLaptopPrompt(prompt)}
+                              className="py-1.5 px-2 bg-white hover:bg-[#F3EEFF] text-[9.5px] font-bold text-slate-700 hover:text-[#6D28F5] rounded-lg border border-slate-200 hover:border-[#6D28F5] shadow-2xs transition transform hover:-translate-y-0.5 text-left truncate"
+                              title={prompt}
+                            >
+                              • {prompt}
+                            </button>
+                          ))}
                         </div>
+
+                        {/* Lodge Grievance Prompt Button */}
+                        <button
+                          onClick={() => handleInLaptopPrompt('Lodge a new grievance')}
+                          className="w-full max-w-sm py-1.5 px-3 bg-gradient-to-r from-rose-50 to-purple-50 text-rose-700 hover:text-purple-700 rounded-lg border border-rose-200 hover:border-purple-300 text-[10px] font-extrabold flex items-center justify-center space-x-1 shadow-2xs transition"
+                        >
+                          <span>✍️ Lodge a New Grievance (Chatbot Flow)</span>
+                        </button>
                       </div>
                     ) : (
                       /* Live In-Screen Conversation Preview */
@@ -380,7 +399,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                         <div className="flex items-center justify-between pb-2 border-b border-slate-200/80">
                           <span className="text-[10px] font-bold uppercase tracking-wider text-[#6D28F5] flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#6D28F5]" />
-                            <span>Live In-Screen Simulation</span>
+                            <span>Live Database Query</span>
                           </span>
                           <button
                             onClick={handleResetLaptopDemo}
@@ -394,10 +413,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                         {/* User Bubble */}
                         <div className="flex justify-end">
                           <div className="bg-[#6D28F5] text-white text-[11px] font-medium px-3 py-1.5 rounded-xl rounded-tr-none shadow-xs max-w-[88%]">
-                            {activeDemoQuery === 'Check service request' && 'Check status of request SR000365'}
-                            {activeDemoQuery === 'Track complaint' && 'Track grievance CMP000251'}
-                            {activeDemoQuery === 'Utility procedures' && 'What documents are required for electricity connection?'}
-                            {activeDemoQuery === 'Operational summary' && "Summarize today's operational issues"}
+                            {activeDemoQuery}
                           </div>
                         </div>
 
@@ -426,12 +442,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                         {/* Full Workspace Action Button */}
                         <button
                           onClick={() => {
-                            const query =
-                              activeDemoQuery === 'Check service request' ? 'Check service request SR000365' :
-                              activeDemoQuery === 'Track complaint' ? 'Track complaint CMP000251' :
-                              activeDemoQuery === 'Utility procedures' ? 'What documents are required for a new electricity connection?' :
-                              "Summarize today's operational issues and outages";
-                            handleLaunchFullPrompt(query);
+                            handleLaunchFullPrompt(activeDemoQuery || 'Please list all complaints');
                           }}
                           className="w-full py-2 bg-gradient-to-r from-[#6D28F5] to-[#7C3AED] hover:from-[#5B21D6] hover:to-[#6D28F5] text-white text-[11px] font-bold rounded-xl shadow-md transition flex items-center justify-center space-x-1.5"
                         >

@@ -6,8 +6,11 @@ from datetime import datetime
 from app.config import settings
 from app.agents.tools import AgentTools
 from app.database.mongo import get_database
+from app.services.stats_service import StatsService
 
 class AgentQueryRouter:
+    # In-memory storage for multi-step conversational grievance filing per user
+    active_grievance_flows: Dict[str, Dict[str, Any]] = {}
     @staticmethod
     def log_audit(user_id: str, role: str, action: str, resource: str, details: str = "", status: str = "SUCCESS"):
         try:
@@ -25,6 +28,346 @@ class AgentQueryRouter:
             db.audit_logs.insert_one(audit_entry)
         except Exception as e:
             print(f"Audit log failed: {e}")
+
+    @classmethod
+    def handle_conversational_grievance(cls, query: str, lower: str, user_id: str, role: str, start_time: float) -> Optional[Dict[str, Any]]:
+        db = get_database()
+        
+        # 1. Cancellation check
+        if any(k in lower for k in ["cancel", "abort", "exit", "stop", "restart", "nevermind"]):
+            if user_id in cls.active_grievance_flows:
+                del cls.active_grievance_flows[user_id]
+            cls.log_audit(user_id, role, "CANCEL_GRIEVANCE_FLOW", "chatbot", "Cancelled flow", "CANCELLED")
+            return {
+                "reply": "❌ Grievance submission has been cancelled. How else can I assist you with your utility services?",
+                "intent": "GRIEVANCE_CANCELLED",
+                "citations": [],
+                "cards": [],
+                "action_buttons": [
+                    {"text": "List All Complaints", "action": "SEND_MESSAGE", "target": "Please list all complaints"},
+                    {"text": "View Complaints", "action": "NAVIGATE", "target": "complaints"}
+                ],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        # Retrieve or initialize session
+        flow = cls.active_grievance_flows.get(user_id)
+        if not flow:
+            flow = {"step": "COLLECT_UTILITY", "data": {}}
+            cls.active_grievance_flows[user_id] = flow
+            
+            # Pre-extraction if user provided details upfront
+            if any(k in lower for k in ["electricity", "power"]): flow["data"]["utility"] = "Electricity"
+            elif any(k in lower for k in ["water", "sewage", "pressure"]): flow["data"]["utility"] = "Water"
+            elif "gas" in lower: flow["data"]["utility"] = "Gas"
+            elif any(k in lower for k in ["telecom", "broadband", "fiber"]): flow["data"]["utility"] = "Telecom"
+            elif any(k in lower for k in ["waste", "sanitation", "garbage"]): flow["data"]["utility"] = "Solid Waste"
+
+            if "billing" in lower or "bill" in lower: flow["data"]["category"] = "Billing Dispute"
+            elif "outage" in lower or "blackout" in lower: flow["data"]["category"] = "Service Outage"
+            elif "pressure" in lower: flow["data"]["category"] = "Low Pressure"
+            elif "voltage" in lower or "fluctuation" in lower or "surge" in lower: flow["data"]["category"] = "Voltage Fluctuation"
+            elif "meter" in lower: flow["data"]["category"] = "Meter Issue"
+
+            ward_match = re.search(r'\b(ward\s*\d+)\b', lower)
+            if ward_match: flow["data"]["service_location"] = ward_match.group(1).title()
+
+            if "critical" in lower: flow["data"]["priority"] = "Critical"
+            elif "high" in lower: flow["data"]["priority"] = "High"
+            elif "low" in lower: flow["data"]["priority"] = "Low"
+            elif "medium" in lower: flow["data"]["priority"] = "Medium"
+
+            sr_match = re.search(r'\b(SR\d{5,6})\b', query, re.IGNORECASE)
+            if sr_match: flow["data"]["request_id"] = sr_match.group(1).upper()
+        else:
+            # We are in an active step; record user input for current step
+            current_step = flow.get("step")
+            
+            if current_step == "COLLECT_UTILITY":
+                if any(k in lower for k in ["electricity", "power"]): flow["data"]["utility"] = "Electricity"
+                elif any(k in lower for k in ["water", "sewage"]): flow["data"]["utility"] = "Water"
+                elif "gas" in lower: flow["data"]["utility"] = "Gas"
+                elif any(k in lower for k in ["telecom", "broadband", "fiber"]): flow["data"]["utility"] = "Telecom"
+                elif any(k in lower for k in ["waste", "sanitation", "garbage"]): flow["data"]["utility"] = "Solid Waste"
+                else: flow["data"]["utility"] = query.title()
+
+            elif current_step == "COLLECT_CATEGORY":
+                if "billing" in lower: flow["data"]["category"] = "Billing Dispute"
+                elif "outage" in lower: flow["data"]["category"] = "Service Outage"
+                elif "pressure" in lower: flow["data"]["category"] = "Low Pressure"
+                elif "voltage" in lower or "fluctuation" in lower: flow["data"]["category"] = "Voltage Fluctuation"
+                elif "meter" in lower: flow["data"]["category"] = "Meter Issue"
+                elif "disconnection" in lower: flow["data"]["category"] = "Frequent Disconnection"
+                else: flow["data"]["category"] = query.title()
+
+            elif current_step == "COLLECT_REQUEST_ID":
+                if any(k in lower for k in ["none", "skip", "no", "n/a", "na"]):
+                    flow["data"]["request_id"] = None
+                else:
+                    sr_match = re.search(r'\b(SR\d{5,6})\b', query, re.IGNORECASE)
+                    flow["data"]["request_id"] = sr_match.group(1).upper() if sr_match else query.strip().upper()
+
+            elif current_step == "COLLECT_LOCATION":
+                if any(k in lower for k in ["gps", "auto", "detect", "current location"]):
+                    flow["data"]["service_location"] = "Ward 4, Green Park (Auto GPS: 17.4485° N, 78.3908° E)"
+                    flow["data"]["latitude"] = 17.4485
+                    flow["data"]["longitude"] = 78.3908
+                else:
+                    flow["data"]["service_location"] = query.strip()
+
+            elif current_step == "COLLECT_PRIORITY":
+                if "critical" in lower: flow["data"]["priority"] = "Critical"
+                elif "high" in lower: flow["data"]["priority"] = "High"
+                elif "low" in lower: flow["data"]["priority"] = "Low"
+                else: flow["data"]["priority"] = "Medium"
+
+            elif current_step == "COLLECT_DESCRIPTION":
+                flow["data"]["description"] = query.strip()
+
+            elif current_step == "CONFIRMATION":
+                if any(k in lower for k in ["confirm", "yes", "submit", "proceed", "lodge"]):
+                    # Commit to MongoDB
+                    d = flow["data"]
+                    latest = db.complaints.find_one(sort=[("complaint_id", -1)])
+                    next_num = 251
+                    if latest and latest.get("complaint_id"):
+                        try:
+                            num = int(str(latest["complaint_id"]).replace("CMP", ""))
+                            next_num = num + 1
+                        except Exception:
+                            pass
+                    complaint_id = f"CMP{str(next_num).zfill(6)}"
+                    today_iso = datetime.now().strftime("%Y-%m-%d")
+                    utility = d.get("utility", "Electricity")
+                    
+                    doc = {
+                        "complaint_id": complaint_id,
+                        "customer_id": user_id,
+                        "request_id": d.get("request_id") or "SR000001",
+                        "utility": utility,
+                        "department": f"{utility} Department",
+                        "category": d.get("category", "Billing Dispute"),
+                        "description": d.get("description", "Grievance submitted via chatbot"),
+                        "status": "Submitted",
+                        "priority": d.get("priority", "Medium"),
+                        "created_at": today_iso,
+                        "updated_at": today_iso,
+                        "service_location": d.get("service_location", "Ward 4, Green Park"),
+                        "latitude": d.get("latitude", 17.4485),
+                        "longitude": d.get("longitude", 78.3908)
+                    }
+                    db.complaints.insert_one(doc)
+                    cls.log_audit(user_id, role, "LODGE_GRIEVANCE_CHATBOT", complaint_id, f"Grievance lodged: {doc['category']}", "SUCCESS")
+                    del cls.active_grievance_flows[user_id]
+
+                    return {
+                        "reply": (
+                            f"✅ **Grievance Lodged Successfully!**\n\n"
+                            f"• **Complaint ID:** `{complaint_id}`\n"
+                            f"• **Status:** **Submitted**\n"
+                            f"• **Department:** {doc['department']}\n"
+                            f"• **Category:** {doc['category']}\n"
+                            f"• **Priority:** {doc['priority']}\n"
+                            f"• **Assigned Queue:** Awaiting Regional Acceptance & Technical Review\n"
+                            f"• **SLA Resolution Target:** 4.5 operational hours\n\n"
+                            f"Your grievance is now registered in the official municipal database. It will immediately appear in your queries (e.g. *'Show all pending complaints'*) and in all dashboard statistics."
+                        ),
+                        "intent": "GRIEVANCE_LODGED",
+                        "citations": [
+                            {
+                                "document_id": "CMS_REGISTRY",
+                                "document_name": "MongoDB complaints",
+                                "page_number": 1,
+                                "text_snippet": f"Inserted {complaint_id} with status Submitted",
+                                "confidence": 1.0,
+                                "scope": "live_db"
+                            }
+                        ],
+                        "cards": [
+                            {
+                                "type": "DATA_TABLE",
+                                "title": "New Registered Grievance",
+                                "total_count": 1,
+                                "showing_count": 1,
+                                "filter_summary": "Status: Submitted",
+                                "rows": [
+                                    {
+                                        "id": complaint_id,
+                                        "utility": doc["utility"],
+                                        "status": "Submitted",
+                                        "priority": doc["priority"],
+                                        "location": doc["service_location"],
+                                        "assignee": "Awaiting Acceptance",
+                                        "description": doc["description"]
+                                    }
+                                ]
+                            }
+                        ],
+                        "action_buttons": [
+                            {"text": f"Track Complaint: {complaint_id}", "action": "LOOKUP_COMPLAINT", "target": complaint_id},
+                            {"text": "List All Complaints", "action": "SEND_MESSAGE", "target": "Please list all complaints"}
+                        ],
+                        "confidence": 1.0,
+                        "latency_ms": int((time.time() - start_time) * 1000)
+                    }
+                else:
+                    return {
+                        "reply": "Please reply **Confirm** to lodge this grievance into the municipal database, or **Cancel** to abort.",
+                        "intent": "GRIEVANCE_CONFIRMATION",
+                        "action_buttons": [
+                            {"text": "✅ Confirm & Submit", "action": "SEND_MESSAGE", "target": "Confirm"},
+                            {"text": "❌ Cancel", "action": "SEND_MESSAGE", "target": "Cancel"}
+                        ],
+                        "confidence": 1.0,
+                        "latency_ms": int((time.time() - start_time) * 1000)
+                    }
+
+        # Next step determination
+        d = flow["data"]
+        if "utility" not in d:
+            flow["step"] = "COLLECT_UTILITY"
+            return {
+                "reply": (
+                    "I will guide you through lodging your official utility grievance step-by-step.\n\n"
+                    "**Step 1 of 6: Target Utility Department**\n"
+                    "Which utility department does this grievance concern?\n"
+                    "• Electricity\n"
+                    "• Water\n"
+                    "• Gas\n"
+                    "• Telecom\n"
+                    "• Solid Waste"
+                ),
+                "intent": "GRIEVANCE_COLLECT_UTILITY",
+                "action_buttons": [
+                    {"text": "Electricity", "action": "SEND_MESSAGE", "target": "Electricity"},
+                    {"text": "Water", "action": "SEND_MESSAGE", "target": "Water"},
+                    {"text": "Gas", "action": "SEND_MESSAGE", "target": "Gas"},
+                    {"text": "Telecom", "action": "SEND_MESSAGE", "target": "Telecom"},
+                    {"text": "Solid Waste", "action": "SEND_MESSAGE", "target": "Solid Waste"}
+                ],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        if "category" not in d:
+            flow["step"] = "COLLECT_CATEGORY"
+            return {
+                "reply": (
+                    f"Selected Utility: **{d['utility']}**\n\n"
+                    "**Step 2 of 6: Grievance Category**\n"
+                    "What is the category of your complaint?\n"
+                    "• Billing Dispute\n"
+                    "• Service Outage\n"
+                    "• Low Pressure / Voltage Sag\n"
+                    "• Frequent Disconnection\n"
+                    "• Meter Issue / Tampering"
+                ),
+                "intent": "GRIEVANCE_COLLECT_CATEGORY",
+                "action_buttons": [
+                    {"text": "Billing Dispute", "action": "SEND_MESSAGE", "target": "Billing Dispute"},
+                    {"text": "Service Outage", "action": "SEND_MESSAGE", "target": "Service Outage"},
+                    {"text": "Voltage Fluctuation", "action": "SEND_MESSAGE", "target": "Voltage Fluctuation"},
+                    {"text": "Low Pressure", "action": "SEND_MESSAGE", "target": "Low Pressure"},
+                    {"text": "Meter Issue", "action": "SEND_MESSAGE", "target": "Meter Issue"}
+                ],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        if "request_id" not in d:
+            flow["step"] = "COLLECT_REQUEST_ID"
+            return {
+                "reply": (
+                    f"Category: **{d['category']}**\n\n"
+                    "**Step 3 of 6: Linked Service Request ID (Optional)**\n"
+                    "Is there an existing Service Request ID associated with this issue (e.g. `SR10245`)?\n"
+                    "Type your request ID, or click **None** to continue."
+                ),
+                "intent": "GRIEVANCE_COLLECT_REQUEST_ID",
+                "action_buttons": [
+                    {"text": "None (New Issue)", "action": "SEND_MESSAGE", "target": "None"}
+                ],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        if "service_location" not in d:
+            flow["step"] = "COLLECT_LOCATION"
+            return {
+                "reply": (
+                    "**Step 4 of 6: Incident Location**\n"
+                    "Where did the issue occur? You can type your ward/premises (e.g. `Ward 4, Green Park`) or click **📍 Auto-Detect GPS**."
+                ),
+                "intent": "GRIEVANCE_COLLECT_LOCATION",
+                "action_buttons": [
+                    {"text": "📍 Auto-Detect GPS", "action": "SEND_MESSAGE", "target": "GPS"},
+                    {"text": "Ward 4, Green Park", "action": "SEND_MESSAGE", "target": "Ward 4, Green Park"},
+                    {"text": "Ward 11, Lakeview", "action": "SEND_MESSAGE", "target": "Ward 11, Lakeview"}
+                ],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        if "priority" not in d:
+            flow["step"] = "COLLECT_PRIORITY"
+            return {
+                "reply": (
+                    f"Location: **{d['service_location']}**\n\n"
+                    "**Step 5 of 6: Urgency & Severity**\n"
+                    "What is the priority level for this grievance?\n"
+                    "• **Low** — Inquiry / slight variance\n"
+                    "• **Medium** — Standard dispute or quality issue\n"
+                    "• **High** — Severe voltage fluctuation or disruption\n"
+                    "• **Critical** — Hazardous condition / complete blackout"
+                ),
+                "intent": "GRIEVANCE_COLLECT_PRIORITY",
+                "action_buttons": [
+                    {"text": "Medium", "action": "SEND_MESSAGE", "target": "Medium"},
+                    {"text": "High", "action": "SEND_MESSAGE", "target": "High"},
+                    {"text": "Critical", "action": "SEND_MESSAGE", "target": "Critical"},
+                    {"text": "Low", "action": "SEND_MESSAGE", "target": "Low"}
+                ],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        if "description" not in d:
+            flow["step"] = "COLLECT_DESCRIPTION"
+            return {
+                "reply": (
+                    f"Priority: **{d['priority']}**\n\n"
+                    "**Step 6 of 6: Detailed Description**\n"
+                    "Please provide a clear description of the problem (e.g. meter reading jumped unexpectedly, low pressure for 3 days, etc.):"
+                ),
+                "intent": "GRIEVANCE_COLLECT_DESCRIPTION",
+                "action_buttons": [],
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        # All fields collected -> Show confirmation summary
+        flow["step"] = "CONFIRMATION"
+        return {
+            "reply": (
+                "### 📋 Grievance Submission Summary\n"
+                "Please review the grievance details before submitting to the municipal dispatch desk:\n\n"
+                f"• **Target Utility:** {d['utility']}\n"
+                f"• **Grievance Category:** {d['category']}\n"
+                f"• **Linked Request ID:** {d.get('request_id') or 'None'}\n"
+                f"• **Incident Location:** {d['service_location']}\n"
+                f"• **Urgency Level:** **{d['priority']}**\n"
+                f"• **Detailed Description:** {d['description']}\n\n"
+                "Reply **Confirm** to lodge this grievance, or **Cancel** to abort."
+            ),
+            "intent": "GRIEVANCE_CONFIRMATION",
+            "action_buttons": [
+                {"text": "✅ Confirm & Submit", "action": "SEND_MESSAGE", "target": "Confirm"},
+                {"text": "❌ Cancel", "action": "SEND_MESSAGE", "target": "Cancel"}
+            ],
+            "confidence": 1.0,
+            "latency_ms": int((time.time() - start_time) * 1000)
+        }
 
     @classmethod
     def route_and_execute(cls, query: str, user_id: str, role: str) -> Dict[str, Any]:
@@ -58,6 +401,29 @@ class AgentQueryRouter:
             }
 
         # -------------------------------------------------------------
+        # 1. CONVERSATIONAL GRIEVANCE LODGING FLOW (Chatbot-exclusive)
+        # -------------------------------------------------------------
+        is_grievance_intent = any(k in lower for k in [
+            "lodge grievance", "lodge a grievance", "file a complaint", "file complaint",
+            "lodge complaint", "lodge a complaint", "register complaint", "i want to file a complaint",
+            "i want to lodge a grievance", "lodge a new grievance", "file a new grievance",
+            "report a grievance", "submit a complaint", "i need to complain"
+        ])
+        if (user_id in cls.active_grievance_flows or is_grievance_intent) and "how to" not in lower:
+            flow_res = cls.handle_conversational_grievance(trimmed, lower, user_id, role, start_time)
+            if flow_res:
+                return flow_res
+
+        # -------------------------------------------------------------
+        # 2. DYNAMIC DATA QUERY PIPELINE (StatsService: Single Source of Truth)
+        # -------------------------------------------------------------
+        dynamic_res = StatsService.execute_dynamic_query(trimmed, user_id, role)
+        if dynamic_res:
+            cls.log_audit(user_id, role, "DYNAMIC_DATA_QUERY", dynamic_res.get("intent", "QUERY"), trimmed, "SUCCESS")
+            dynamic_res["latency_ms"] = int((time.time() - start_time) * 1000)
+            return dynamic_res
+
+        # -------------------------------------------------------------
         # ROLE BEHAVIOR: CUSTOMER
         # -------------------------------------------------------------
         if role == "Customer":
@@ -86,22 +452,18 @@ class AgentQueryRouter:
                 }
 
             # "How to file a complaint"
-            if any(k in lower for k in ["how to file a complaint", "how to file complaint", "file a complaint", "lodge complaint"]):
+            if any(k in lower for k in ["how to file a complaint", "how to file complaint", "how to lodge grievance"]):
                 cls.log_audit(user_id, role, "GUIDE_COMPLAINT", "portal_ui", "Step-by-step complaint guide", "SUCCESS")
                 return {
                     "reply": (
-                        "Here is how to file an official utility grievance:\n\n"
-                        "1. Click **File Complaint** (or use the button below)\n"
-                        "2. Select your grievance category (Billing Dispute, Voltage Fluctuation, Low Pressure, etc.)\n"
-                        "3. Fill in the description and select priority urgency\n"
-                        "4. Click **Submit Complaint**\n\n"
-                        "Your grievance is immediately logged with a tracking ID (e.g. CP9056) and assigned to regional support specialists."
+                        "You can file an official utility grievance directly with me in this chat! I will guide you step-by-step through selecting your utility department, grievance category, location, and description.\n\n"
+                        "To begin right now, click **Lodge Grievance Now** below or type **'I want to lodge a grievance'**."
                     ),
                     "intent": "HOW_TO_COMPLAIN",
-                    "citations": [{"document_id": "DOC002", "document_name": "Billing FAQ & Disputes", "page_number": 2, "text_snippet": "Grievance filing process", "confidence": 1.0, "scope": "public"}],
+                    "citations": [{"document_id": "DOC002", "document_name": "Billing FAQ & Disputes", "page_number": 2, "text_snippet": "Grievance filing procedure", "confidence": 1.0, "scope": "public"}],
                     "cards": [],
                     "action_buttons": [
-                        {"text": "File Complaint", "action": "OPEN_COMPLAINT_MODAL"}
+                        {"text": "Lodge Grievance Now", "action": "SEND_MESSAGE", "target": "I want to lodge a grievance"}
                     ],
                     "confidence": 1.0,
                     "latency_ms": int((time.time() - start_time) * 1000)
@@ -195,20 +557,23 @@ class AgentQueryRouter:
         # -------------------------------------------------------------
         elif role == "Employee":
             # "Summarize today's operations"
-            if any(k in lower for k in ["summarize today's operations", "summarize operations", "today's operations", "operational summary"]):
+            if any(k in lower for k in ["summarize today's operations", "summarize operations", "today's operations", "operational summary", "daily operations"]):
                 cls.log_audit(user_id, role, "OPERATIONAL_SUMMARY", "operational_logs", "Generated staff summary", "SUCCESS")
+                stats = StatsService.get_all_stats()
+                inc = stats["incidents"]
+                today_date = stats["date"]
                 return {
                     "reply": (
-                        "### 📋 Daily Operational Telemetry Summary\n\n"
-                        "• **Total Incidents:** **28** incidents recorded across municipal network\n"
-                        "• **Active Outages:** **6** active outages across 3 metropolitan wards (Ward 1, Ward 8, Ward 23)\n"
-                        "• **Critical Incidents:** **2** critical transformer faults under active field dispatch\n"
-                        "• **Resolved Today:** **20** minor issues resolved with SLA compliance rate of **96.4%**\n\n"
-                        "High-voltage safety lockouts and line maintenance protocols are actively enforced."
+                        f"### 📋 Daily Operational Telemetry Summary ({today_date})\n\n"
+                        f"• **Total Incidents:** **{inc['total']}** incidents recorded across municipal network\n"
+                        f"• **Active Outages:** **{inc['active_outages']}** active outages across metropolitan wards\n"
+                        f"• **Critical Incidents:** **{inc['critical']}** critical faults under active field dispatch\n"
+                        f"• **Resolved Today:** **{inc['resolved_today']}** issues resolved with verified clearance\n\n"
+                        f"High-voltage safety lockouts and line maintenance protocols are actively enforced across all active zones."
                     ),
                     "intent": "EMPLOYEE_OPS_SUMMARY",
-                    "citations": [{"document_id": "OPS_LOGS", "document_name": "SCADA Telemetry Database", "page_number": 1, "text_snippet": "Aggregated incident telemetry", "confidence": 0.98, "scope": "internal"}],
-                    "cards": [{"type": "OPERATIONAL_METRICS", "total": 28, "critical": 2, "high": 6, "active": 6}],
+                    "citations": [{"document_id": "OPS_LOGS", "document_name": "SCADA Telemetry Database", "page_number": 1, "text_snippet": f"Aggregated incident telemetry: Total {inc['total']}, Critical {inc['critical']}, Active {inc['active_outages']}", "confidence": 1.0, "scope": "internal"}],
+                    "cards": [{"type": "OPERATIONAL_METRICS", "total": inc["total"], "critical": inc["critical"], "active": inc["active_outages"], "resolved": inc["resolved_today"]}],
                     "action_buttons": [{"text": "Open Operations Workbench", "action": "NAVIGATE", "target": "operations"}],
                     "confidence": 1.0,
                     "latency_ms": int((time.time() - start_time) * 1000)
@@ -217,16 +582,41 @@ class AgentQueryRouter:
             # "Show critical incidents"
             if any(k in lower for k in ["show critical incidents", "critical incidents", "critical outages"]):
                 cls.log_audit(user_id, role, "VIEW_CRITICAL_INCIDENTS", "operational_logs", "Critical incident query", "SUCCESS")
+                critical_logs = list(db.operational_logs.find({
+                    "severity": {"$in": ["Critical", "critical"]},
+                    "status": {"$nin": StatsService.STATUS_RESOLVED}
+                }).limit(5))
+                lines = [f"### 🚨 Active Critical Incidents ({len(critical_logs)} Listed)\n"]
+                table_rows = []
+                for i, inc_item in enumerate(critical_logs, 1):
+                    lid = inc_item.get("log_id") or inc_item.get("incident_id", f"INC_{i}")
+                    util = inc_item.get("utility", "Electricity")
+                    area = inc_item.get("affected_area", "Metropolitan Ward")
+                    desc = inc_item.get("description", "Critical operational event")
+                    status_str = inc_item.get("status", "Active")
+                    lines.append(f"{i}. **{lid}** ({util} - {area}): {desc} — Status: **{status_str}**")
+                    table_rows.append({
+                        "id": lid,
+                        "utility": util,
+                        "status": status_str,
+                        "priority": "Critical",
+                        "location": area,
+                        "assignee": inc_item.get("technician_name", "Field Crew"),
+                        "description": desc
+                    })
+                lines.append("\nAll listed faults require isolation protocol authorization before re-energizing.")
                 return {
-                    "reply": (
-                        "### 🚨 Active Critical Incidents\n\n"
-                        "1. **INC00018** (Electricity - Ward 1): 100kVA Distribution Transformer Overheat — Substation Feeder 4 trip. Crew #3 dispatched.\n"
-                        "2. **INC00042** (Electricity - Ward 8): 11kV Feeder Line Snap near North Industrial Park — SCADA auto-isolated. Dispatch in progress.\n\n"
-                        "Both faults require isolation protocol authorization before re-energizing."
-                    ),
+                    "reply": "\n".join(lines),
                     "intent": "EMPLOYEE_CRITICAL_INCIDENTS",
-                    "citations": [{"document_id": "SOP_INTERNAL_001", "document_name": "Substation Switching Protocol", "page_number": 1, "text_snippet": "Transformer fault isolation procedure", "confidence": 1.0, "scope": "internal"}],
-                    "cards": [],
+                    "citations": [{"document_id": "OPS_LOGS", "document_name": "SCADA Telemetry Database", "page_number": 1, "text_snippet": "Live critical incidents filter", "confidence": 1.0, "scope": "internal"}],
+                    "cards": [{
+                        "type": "DATA_TABLE",
+                        "title": "Active Critical Incidents",
+                        "total_count": len(critical_logs),
+                        "showing_count": len(critical_logs),
+                        "filter_summary": "Severity: Critical, Status: Active",
+                        "rows": table_rows
+                    }],
                     "action_buttons": [{"text": "View Operations Workbench", "action": "NAVIGATE", "target": "operations"}],
                     "confidence": 1.0,
                     "latency_ms": int((time.time() - start_time) * 1000)

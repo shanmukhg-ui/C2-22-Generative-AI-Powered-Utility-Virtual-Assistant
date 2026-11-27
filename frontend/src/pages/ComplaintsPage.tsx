@@ -8,10 +8,11 @@ import {
 } from 'lucide-react';
 
 interface ComplaintsPageProps {
-  onOpenNewComplaint: () => void;
+  onOpenNewComplaint?: () => void;
+  onNavigate?: (page: string, prompt?: string) => void;
 }
 
-export const ComplaintsPage: React.FC<ComplaintsPageProps> = ({ onOpenNewComplaint }) => {
+export const ComplaintsPage: React.FC<ComplaintsPageProps> = ({ onOpenNewComplaint, onNavigate }) => {
   const { user } = useAuth();
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,11 +85,17 @@ export const ComplaintsPage: React.FC<ComplaintsPageProps> = ({ onOpenNewComplai
           </p>
         </div>
         <button
-          onClick={onOpenNewComplaint}
-          className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center space-x-2 self-start md:self-auto"
+          onClick={() => {
+            if (onNavigate) {
+              onNavigate('chat', 'I want to lodge a grievance');
+            } else if (onOpenNewComplaint) {
+              onOpenNewComplaint();
+            }
+          }}
+          className="px-4 py-2.5 bg-gradient-to-r from-rose-600 to-[#6D28F5] hover:from-rose-700 hover:to-[#5B21D6] text-white font-bold text-xs rounded-xl shadow-md transition flex items-center space-x-2 self-start md:self-auto active:scale-95"
         >
           <Plus className="w-4 h-4" />
-          <span>Lodge Grievance</span>
+          <span>Lodge Grievance via AI Assistant</span>
         </button>
       </div>
 

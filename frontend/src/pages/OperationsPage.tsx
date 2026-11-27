@@ -65,19 +65,22 @@ export const OperationsPage: React.FC = () => {
   const [savingFleet, setSavingFleet] = useState(false);
 
   // AI Summary State
-  const [summaryDate, setSummaryDate] = useState('2025-02-14');
+  const [summaryDate, setSummaryDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [generatingSummary, setGeneratingSummary] = useState(false);
   const [aiSummary, setAiSummary] = useState<string | null>(null);
+  const [stats, setStats] = useState<any>(null);
 
   const fetchIntakeData = async () => {
     setLoadingIntake(true);
     try {
-      const [reqRes, cmpRes] = await Promise.all([
-        requestsApi.listRequests({ limit: 60 }),
-        complaintsApi.listComplaints({ limit: 60 })
+      const [reqRes, cmpRes, statsRes] = await Promise.all([
+        requestsApi.listRequests({ limit: 100 }),
+        complaintsApi.listComplaints({ limit: 100 }),
+        operationsApi.getStats().catch(() => null)
       ]);
       setAllRequests(reqRes.requests || reqRes.records || []);
       setAllComplaints(cmpRes.complaints || cmpRes.records || []);
+      if (statsRes) setStats(statsRes);
     } catch (err) {
       console.error('Failed to load intake queues:', err);
     } finally {
@@ -248,6 +251,11 @@ export const OperationsPage: React.FC = () => {
     }
   };
 
+  // Shared Canonical Status Functions matching StatsService definitions
+  const isAwaiting = (s: string) => ['submitted', 'pending', 'open'].includes((s || '').toLowerCase());
+  const isInProgress = (s: string) => ['in progress', 'assigned', 'under investigation', 'crew assigned', 'inspection started', 'monitoring ongoing'].includes((s || '').toLowerCase());
+  const isResolved = (s: string) => ['completed', 'resolved', 'repair completed', 'closed'].includes((s || '').toLowerCase());
+
   // Filtered requests in Intake
   const filteredRequests = allRequests.filter((r) => {
     const s = (r.status || '').toLowerCase();
@@ -255,10 +263,10 @@ export const OperationsPage: React.FC = () => {
       intakeStatusFilter === 'all'
         ? true
         : intakeStatusFilter === 'submitted'
-        ? s === 'submitted' || s === 'pending' || s === 'open'
+        ? isAwaiting(s)
         : intakeStatusFilter === 'in_progress'
-        ? s === 'in progress' || s === 'assigned'
-        : s === 'completed' || s === 'resolved';
+        ? isInProgress(s)
+        : isResolved(s);
 
     const matchesSearch = intakeSearch
       ? r.request_id.toLowerCase().includes(intakeSearch.toLowerCase()) ||
@@ -277,10 +285,10 @@ export const OperationsPage: React.FC = () => {
       intakeStatusFilter === 'all'
         ? true
         : intakeStatusFilter === 'submitted'
-        ? s === 'submitted' || s === 'open'
+        ? isAwaiting(s)
         : intakeStatusFilter === 'in_progress'
-        ? s === 'under investigation' || s === 'in progress'
-        : s === 'resolved' || s === 'closed';
+        ? isInProgress(s)
+        : isResolved(s);
 
     const matchesSearch = intakeSearch
       ? c.complaint_id.toLowerCase().includes(intakeSearch.toLowerCase()) ||
@@ -292,10 +300,12 @@ export const OperationsPage: React.FC = () => {
     return matchesFilter && matchesSearch;
   });
 
-  // KPI Counts for Intake
-  const pendingRequestsCount = allRequests.filter(r => (r.status || '').toLowerCase() === 'submitted' || (r.status || '').toLowerCase() === 'pending').length;
-  const inProgressRequestsCount = allRequests.filter(r => (r.status || '').toLowerCase() === 'in progress' || (r.status || '').toLowerCase() === 'assigned').length;
-  const pendingComplaintsCount = allComplaints.filter(c => (c.status || '').toLowerCase() === 'submitted' || (c.status || '').toLowerCase() === 'open').length;
+  // KPI Counts for Intake computed from Single Source of Truth StatsService
+  const totalRequestsCount = stats?.service_requests?.total ?? allRequests.length;
+  const totalComplaintsCount = stats?.complaints?.total ?? allComplaints.length;
+  const pendingRequestsCount = stats?.service_requests?.awaiting_acceptance ?? allRequests.filter(r => isAwaiting(r.status)).length;
+  const inProgressRequestsCount = stats?.service_requests?.assigned_in_progress ?? allRequests.filter(r => isInProgress(r.status)).length;
+  const pendingComplaintsCount = stats?.complaints?.awaiting_acceptance ?? allComplaints.filter(c => isAwaiting(c.status)).length;
 
   // SCADA Grid Prep
   const wards = Array.from({ length: 40 }, (_, i) => `Ward ${i + 1}`);
@@ -425,7 +435,7 @@ export const OperationsPage: React.FC = () => {
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
               <div>
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Service Requests</span>
-                <div className="mt-1 text-2xl font-black text-slate-900">{allRequests.length}</div>
+                <div className="mt-1 text-2xl font-black text-slate-900">{totalRequestsCount}</div>
                 <span className="text-[10px] text-slate-400 font-mono">Recorded on Atlas</span>
               </div>
               <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
@@ -436,7 +446,7 @@ export const OperationsPage: React.FC = () => {
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
               <div>
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Consumer Grievances</span>
-                <div className="mt-1 text-2xl font-black text-rose-600">{allComplaints.length}</div>
+                <div className="mt-1 text-2xl font-black text-rose-600">{totalComplaintsCount}</div>
                 <span className="text-[10px] text-rose-500 font-semibold">{pendingComplaintsCount} Pending Review</span>
               </div>
               <div className="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
@@ -457,7 +467,7 @@ export const OperationsPage: React.FC = () => {
                 }`}
               >
                 <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                <span>Service Requests Queue ({allRequests.length})</span>
+                <span>Service Requests Queue ({totalRequestsCount})</span>
                 {pendingRequestsCount > 0 && (
                   <span className="px-1.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-mono">
                     {pendingRequestsCount} new
@@ -474,7 +484,7 @@ export const OperationsPage: React.FC = () => {
                 }`}
               >
                 <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
-                <span>Consumer Grievances Queue ({allComplaints.length})</span>
+                <span>Consumer Grievances Queue ({totalComplaintsCount})</span>
                 {pendingComplaintsCount > 0 && (
                   <span className="px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-mono">
                     {pendingComplaintsCount} new

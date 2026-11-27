@@ -19,7 +19,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { LoginPage } from './pages/LoginPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { UsersPage } from './pages/UsersPage';
-import { NewRequestModal, NewComplaintModal, IngestDocModal } from './components/Modals';
+import { NewRequestModal, IngestDocModal } from './components/Modals';
 import { IntroOverlay } from './components/intro/IntroOverlay';
 import { DashboardChat } from './components/DashboardChat';
 import { useIntroPreference } from './hooks/useIntroPreference';
@@ -37,7 +37,6 @@ const AppContent: React.FC = () => {
 
   // Modal states
   const [isNewRequestOpen, setIsNewRequestOpen] = useState(false);
-  const [isNewComplaintOpen, setIsNewComplaintOpen] = useState(false);
   const [isIngestDocOpen, setIsIngestDocOpen] = useState(false);
 
   // Toast Notification state
@@ -97,7 +96,7 @@ const AppContent: React.FC = () => {
     showToast('Record committed to MongoDB successfully.');
   };
 
-  const handleNavigate = (page: string) => {
+  const handleNavigate = (page: string, prompt?: string) => {
     if (page === 'users') {
       setCurrentPage('users');
     } else if (page === 'settings') {
@@ -106,10 +105,15 @@ const AppContent: React.FC = () => {
       setCurrentPage('profile');
     } else {
       if (page === 'chat') {
-        setChatInitialQuery(undefined);
+        setChatInitialQuery(prompt);
       }
       setCurrentPage(page);
     }
+  };
+
+  const handleOpenGrievanceChat = () => {
+    setChatInitialQuery('I want to lodge a grievance');
+    setCurrentPage('chat');
   };
 
   // If on public landing page, render full width without sidebar
@@ -144,7 +148,7 @@ const AppContent: React.FC = () => {
           onClose={() => setIsCommandPaletteOpen(false)}
           onNavigate={handleNavigate}
           onOpenNewRequest={() => setIsNewRequestOpen(true)}
-          onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+          onOpenNewComplaint={handleOpenGrievanceChat}
           onSelectPrompt={(prompt) => {
             setChatInitialQuery(prompt);
             setCurrentPage('chat');
@@ -164,7 +168,7 @@ const AppContent: React.FC = () => {
             key={refreshKey}
             onNavigate={handleNavigate}
             onOpenNewRequest={() => setIsNewRequestOpen(true)}
-            onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+            onOpenNewComplaint={handleOpenGrievanceChat}
           />
         );
       case 'employee-dash':
@@ -193,7 +197,8 @@ const AppContent: React.FC = () => {
         return (
           <ComplaintsPage
             key={refreshKey}
-            onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+            onOpenNewComplaint={handleOpenGrievanceChat}
+            onNavigate={handleNavigate}
           />
         );
       case 'operations':
@@ -255,7 +260,7 @@ const AppContent: React.FC = () => {
                     role={user?.role || 'Customer'}
                     onNavigate={handleNavigate}
                     onOpenNewRequest={() => setIsNewRequestOpen(true)}
-                    onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+                    onOpenNewComplaint={handleOpenGrievanceChat}
                     onOpenUploadDoc={() => setIsIngestDocOpen(true)}
                   />
                 </div>
@@ -268,7 +273,7 @@ const AppContent: React.FC = () => {
                 role={user?.role || 'Customer'}
                 onNavigate={handleNavigate}
                 onOpenNewRequest={() => setIsNewRequestOpen(true)}
-                onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+                onOpenNewComplaint={handleOpenGrievanceChat}
                 onOpenUploadDoc={() => setIsIngestDocOpen(true)}
               />
             </div>
@@ -286,7 +291,7 @@ const AppContent: React.FC = () => {
         onClose={() => setIsCommandPaletteOpen(false)}
         onNavigate={handleNavigate}
         onOpenNewRequest={() => setIsNewRequestOpen(true)}
-        onOpenNewComplaint={() => setIsNewComplaintOpen(true)}
+        onOpenNewComplaint={handleOpenGrievanceChat}
         onSelectPrompt={(prompt) => {
           setChatInitialQuery(prompt);
           setCurrentPage('chat');
@@ -297,11 +302,6 @@ const AppContent: React.FC = () => {
       <NewRequestModal
         isOpen={isNewRequestOpen}
         onClose={() => setIsNewRequestOpen(false)}
-        onSuccess={handleModalSuccess}
-      />
-      <NewComplaintModal
-        isOpen={isNewComplaintOpen}
-        onClose={() => setIsNewComplaintOpen(false)}
         onSuccess={handleModalSuccess}
       />
       <IngestDocModal

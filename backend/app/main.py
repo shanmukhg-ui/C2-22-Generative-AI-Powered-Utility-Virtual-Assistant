@@ -56,6 +56,11 @@ app.include_router(settings_router, prefix="/api")
 def health_check():
     return {"status": "ok", "project": "C2-22", "architecture": "FastAPI + MongoDB + RAG + OpenRouter"}
 
+@app.get("/api/stats")
+def global_stats():
+    from app.services.stats_service import StatsService
+    return StatsService.get_all_stats()
+
 # Serve Frontend SPA if built
 frontend_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist"))
 if os.path.isdir(frontend_dist):

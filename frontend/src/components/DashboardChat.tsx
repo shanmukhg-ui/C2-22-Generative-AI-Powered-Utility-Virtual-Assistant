@@ -24,6 +24,7 @@ export interface ChatMessage {
     page_number: number;
     text_snippet?: string;
   }>;
+  cards?: any[];
   actionButtons?: ActionButton[];
 }
 
@@ -84,13 +85,15 @@ export const DashboardChat: React.FC<DashboardChatProps> = ({
         return [
           "Summarize today's operations",
           'Show critical incidents',
-          'How to resolve an outage',
-          'Find an SOP',
-          'Escalation steps'
+          'What are the currently assigned cases?',
+          'List all successfully resolved cases',
+          'Please list all complaints',
+          'Find an SOP'
         ];
       case 'Administrator':
         return [
-          'How to upload a document',
+          'Please list all complaints',
+          'What are the currently assigned cases?',
           'Manage users',
           'View audit logs',
           'Ingestion status',
@@ -99,10 +102,11 @@ export const DashboardChat: React.FC<DashboardChatProps> = ({
       case 'Customer':
       default:
         return [
-          'How to apply for a service',
-          'How to file a complaint',
+          'Please list all complaints',
+          'Show all pending complaints',
+          'Lodge a new grievance',
           'Track my request',
-          'Complaint status',
+          'How to apply for a service',
           'Billing help'
         ];
     }
@@ -212,6 +216,7 @@ export const DashboardChat: React.FC<DashboardChatProps> = ({
         text: data.reply || "I don't have that information in verified utility documentation. Please contact support.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         citations: data.citations || [],
+        cards: data.cards || [],
         actionButtons: data.action_buttons || []
       };
 
@@ -238,10 +243,16 @@ export const DashboardChat: React.FC<DashboardChatProps> = ({
   };
 
   const handleActionButtonClick = (action: ActionButton) => {
-    if (action.action === 'OPEN_REQUEST_MODAL' && onOpenNewRequest) {
+    if (action.action === 'SEND_MESSAGE') {
+      handleSendMessage(action.target || action.text);
+    } else if (action.action === 'LOOKUP_COMPLAINT' && action.target) {
+      handleSendMessage(action.target);
+    } else if (action.action === 'LIST_COMPLAINTS') {
+      handleSendMessage('Please list all complaints');
+    } else if (action.action === 'OPEN_REQUEST_MODAL' && onOpenNewRequest) {
       onOpenNewRequest();
-    } else if (action.action === 'OPEN_COMPLAINT_MODAL' && onOpenNewComplaint) {
-      onOpenNewComplaint();
+    } else if (action.action === 'OPEN_COMPLAINT_MODAL') {
+      handleSendMessage('I want to lodge a grievance');
     } else if (action.action === 'OPEN_UPLOAD_MODAL' && onOpenUploadDoc) {
       onOpenUploadDoc();
     } else if (action.action === 'NAVIGATE' && action.target && onNavigate) {
@@ -417,6 +428,57 @@ export const DashboardChat: React.FC<DashboardChatProps> = ({
               }`}
             >
               {renderFormattedText(msg.text)}
+
+              {/* Structured DATA_TABLE Card */}
+              {msg.cards && msg.cards.map((card: any, cIdx: number) => {
+                if (card.type === 'DATA_TABLE' && card.rows && card.rows.length > 0) {
+                  return (
+                    <div key={cIdx} className="mt-3 pt-2 border-t border-surface-border/60 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-extrabold text-[#6D28F5] uppercase tracking-wide">
+                          {card.title || 'Dynamic Query Records'}
+                        </span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+                          Showing {card.showing_count} of {card.total_count}
+                        </span>
+                      </div>
+                      <div className="overflow-x-auto rounded-lg border border-surface-border bg-surface-card max-h-56 overflow-y-auto">
+                        <table className="w-full text-left text-[11px]">
+                          <thead className="bg-surface-page text-content-muted font-bold border-b border-surface-border sticky top-0">
+                            <tr>
+                              <th className="py-1.5 px-2">ID</th>
+                              <th className="py-1.5 px-2">Utility</th>
+                              <th className="py-1.5 px-2">Status</th>
+                              <th className="py-1.5 px-2">Priority</th>
+                              <th className="py-1.5 px-2">Location</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-surface-border font-medium">
+                            {card.rows.slice(0, 10).map((r: any, rIdx: number) => (
+                              <tr key={rIdx} className="hover:bg-primary-light/20 transition">
+                                <td className="py-1 px-2 font-bold text-[#6D28F5] whitespace-nowrap">{r.id}</td>
+                                <td className="py-1 px-2 whitespace-nowrap">{r.utility}</td>
+                                <td className="py-1 px-2 whitespace-nowrap">
+                                  <span className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
+                                    (r.status || '').toLowerCase().includes('resolve') ? 'bg-emerald-100 text-emerald-800' :
+                                    (r.status || '').toLowerCase().includes('progress') ? 'bg-blue-100 text-blue-800' :
+                                    'bg-amber-100 text-amber-800'
+                                  }`}>
+                                    {r.status}
+                                  </span>
+                                </td>
+                                <td className="py-1 px-2 whitespace-nowrap text-[10px]">{r.priority}</td>
+                                <td className="py-1 px-2 text-[10px] text-content-muted max-w-[120px] truncate">{r.location || 'Municipal'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
 
               {/* Citations block for Grounded RAG */}
               {msg.citations && msg.citations.length > 0 && (

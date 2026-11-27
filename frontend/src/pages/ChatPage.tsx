@@ -69,11 +69,13 @@ export const ChatPage: React.FC<{ initialQuery?: string }> = ({ initialQuery }) 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const samplePrompts = [
-    'What documents are required for a new electricity connection?',
-    'How can I register a utility complaint?',
-    'Check my service request status (SR000110)',
-    'Explain the electricity tariff procedure',
-    "Summarize today's operational issues"
+    'Please list all complaints',
+    'List all successfully resolved cases',
+    'What are the currently assigned cases?',
+    'Show all pending complaints',
+    'Critical electricity incidents in Ward 11 that are still unresolved',
+    'Assigned cases for Rajesh Kumar',
+    'I want to lodge a grievance'
   ];
 
   // Initialize greeting (matching Image 2 exactly)
@@ -213,6 +215,74 @@ export const ChatPage: React.FC<{ initialQuery?: string }> = ({ initialQuery }) 
 
                 {/* Formatted Markdown Body with Aligned Bullets & Bold */}
                 <FormattedMarkdown content={msg.text} />
+
+                {/* Structured Dynamic Data Table Card */}
+                {msg.cards && msg.cards.map((card: any, cIdx: number) => {
+                  if (card.type === 'DATA_TABLE' && card.rows && card.rows.length > 0) {
+                    return (
+                      <div key={cIdx} className="mt-3 pt-3 border-t border-[#2B246B] space-y-2.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-[#A78BFA] tracking-wide uppercase">
+                            {card.title}
+                          </span>
+                          <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#271B55] text-[#DDD6FE] border border-[#4C2882]">
+                            Showing {card.showing_count} of {card.total_count} records
+                          </span>
+                        </div>
+                        <div className="overflow-x-auto rounded-xl border border-[#2B246B] bg-[#120F35] max-h-72 overflow-y-auto">
+                          <table className="w-full text-left text-xs text-slate-200">
+                            <thead className="bg-[#1A1647] text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-[#2B246B] sticky top-0">
+                              <tr>
+                                <th className="py-2 px-3">Ticket ID</th>
+                                <th className="py-2 px-3">Utility</th>
+                                <th className="py-2 px-3">Status</th>
+                                <th className="py-2 px-3">Priority</th>
+                                <th className="py-2 px-3">Location</th>
+                                <th className="py-2 px-3">Staff</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-[#2B246B]/60 font-medium">
+                              {card.rows.map((row: any, rIdx: number) => (
+                                <tr key={rIdx} className="hover:bg-white/5 transition">
+                                  <td className="py-2 px-3 font-bold text-[#A78BFA] whitespace-nowrap">{row.id}</td>
+                                  <td className="py-2 px-3 whitespace-nowrap">{row.utility}</td>
+                                  <td className="py-2 px-3 whitespace-nowrap">
+                                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                      (row.status || '').toLowerCase().includes('resolve') ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
+                                      (row.status || '').toLowerCase().includes('progress') ? 'bg-blue-950 text-blue-300 border border-blue-800' :
+                                      'bg-amber-950 text-amber-300 border border-amber-800'
+                                    }`}>
+                                      {row.status}
+                                    </span>
+                                  </td>
+                                  <td className="py-2 px-3 whitespace-nowrap text-[11px]">{row.priority}</td>
+                                  <td className="py-2 px-3 text-[11px] text-slate-300 max-w-[150px] truncate">{row.location}</td>
+                                  <td className="py-2 px-3 text-[11px] text-slate-400 whitespace-nowrap">{row.assignee}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Quick Action Buttons */}
+                {msg.action_buttons && msg.action_buttons.length > 0 && (
+                  <div className="pt-2 flex flex-wrap gap-2">
+                    {msg.action_buttons.map((btn: any, bIdx: number) => (
+                      <button
+                        key={bIdx}
+                        onClick={() => handleSend(btn.target || btn.text)}
+                        className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#6D28F5] hover:bg-[#5B21D6] text-white text-xs font-bold shadow-md transition active:scale-95"
+                      >
+                        <span>{btn.text}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 {/* Citation Pill Chips (Matching Screenshot 2: New Connection Guide · p.2) */}
                 {msg.citations && msg.citations.length > 0 && (

@@ -48,6 +48,7 @@ chroma_db/
 */chroma_db/
 *.db
 *.sqlite3
+.chrome_tmp/
 
 # Logs & Temp files
 *.log

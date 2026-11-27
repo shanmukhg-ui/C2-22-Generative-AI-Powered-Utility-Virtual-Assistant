@@ -11,9 +11,9 @@ import {
 } from 'lucide-react';
 
 interface CustomerDashboardProps {
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, prompt?: string) => void;
   onOpenNewRequest: () => void;
-  onOpenNewComplaint: () => void;
+  onOpenNewComplaint?: () => void;
 }
 
 export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
@@ -114,11 +114,11 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
             <span>New Request</span>
           </button>
           <button
-            onClick={onOpenNewComplaint}
+            onClick={() => onNavigate('chat', 'I want to lodge a grievance')}
             className="px-4 py-2 bg-white hover:bg-slate-50 text-[#171642] border border-[#E5E7EB] text-xs font-bold rounded-xl shadow-xs transition flex items-center space-x-1.5"
           >
             <AlertTriangle className="w-4 h-4 text-amber-500" />
-            <span>File Complaint</span>
+            <span>File Complaint via AI</span>
           </button>
         </div>
       </div>

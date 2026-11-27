@@ -114,6 +114,10 @@ export const complaintsApi = {
 };
 
 export const operationsApi = {
+  getStats: async () => {
+    const res = await client.get('/operations/stats');
+    return res.data;
+  },
   getLogs: async (params?: any) => {
     const res = await client.get('/operations/logs', { params });
     return res.data.logs || [];
