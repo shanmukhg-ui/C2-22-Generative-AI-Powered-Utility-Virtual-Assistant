@@ -329,7 +329,7 @@ describe('Firebase Authentication UI & Flows', () => {
     expect(onLogin).toHaveBeenCalled();
   });
 
-  it('LandingPage interactive demo renders all 4 grounded scenarios without regression', () => {
+  it('LandingPage interactive demo renders dynamic query scenarios without regression', () => {
     const onGetStarted = vi.fn();
     const onLogin = vi.fn();
 
@@ -339,38 +339,36 @@ describe('Firebase Authentication UI & Flows', () => {
       </AuthProvider>
     );
 
-    // Scenario 1: Check service request
-    fireEvent.click(screen.getByText('Check service request'));
-    expect(screen.getByText(/Found service request 'SR000365'/i)).toBeInTheDocument();
-    expect(screen.getByText('MongoDB Ownership Verified')).toBeInTheDocument();
-    expect(screen.getByText('Service Requests Database [SR000365]')).toBeInTheDocument();
+    // Scenario 1: Please list all complaints
+    fireEvent.click(screen.getByText('• Please list all complaints'));
+    expect(screen.getByText(/Found 250 record\(s\) in Citizen Grievances & Complaints registry/i)).toBeInTheDocument();
+    expect(screen.getByText('Live Dynamic Query')).toBeInTheDocument();
+    expect(screen.getByText('MongoDB complaints [/api/complaints]')).toBeInTheDocument();
 
     // Reset demo
     fireEvent.click(screen.getByText('Reset'));
 
-    // Scenario 2: Track complaint
-    fireEvent.click(screen.getByText('Track complaint'));
-    expect(screen.getByText(/Found grievance 'CMP000251'/i)).toBeInTheDocument();
-    expect(screen.getByText('Consumer Protection SLA Active')).toBeInTheDocument();
-    expect(screen.getByText('Complaints Registry [CMP000251]')).toBeInTheDocument();
+    // Scenario 2: List all successfully resolved cases
+    fireEvent.click(screen.getByText('• List all successfully resolved cases'));
+    expect(screen.getByText(/Found 112 record\(s\) with Status: Resolved/i)).toBeInTheDocument();
+    expect(screen.getByText('Live Dynamic Query')).toBeInTheDocument();
+    expect(screen.getByText('MongoDB service_requests [/api/requests]')).toBeInTheDocument();
 
     // Reset demo
     fireEvent.click(screen.getByText('Reset'));
 
-    // Scenario 3: Utility procedures
-    fireEvent.click(screen.getByText('Utility procedures'));
-    expect(screen.getByText(/Mandatory documents for new electricity connection/i)).toBeInTheDocument();
-    expect(screen.getByText('Grounded RAG Verified')).toBeInTheDocument();
-    expect(screen.getByText('Electricity Connection SOP.pdf (Page 4)')).toBeInTheDocument();
+    // Scenario 3: What are the currently assigned cases?
+    fireEvent.click(screen.getByText('• What are the currently assigned cases?'));
+    expect(screen.getByText(/Found 108 record\(s\) with Status: Assigned \/ In Progress/i)).toBeInTheDocument();
+    expect(screen.getByText('Live Dynamic Query')).toBeInTheDocument();
 
     // Reset demo
     fireEvent.click(screen.getByText('Reset'));
 
-    // Scenario 4: Operational summary
-    fireEvent.click(screen.getByText('Operational summary'));
-    expect(screen.getByText(/Daily Operational Summary: 6 active outages/i)).toBeInTheDocument();
-    expect(screen.getByText('Operational Dispatch Copilot')).toBeInTheDocument();
-    expect(screen.getByText('Daily Incident Telemetry (24 Jan 2025)')).toBeInTheDocument();
+    // Scenario 4: Show all pending complaints
+    fireEvent.click(screen.getByText('• Show all pending complaints'));
+    expect(screen.getByText(/Found 56 record\(s\) with Status: Pending \/ Unresolved/i)).toBeInTheDocument();
+    expect(screen.getByText('Live Dynamic Query')).toBeInTheDocument();
   });
 
   it('App navigates from LandingPage to full-screen LoginPage and back to LandingPage', async () => {
