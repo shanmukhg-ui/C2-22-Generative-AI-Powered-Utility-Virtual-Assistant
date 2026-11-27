@@ -92,3 +92,16 @@ class UserProfileUpdate(BaseModel):
     preferred_language: Optional[str] = None
     notifications: Optional[Dict[str, bool]] = None
 
+class AdminCreateUserRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100, description="Full Name of the new user")
+    email: str = Field(..., min_length=5, max_length=150, description="Valid official email address")
+    department: Optional[str] = Field("Customer Service", description="Department or organizational unit")
+    phone: Optional[str] = Field(None, description="Optional phone number")
+    city: Optional[str] = Field(None, description="City or primary work location")
+    user_id: Optional[str] = Field(None, description="Optional custom user identifier")
+    password: Optional[str] = Field(None, min_length=6, description="Optional initial temporary password")
+
+class AdminUserStatusUpdate(BaseModel):
+    is_active: bool = Field(..., description="Whether the user account is active")
+    reason: Optional[str] = Field(None, description="Reason for deactivation or reactivation")
+    status: Optional[str] = Field(None, description="Optional explicit status string ('Active' or 'Inactive')")

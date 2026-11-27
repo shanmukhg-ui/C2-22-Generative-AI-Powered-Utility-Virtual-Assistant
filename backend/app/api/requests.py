@@ -18,7 +18,7 @@ async def list_service_requests(
     q: Optional[str] = Query(None),
     limit: int = Query(25, ge=1, le=100),
     offset: int = Query(0, ge=0),
-    current_user: Dict[str, Any] = Depends(require_verified_user)
+    current_user: Dict[str, Any] = Depends(get_current_user)
 ):
     db = get_database()
     query: Dict[str, Any] = {}
@@ -62,7 +62,7 @@ async def list_service_requests(
     }
 
 @router.get("/{request_id}", response_model=Dict[str, Any])
-async def get_service_request(request_id: str, current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def get_service_request(request_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
     db = get_database()
     req = db.service_requests.find_one({"request_id": request_id.upper()})
     if not req:
@@ -88,20 +88,28 @@ async def get_service_request(request_id: str, current_user: Dict[str, Any] = De
     return req
 
 @router.post("", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
-async def create_service_request(payload: ServiceRequestCreate, current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def create_service_request(payload: ServiceRequestCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
     db = get_database()
 
     # RBAC check: Customers cannot create tickets on behalf of other customers
-    if current_user["role"] == UserRole.CUSTOMER.value:
+    if current_user["role"] == UserRole.CUSTOMER.value or not payload.customer_id:
         payload.customer_id = current_user["user_id"]
 
-    # Generate next SR ID
+    # Atomic sequence generation from counters collection with fallback
+    seq_doc = db.counters.find_one_and_update(
+        {"_id": "service_request_id"},
+        {"$inc": {"seq": 1}},
+        upsert=True,
+        return_document=True
+    )
+    next_num = seq_doc.get("seq", 501)
     latest = db.service_requests.find_one(sort=[("request_id", -1)])
-    next_num = 501
     if latest and latest.get("request_id"):
         try:
             num = int(str(latest["request_id"]).replace("SR", ""))
-            next_num = num + 1
+            if num >= next_num:
+                next_num = num + 1
+                db.counters.update_one({"_id": "service_request_id"}, {"$set": {"seq": next_num}})
         except Exception:
             pass
 
@@ -154,7 +162,7 @@ async def create_service_request(payload: ServiceRequestCreate, current_user: Di
     }
 
 @router.get("/{request_id}/tracking", response_model=Dict[str, Any])
-async def get_service_request_tracking(request_id: str, current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def get_service_request_tracking(request_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
     """
     Returns real-time GPS telemetry for the assigned field technician and customer destination.
     """
@@ -162,6 +170,13 @@ async def get_service_request_tracking(request_id: str, current_user: Dict[str, 
     req = db.service_requests.find_one({"request_id": request_id.upper()})
     if not req:
         raise HTTPException(status_code=404, detail=f"Service request '{request_id}' not found.")
+
+    # RBAC Ownership check
+    RBACManager.validate_customer_ownership(
+        caller_id=current_user["user_id"],
+        caller_role=current_user["role"],
+        target_customer_id=req.get("customer_id", "")
+    )
 
     cust_lat = req.get("latitude") or 17.4482
     cust_lng = req.get("longitude") or 78.3845

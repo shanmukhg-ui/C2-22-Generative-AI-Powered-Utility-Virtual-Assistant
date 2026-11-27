@@ -51,22 +51,14 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
   }, [user]);
 
   // Derived KPI Counts
-  const totalReqCount = requests.length || 5;
-  const activeReqCount = requests.filter(r => r.status !== 'Completed' && r.status !== 'Resolved' && r.status !== 'Rejected').length || 2;
-  const resolvedReqCount = requests.filter(r => r.status === 'Completed' || r.status === 'Resolved').length || 3;
-  const openComplaintsCount = complaints.filter(c => c.status !== 'Resolved' && c.status !== 'Closed').length || 1;
+  const totalReqCount = requests.length;
+  const activeReqCount = requests.filter(r => r.status !== 'Completed' && r.status !== 'Resolved' && r.status !== 'Rejected').length;
+  const resolvedReqCount = requests.filter(r => r.status === 'Completed' || r.status === 'Resolved').length;
+  const openComplaintsCount = complaints.filter(c => c.status !== 'Resolved' && c.status !== 'Closed').length;
 
-  // Realistic sample fallback items matching reference screenshot
-  const displayRequests = requests.length > 0 ? requests.slice(0, 4) : [
-    { request_id: 'SR10245', request_type: 'Power connection request', status: 'In Progress', utility: 'Electricity', department: 'Electricity Department' },
-    { request_id: 'SR10218', request_type: 'Meter replacement', status: 'Resolved', utility: 'Electricity', department: 'Electricity Department' },
-    { request_id: 'SR10197', request_type: 'Load enhancement', status: 'Resolved', utility: 'Electricity', department: 'Electricity Department' },
-  ];
-
-  const displayComplaints = complaints.length > 0 ? complaints.slice(0, 4) : [
-    { complaint_id: 'CP9056', category: 'Voltage fluctuation', status: 'Open', utility: 'Electricity', department: 'Electricity Department' },
-    { complaint_id: 'CP9042', category: 'Billing discrepancy', status: 'Resolved', utility: 'Electricity', department: 'Electricity Department' }
-  ];
+  const displayRequests = requests.slice(0, 4);
+  const displayComplaints = complaints.slice(0, 4);
+  const activeTrackingRequest = requests.find(r => (r.technician_status && r.technician_status !== 'Completed') || r.status === 'In Progress');
 
   const getStatusBadge = (status: string) => {
     const s = (status || '').toLowerCase();
@@ -171,37 +163,39 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       </div>
 
       {/* Live Field Technician GPS Tracking Banner */}
-      <div className="bg-gradient-to-r from-[#171642] via-[#201B50] to-[#2B1B6D] rounded-3xl p-6 text-white shadow-xl border border-purple-900/50 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden">
-        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-[radial-gradient(circle_at_top_right,rgba(109,40,245,0.25),transparent_70%)] pointer-events-none"></div>
-        <div className="flex items-center space-x-4 z-10">
-          <div className="w-12 h-12 rounded-2xl bg-[#6D28F5] text-white flex items-center justify-center shadow-lg shadow-purple-600/50 ring-2 ring-purple-400/30 flex-shrink-0">
-            <Truck className="w-6 h-6 animate-pulse" />
-          </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-[11px] font-black uppercase tracking-wider text-purple-300">Live Field Dispatch Active</span>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono border border-emerald-500/30 flex items-center space-x-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                <span>GPS EN ROUTE</span>
-              </span>
+      {activeTrackingRequest && (
+        <div className="bg-gradient-to-r from-[#171642] via-[#201B50] to-[#2B1B6D] rounded-3xl p-6 text-white shadow-xl border border-purple-900/50 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden">
+          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-[radial-gradient(circle_at_top_right,rgba(109,40,245,0.25),transparent_70%)] pointer-events-none"></div>
+          <div className="flex items-center space-x-4 z-10">
+            <div className="w-12 h-12 rounded-2xl bg-[#6D28F5] text-white flex items-center justify-center shadow-lg shadow-purple-600/50 ring-2 ring-purple-400/30 flex-shrink-0">
+              <Truck className="w-6 h-6 animate-pulse" />
             </div>
-            <h3 className="text-base font-extrabold text-white mt-0.5">
-              Technician Rajesh Kumar is 1.8 km away from your premises
-            </h3>
-            <p className="text-xs text-purple-200 mt-0.5 font-mono">
-              Ticket #SR10245 · Rapid Utility Van #3 · Estimated Arrival: ~14 mins
-            </p>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-purple-300">Live Field Dispatch Active</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono border border-emerald-500/30 flex items-center space-x-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>GPS EN ROUTE</span>
+                </span>
+              </div>
+              <h3 className="text-base font-extrabold text-white mt-0.5">
+                Technician {activeTrackingRequest.technician_name || 'Assigned Officer'} is en route to your premises
+              </h3>
+              <p className="text-xs text-purple-200 mt-0.5 font-mono">
+                Ticket #{activeTrackingRequest.request_id} {activeTrackingRequest.technician_eta_mins ? `· ETA: ~${activeTrackingRequest.technician_eta_mins} mins` : ''}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <button
-          onClick={() => setSelectedTrackingId('SR10245')}
-          className="w-full md:w-auto px-5 py-3 bg-[#6D28F5] hover:bg-[#5B21D6] text-white text-xs font-black rounded-xl shadow-lg shadow-purple-600/40 transition flex items-center justify-center space-x-2 flex-shrink-0 active:scale-95 z-10"
-        >
-          <Navigation className="w-4 h-4 fill-current" />
-          <span>View Live GPS Telemetry Map</span>
-        </button>
-      </div>
+          <button
+            onClick={() => setSelectedTrackingId(activeTrackingRequest.request_id)}
+            className="w-full md:w-auto px-5 py-3 bg-[#6D28F5] hover:bg-[#5B21D6] text-white text-xs font-black rounded-xl shadow-lg shadow-purple-600/40 transition flex items-center justify-center space-x-2 flex-shrink-0 active:scale-95 z-10"
+          >
+            <Navigation className="w-4 h-4 fill-current" />
+            <span>View Live GPS Telemetry Map</span>
+          </button>
+        </div>
+      )}
 
       {/* Main Grid: Recent Service Requests & Recent Complaints */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -218,30 +212,40 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           </div>
 
           <div className="divide-y divide-slate-100">
-            {displayRequests.map((req, idx) => (
-              <div key={idx} className="py-3.5 flex items-center justify-between hover:bg-slate-50/60 px-2 rounded-xl transition">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="font-mono text-xs font-bold text-[#171642]">{req.request_id}</span>
-                    <span className="text-xs font-medium text-slate-700">{req.request_type}</span>
+            {displayRequests.length > 0 ? (
+              displayRequests.map((req, idx) => (
+                <div key={req.request_id || idx} className="py-3.5 flex items-center justify-between hover:bg-slate-50/60 px-2 rounded-xl transition">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="font-mono text-xs font-bold text-[#171642]">{req.request_id}</span>
+                      <span className="text-xs font-medium text-slate-700">{req.request_type}</span>
+                    </div>
+                    <span className="text-[11px] text-[#6D28F5] font-semibold block mt-0.5">
+                      {req.department || (req.utility ? `${req.utility} Department` : 'Electricity Department')}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-[#6D28F5] font-semibold block mt-0.5">
-                    {req.department || (req.utility ? `${req.utility} Department` : 'Electricity Department')}
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    {req.request_id && (
+                      <button
+                        onClick={() => setSelectedTrackingId(req.request_id)}
+                        className="p-1.5 px-2.5 bg-[#F3EEFF] hover:bg-[#EAE2FF] text-[#6D28F5] rounded-lg text-[11px] font-bold transition flex items-center space-x-1"
+                        title="Live Technician GPS Tracking"
+                      >
+                        <Truck className="w-3.5 h-3.5" />
+                        <span>Track GPS</span>
+                      </button>
+                    )}
+                    {getStatusBadge(req.status)}
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => setSelectedTrackingId(req.request_id)}
-                    className="p-1.5 px-2.5 bg-[#F3EEFF] hover:bg-[#EAE2FF] text-[#6D28F5] rounded-lg text-[11px] font-bold transition flex items-center space-x-1"
-                    title="Live Technician GPS Tracking"
-                  >
-                    <Truck className="w-3.5 h-3.5" />
-                    <span>Track GPS</span>
-                  </button>
-                  {getStatusBadge(req.status)}
-                </div>
+              ))
+            ) : (
+              <div className="py-8 text-center">
+                <ClipboardList className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-xs font-semibold text-slate-500">No service requests yet</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">Create a new service request to get started</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
@@ -258,22 +262,30 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           </div>
 
           <div className="divide-y divide-slate-100">
-            {displayComplaints.map((comp, idx) => (
-              <div key={idx} className="py-3.5 flex items-center justify-between hover:bg-slate-50/60 px-2 rounded-xl transition">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="font-mono text-xs font-bold text-[#171642]">{comp.complaint_id}</span>
-                    <span className="text-xs font-medium text-slate-700">{comp.category}</span>
+            {displayComplaints.length > 0 ? (
+              displayComplaints.map((comp, idx) => (
+                <div key={comp.complaint_id || idx} className="py-3.5 flex items-center justify-between hover:bg-slate-50/60 px-2 rounded-xl transition">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="font-mono text-xs font-bold text-[#171642]">{comp.complaint_id}</span>
+                      <span className="text-xs font-medium text-slate-700">{comp.category}</span>
+                    </div>
+                    <span className="text-[11px] text-purple-700 font-semibold block mt-0.5">
+                      {comp.department || (comp.utility ? `${comp.utility} Department` : 'Electricity Department')}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-purple-700 font-semibold block mt-0.5">
-                    {comp.department || (comp.utility ? `${comp.utility} Department` : 'Electricity Department')}
-                  </span>
+                  <div>
+                    {getStatusBadge(comp.status)}
+                  </div>
                 </div>
-                <div>
-                  {getStatusBadge(comp.status)}
-                </div>
+              ))
+            ) : (
+              <div className="py-8 text-center">
+                <AlertCircle className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-xs font-semibold text-slate-500">No complaints logged</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">Any utility issues reported will appear here</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

@@ -69,6 +69,17 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   const [demoError, setDemoError] = useState<string | null>(null);
   const [demoLoading, setDemoLoading] = useState(false);
 
+  React.useEffect(() => {
+    if (initialPersonaId) {
+      const match = PRESET_USERS.find(p => p.id === initialPersonaId);
+      if (match) {
+        setSelectedDemo(match);
+        setDemoPasswordInput('');
+        setDemoError(null);
+      }
+    }
+  }, [initialPersonaId]);
+
   const formatFirebaseError = (err: any): string => {
     const code = err?.code || '';
     switch (code) {

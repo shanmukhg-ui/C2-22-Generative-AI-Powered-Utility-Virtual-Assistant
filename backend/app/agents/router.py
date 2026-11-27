@@ -415,7 +415,40 @@ class AgentQueryRouter:
                 return flow_res
 
         # -------------------------------------------------------------
-        # 2. DYNAMIC DATA QUERY PIPELINE (StatsService: Single Source of Truth)
+        # 2. DIRECT TICKET LOOKUPS (SR / CMP) - PRIORITIZED OVER GENERIC INTENTS
+        # -------------------------------------------------------------
+        sr_match = re.search(r'\b(SR\d{5,6})\b', trimmed, re.IGNORECASE)
+        if sr_match:
+            req_id = sr_match.group(1).upper()
+            result = AgentTools.lookup_service_request(req_id, user_id, role)
+            cls.log_audit(user_id, role, "LOOKUP_SERVICE_REQUEST", req_id, result.get("message", ""), "DENIED" if result.get("rbac_denied") else "SUCCESS")
+            return {
+                "reply": result.get("message"),
+                "intent": "SERVICE_REQUEST_LOOKUP",
+                "citations": [{"document_id": f"CRM_{req_id}", "document_name": f"Service Request Database [{req_id}]", "page_number": 1, "text_snippet": "Verified CRM Request Record", "confidence": 1.0, "scope": "crm"}],
+                "cards": [result.get("card")] if result.get("card") else [],
+                "security_alert": result.get("security_alert", False),
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        cmp_match = re.search(r'\b(CMP\d{5,6})\b', trimmed, re.IGNORECASE)
+        if cmp_match:
+            cmp_id = cmp_match.group(1).upper()
+            result = AgentTools.lookup_complaint(cmp_id, user_id, role)
+            cls.log_audit(user_id, role, "LOOKUP_COMPLAINT", cmp_id, result.get("message", ""), "DENIED" if result.get("rbac_denied") else "SUCCESS")
+            return {
+                "reply": result.get("message"),
+                "intent": "COMPLAINT_LOOKUP",
+                "citations": [{"document_id": f"CMS_{cmp_id}", "document_name": f"Complaint Registry [{cmp_id}]", "page_number": 1, "text_snippet": "Verified CMS Complaint Record", "confidence": 1.0, "scope": "cms"}],
+                "cards": [result.get("card")] if result.get("card") else [],
+                "security_alert": result.get("security_alert", False),
+                "confidence": 1.0,
+                "latency_ms": int((time.time() - start_time) * 1000)
+            }
+
+        # -------------------------------------------------------------
+        # 3. DYNAMIC DATA QUERY PIPELINE (StatsService: Single Source of Truth)
         # -------------------------------------------------------------
         dynamic_res = StatsService.execute_dynamic_query(trimmed, user_id, role)
         if dynamic_res:
@@ -477,7 +510,7 @@ class AgentQueryRouter:
                     lines = [f"Found **{len(user_reqs)}** service request(s) registered under your account ({user_id}):"]
                     action_buttons = []
                     for r in user_reqs:
-                        req_id = r.get("request_id", "SR10245")
+                        req_id = r.get("request_id") or "SR000000"
                         status = r.get("status", "In Progress")
                         tech = r.get("technician_name") or "Rajesh Sharma"
                         dist = r.get("technician_distance_km") or 1.8
@@ -497,11 +530,11 @@ class AgentQueryRouter:
                     }
                 else:
                     return {
-                        "reply": f"You currently have active ticket **SR10245** (Power connection request) under review: **In Progress**. Field Technician **Rajesh Sharma** is assigned (ETA: **14 mins**).",
+                        "reply": f"You currently have no active service requests registered under your account ({user_id}). Would you like to submit a new service request?",
                         "intent": "CUSTOMER_MY_REQUESTS",
                         "citations": [],
                         "cards": [],
-                        "action_buttons": [{"text": "Track GPS: SR10245", "action": "TRACK_GPS", "target": "SR10245"}],
+                        "action_buttons": [{"text": "Apply for Service", "action": "NAVIGATE", "target": "requests"}],
                         "confidence": 1.0,
                         "latency_ms": int((time.time() - start_time) * 1000)
                     }
@@ -513,7 +546,8 @@ class AgentQueryRouter:
                 if user_cmps:
                     lines = [f"Found **{len(user_cmps)}** complaint(s) for your account ({user_id}):"]
                     for c in user_cmps:
-                        lines.append(f"\n• **{c.get('complaint_id', 'CP9056')}** ({c.get('category', 'Service')}): Status **{c.get('status', 'Open')}** (Priority: {c.get('priority', 'Medium')})")
+                        cmp_id = c.get("complaint_id") or "CMP000000"
+                        lines.append(f"\n• **{cmp_id}** ({c.get('category', 'Service')}): Status **{c.get('status', 'Open')}** (Priority: {c.get('priority', 'Medium')})")
                     return {
                         "reply": "\n".join(lines),
                         "intent": "CUSTOMER_MY_COMPLAINTS",
@@ -525,11 +559,11 @@ class AgentQueryRouter:
                     }
                 else:
                     return {
-                        "reply": "You have 1 registered grievance: **CP9056** (Voltage Fluctuation) — Current Status: **Open** (Assigned to regional support desk with 4.5h resolution SLA).",
+                        "reply": f"You currently have no registered complaints or grievances under your account ({user_id}).",
                         "intent": "CUSTOMER_MY_COMPLAINTS",
                         "citations": [],
                         "cards": [],
-                        "action_buttons": [{"text": "View Complaints", "action": "NAVIGATE", "target": "complaints"}],
+                        "action_buttons": [{"text": "Lodge Complaint", "action": "NAVIGATE", "target": "complaints"}],
                         "confidence": 1.0,
                         "latency_ms": int((time.time() - start_time) * 1000)
                     }
@@ -548,6 +582,27 @@ class AgentQueryRouter:
                     "citations": [{"document_id": "DOC002", "document_name": "Billing FAQ & Disputes", "page_number": 2, "text_snippet": "Billing dispute resolution standard procedure", "confidence": 1.0, "scope": "public"}],
                     "cards": [],
                     "action_buttons": [{"text": "File Billing Dispute", "action": "OPEN_COMPLAINT_MODAL"}],
+                    "confidence": 1.0,
+                    "latency_ms": int((time.time() - start_time) * 1000)
+                }
+
+            # "Operational summary" / "SCADA operations" - Staff-only restriction for Citizen/Customer role
+            if any(k in lower for k in ["summarize operations", "summarize today's operations", "today's operations", "operational summary", "scada"]):
+                cls.log_audit(user_id, role, "CUSTOMER_OPS_SUMMARY_ATTEMPT", "operational_logs", "Customer attempted operational summary", "DENIED")
+                return {
+                    "reply": (
+                        "🔒 **Access Restricted by RBAC**:\n\n"
+                        "Detailed operational telemetry, SCADA incident dispatch, and engineering summaries are strictly restricted to **Utility Employees** and **System Administrators**.\n\n"
+                        "As a registered citizen, you can check public utility announcements, track your own service requests, or report an outage in your area."
+                    ),
+                    "intent": "RBAC_RESTRICTED",
+                    "citations": [],
+                    "cards": [],
+                    "action_buttons": [
+                        {"text": "Track My Requests", "action": "NAVIGATE", "target": "requests"},
+                        {"text": "Report an Issue", "action": "NAVIGATE", "target": "complaints"}
+                    ],
+                    "security_alert": True,
                     "confidence": 1.0,
                     "latency_ms": int((time.time() - start_time) * 1000)
                 }
@@ -718,39 +773,6 @@ class AgentQueryRouter:
                     "confidence": 1.0,
                     "latency_ms": int((time.time() - start_time) * 1000)
                 }
-
-        # -------------------------------------------------------------
-        # DIRECT TICKET LOOKUPS (SR / CMP)
-        # -------------------------------------------------------------
-        sr_match = re.search(r'\b(SR\d{5,6})\b', trimmed, re.IGNORECASE)
-        if sr_match:
-            req_id = sr_match.group(1).upper()
-            result = AgentTools.lookup_service_request(req_id, user_id, role)
-            cls.log_audit(user_id, role, "LOOKUP_SERVICE_REQUEST", req_id, result.get("message", ""), "DENIED" if result.get("rbac_denied") else "SUCCESS")
-            return {
-                "reply": result.get("message"),
-                "intent": "SERVICE_REQUEST_LOOKUP",
-                "citations": [{"document_id": f"CRM_{req_id}", "document_name": f"Service Request Database [{req_id}]", "page_number": 1, "text_snippet": "Verified CRM Request Record", "confidence": 1.0, "scope": "crm"}],
-                "cards": [result.get("card")] if result.get("card") else [],
-                "security_alert": result.get("security_alert", False),
-                "confidence": 1.0,
-                "latency_ms": int((time.time() - start_time) * 1000)
-            }
-
-        cmp_match = re.search(r'\b(CMP\d{5,6})\b', trimmed, re.IGNORECASE)
-        if cmp_match:
-            cmp_id = cmp_match.group(1).upper()
-            result = AgentTools.lookup_complaint(cmp_id, user_id, role)
-            cls.log_audit(user_id, role, "LOOKUP_COMPLAINT", cmp_id, result.get("message", ""), "DENIED" if result.get("rbac_denied") else "SUCCESS")
-            return {
-                "reply": result.get("message"),
-                "intent": "COMPLAINT_LOOKUP",
-                "citations": [{"document_id": f"CMS_{cmp_id}", "document_name": f"Complaint Registry [{cmp_id}]", "page_number": 1, "text_snippet": "Verified CMS Complaint Record", "confidence": 1.0, "scope": "cms"}],
-                "cards": [result.get("card")] if result.get("card") else [],
-                "security_alert": result.get("security_alert", False),
-                "confidence": 1.0,
-                "latency_ms": int((time.time() - start_time) * 1000)
-            }
 
         # -------------------------------------------------------------
         # GROUNDED RAG KNOWLEDGE RETRIEVAL (Strict Visibility Filter)

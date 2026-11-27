@@ -7,11 +7,23 @@ export const AccountSettings: React.FC = () => {
   const { user } = useAuth();
   const { userPrefs, updateUserPrefs } = useSettings();
 
-  const [name, setName] = useState(user?.name || 'John Doe');
-  const [phone, setPhone] = useState(userPrefs.phone || '+91 98765 43210');
+  const [name, setName] = useState(user?.name || '');
+  const [phone, setPhone] = useState(user?.phone || userPrefs.phone || '');
   const [language, setLanguage] = useState(userPrefs.preferredLanguage || 'English');
   const [isSaved, setIsSaved] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+
+  React.useEffect(() => {
+    if (user?.name) setName(user.name);
+    if (user?.phone !== undefined && user?.phone !== null) {
+      setPhone(user.phone);
+    } else if (userPrefs.phone) {
+      setPhone(userPrefs.phone);
+    }
+    if (userPrefs.preferredLanguage) {
+      setLanguage(userPrefs.preferredLanguage);
+    }
+  }, [user, userPrefs]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +76,7 @@ export const AccountSettings: React.FC = () => {
             <input
               type="email"
               disabled
-              value={user?.email || 'customer0001@example.test'}
+              value={user?.email || ''}
               className="w-full pl-9 pr-3 py-2 bg-surface-page/60 border border-surface-border rounded-input text-content-muted font-medium cursor-not-allowed"
             />
           </div>
@@ -78,6 +90,7 @@ export const AccountSettings: React.FC = () => {
             <input
               type="text"
               value={phone}
+              placeholder="Enter your mobile number"
               onChange={(e) => { setPhone(e.target.value); setIsDirty(true); }}
               className="w-full pl-9 pr-3 py-2 bg-surface-card border border-surface-border rounded-input text-content-main font-medium focus:ring-2 focus:ring-primary focus:outline-none"
             />

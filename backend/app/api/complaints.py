@@ -32,7 +32,7 @@ async def list_complaints(
     status_filter: Optional[str] = Query(None, alias="status"),
     priority: Optional[str] = Query(None),
     q: Optional[str] = Query(None),
-    current_user: Dict[str, Any] = Depends(require_verified_user)
+    current_user: Dict[str, Any] = Depends(get_current_user)
 ):
     db = get_database()
     effective_offset = offset if offset > 0 else (page - 1) * limit
@@ -79,7 +79,7 @@ async def list_complaints(
     }
 
 @router.get("/{complaint_id}", response_model=Dict[str, Any])
-async def get_complaint(complaint_id: str, current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def get_complaint(complaint_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
     db = get_database()
     cmp = db.complaints.find_one({"complaint_id": complaint_id.upper()})
     if not cmp:
@@ -98,20 +98,28 @@ async def get_complaint(complaint_id: str, current_user: Dict[str, Any] = Depend
     return cmp
 
 @router.post("", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
-async def create_complaint(payload: ComplaintCreate, current_user: Dict[str, Any] = Depends(require_verified_user)):
+async def create_complaint(payload: ComplaintCreate, current_user: Dict[str, Any] = Depends(get_current_user)):
     db = get_database()
 
-    # RBAC check
-    if current_user["role"] == UserRole.CUSTOMER.value:
+    # RBAC check: Customers cannot create complaints on behalf of other customers
+    if current_user["role"] == UserRole.CUSTOMER.value or not payload.customer_id:
         payload.customer_id = current_user["user_id"]
 
-    # Generate next CMP ID
+    # Atomic sequence generation from counters collection with fallback
+    seq_doc = db.counters.find_one_and_update(
+        {"_id": "complaint_id"},
+        {"$inc": {"seq": 1}},
+        upsert=True,
+        return_document=True
+    )
+    next_num = seq_doc.get("seq", 251)
     latest = db.complaints.find_one(sort=[("complaint_id", -1)])
-    next_num = 251
     if latest and latest.get("complaint_id"):
         try:
             num = int(str(latest["complaint_id"]).replace("CMP", ""))
-            next_num = num + 1
+            if num >= next_num:
+                next_num = num + 1
+                db.counters.update_one({"_id": "complaint_id"}, {"$set": {"seq": next_num}})
         except Exception:
             pass
 

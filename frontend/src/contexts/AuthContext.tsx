@@ -79,15 +79,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     firebaseUser?.providerData.some((p) => p.providerId === 'google.com')
   );
 
-  const syncBackendProfile = async (): Promise<User | null> => {
+  const syncBackendProfile = async (throwOnError: boolean = false): Promise<User | null> => {
     try {
       const profile = await authApi.getMe();
+      if (!profile || !profile.role) {
+        throw new Error('Invalid user profile received from backend.');
+      }
       setUser(profile);
       return profile;
     } catch (err: any) {
-      console.warn('Backend user profile fetch failed:', err?.response?.data || err.message);
-      // In case of 401 / 403 (e.g. unverified email or invalid token), user profile is not set
+      const errorMsg =
+        err?.response?.data?.detail ||
+        err?.message ||
+        'Failed to synchronize user profile with backend.';
+      console.warn('Backend user profile fetch failed:', errorMsg);
+      // In case of 401 / 403 (e.g. deactivated account or invalid token), clear state
       setUser(null);
+      if (throwOnError) {
+        throw new Error(errorMsg);
+      }
       return null;
     }
   };
@@ -96,7 +106,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const unsubscribe = onIdTokenChanged(auth, async (currentFbUser) => {
       setFirebaseUser(currentFbUser);
       if (currentFbUser) {
-        await syncBackendProfile();
+        await syncBackendProfile(false);
       } else {
         setUser(null);
       }
@@ -119,7 +129,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email.trim(), pass);
       setFirebaseUser(userCredential.user);
-      await syncBackendProfile();
+      try {
+        await syncBackendProfile(true);
+      } catch (syncErr: any) {
+        // Backend profile synchronization failed: sign out of Firebase to prevent half-authenticated state
+        await signOut(auth);
+        setFirebaseUser(null);
+        setUser(null);
+        throw syncErr;
+      }
     } finally {
       setLoading(false);
     }
@@ -134,7 +152,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       await sendEmailVerification(userCredential.user);
       setFirebaseUser(userCredential.user);
-      await syncBackendProfile();
+      try {
+        await syncBackendProfile(true);
+      } catch (syncErr: any) {
+        console.warn('Backend profile initial sync on registration:', syncErr);
+      }
     } finally {
       setLoading(false);
     }
@@ -145,7 +167,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const userCredential = await signInWithPopup(auth, googleProvider);
       setFirebaseUser(userCredential.user);
-      await syncBackendProfile();
+      try {
+        await syncBackendProfile(true);
+      } catch (syncErr: any) {
+        await signOut(auth);
+        setFirebaseUser(null);
+        setUser(null);
+        throw syncErr;
+      }
     } finally {
       setLoading(false);
     }
@@ -182,7 +211,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, demo.email, passwordToTry);
-      await syncBackendProfile();
+      try {
+        await syncBackendProfile(true);
+      } catch (syncErr: any) {
+        await signOut(auth);
+        setFirebaseUser(null);
+        setUser(null);
+        return {
+          success: false,
+          requiresPassword: false,
+          email: demo.email,
+          personaName: demo.name,
+          message: syncErr.message || 'Profile synchronization failed for demo persona.'
+        };
+      }
       return { success: true };
     } catch (err: any) {
       const code = err?.code || '';
@@ -222,6 +264,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const refreshUser = async () => {
+    if (auth.currentUser) {
+      try {
+        await auth.currentUser.reload();
+        setFirebaseUser(auth.currentUser);
+        await auth.currentUser.getIdToken(true);
+      } catch (e) {
+        console.warn('Failed to reload firebase user', e);
+      }
+    }
     await syncBackendProfile();
   };
 

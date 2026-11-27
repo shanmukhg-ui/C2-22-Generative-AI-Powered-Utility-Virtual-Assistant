@@ -31,6 +31,7 @@ const AppContent: React.FC = () => {
   // Default to public landing page matching the user's primary design
   const [currentPage, setCurrentPage] = useState<string>('landing');
   const [chatInitialQuery, setChatInitialQuery] = useState<string | undefined>(undefined);
+  const [loginInitialPersona, setLoginInitialPersona] = useState<string | undefined>(undefined);
 
   // Command Palette State
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -129,8 +130,16 @@ const AppContent: React.FC = () => {
             setChatInitialQuery(undefined);
             setCurrentPage('chat');
           }}
-          onLogin={() => setCurrentPage('login')}
+          onLogin={() => {
+            setLoginInitialPersona(undefined);
+            setCurrentPage('login');
+          }}
+          onSelectPersona={(personaId) => {
+            setLoginInitialPersona(personaId);
+            setCurrentPage('login');
+          }}
           onLoginSuccess={() => {
+            setLoginInitialPersona(undefined);
             if (user?.role === 'Employee') setCurrentPage('employee-dash');
             else if (user?.role === 'Administrator') setCurrentPage('admin-dash');
             else setCurrentPage('customer-dash');
@@ -155,6 +164,33 @@ const AppContent: React.FC = () => {
           }}
         />
       </>
+    );
+  }
+
+  // If on login page, render full width without sidebar, matching LandingPage design
+  if (currentPage === 'login') {
+    return (
+      <div className="relative min-h-screen bg-slate-900">
+        <button
+          type="button"
+          onClick={() => {
+            setLoginInitialPersona(undefined);
+            setCurrentPage('landing');
+          }}
+          className="absolute top-4 left-4 z-20 px-3 py-1.5 text-xs font-bold text-slate-200 bg-slate-800/80 hover:bg-slate-700 border border-slate-600 rounded-xl shadow-md transition flex items-center gap-1.5"
+        >
+          ← Back to home
+        </button>
+        <LoginPage
+          initialPersonaId={loginInitialPersona}
+          onLoginSuccess={() => {
+            setLoginInitialPersona(undefined);
+            if (user?.role === 'Employee') setCurrentPage('employee-dash');
+            else if (user?.role === 'Administrator') setCurrentPage('admin-dash');
+            else setCurrentPage('customer-dash');
+          }}
+        />
+      </div>
     );
   }
 
@@ -221,7 +257,9 @@ const AppContent: React.FC = () => {
       case 'login':
         return (
           <LoginPage
+            initialPersonaId={loginInitialPersona}
             onLoginSuccess={() => {
+              setLoginInitialPersona(undefined);
               if (user?.role === 'Employee') setCurrentPage('employee-dash');
               else if (user?.role === 'Administrator') setCurrentPage('admin-dash');
               else setCurrentPage('customer-dash');

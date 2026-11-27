@@ -4,9 +4,11 @@ import { Zap } from 'lucide-react';
 
 interface LoginPageProps {
   onLoginSuccess: () => void;
+  initialStep?: string;
+  initialPersonaId?: string;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, initialPersonaId }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-100">
       {/* Brand Header */}
@@ -24,7 +26,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-xl">
-        <AuthCard onSuccess={onLoginSuccess} />
+        <AuthCard onSuccess={onLoginSuccess} initialPersonaId={initialPersonaId} />
       </div>
     </div>
   );

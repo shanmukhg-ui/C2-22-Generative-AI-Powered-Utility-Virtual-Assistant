@@ -160,13 +160,49 @@ export const knowledgeApi = {
   }
 };
 
+export interface CreateUserPayload {
+  name: string;
+  email: string;
+  department?: string;
+  phone?: string;
+  city?: string;
+  user_id?: string;
+  password?: string;
+}
+
+export interface CreateUserResult {
+  success: boolean;
+  message: string;
+  user: User;
+  activation_link?: string;
+  email_delivery: string;
+}
+
 export const adminApi = {
-  listUsers: async (limit: number = 50): Promise<User[]> => {
-    const res = await client.get('/admin/users', { params: { limit } });
+  listUsers: async (
+    params?: number | { limit?: number; skip?: number; role?: string; status?: string; search?: string }
+  ): Promise<User[]> => {
+    const queryParams = typeof params === 'number' ? { limit: params } : params;
+    const res = await client.get('/admin/users', { params: queryParams });
     return res.data.users || [];
   },
   listAuditLogs: async (limit: number = 100): Promise<AuditLog[]> => {
     const res = await client.get('/admin/audit-logs', { params: { limit } });
     return res.data.logs || [];
+  },
+  createEmployee: async (data: CreateUserPayload): Promise<CreateUserResult> => {
+    const res = await client.post('/admin/users/employee', data);
+    return res.data;
+  },
+  createAdministrator: async (data: CreateUserPayload): Promise<CreateUserResult> => {
+    const res = await client.post('/admin/users/administrator', data);
+    return res.data;
+  },
+  updateUserStatus: async (
+    userId: string,
+    data: { is_active: boolean; reason?: string }
+  ): Promise<{ success: boolean; message: string; user: User }> => {
+    const res = await client.patch(`/admin/users/${userId}/status`, data);
+    return res.data;
   }
 };
