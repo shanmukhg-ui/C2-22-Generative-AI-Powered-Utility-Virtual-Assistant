@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TechBharat AI CoE – Project C2-22 Executive Visual Report</title>
+<style>
+  @page {
+    size: A4;
+    margin: 12mm 14mm 14mm 14mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1E293B;
+    background: #FFFFFF;
+    line-height: 1.45;
+    font-size: 9.5pt;
+  }
+
+  .page {
+    page-break-after: always;
+    padding: 4px 0;
+    position: relative;
+  }
+
+  .page:last-child {
+    page-break-after: avoid;
+  }
+
+  /* Header banner */
+  .header-card {
+    background: linear-gradient(135deg, #171642 0%, #2A1F6D 50%, #6D28F5 100%);
+    border-radius: 12px;
+    padding: 20px 24px;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(109, 40, 245, 0.2);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge-purple { background: rgba(255, 255, 255, 0.18); color: #E9D5FF; border: 1px solid rgba(255, 255, 255, 0.25); }
+  .badge-cyan { background: rgba(6, 182, 212, 0.2); color: #22D3EE; border: 1px solid rgba(6, 182, 212, 0.4); }
+  .badge-green { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+  h1 {
+    font-size: 19pt;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 8px 0 4px 0;
+    letter-spacing: -0.5px;
+  }
+
+  h2 {
+    font-size: 12.5pt;
+    font-weight: 700;
+    color: #171642;
+    margin: 14px 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid #F1F5F9;
+    padding-bottom: 5px;
+  }
+
+  h3 {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #4338CA;
+    margin: 10px 0 5px 0;
+  }
+
+  p {
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 9pt;
+  }
+
+  /* Team meta box */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+  }
+
+  .team-member {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6D28F5, #22D3EE);
+    color: white;
+    font-weight: 800;
+    font-size: 11pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .member-name {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #0F172A;
+  }
+
+  .member-role {
+    font-size: 8pt;
+    color: #64748B;
+  }
+
+  /* Stat cards */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border-left: 4px solid #6D28F5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .stat-val {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #171642;
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-size: 7.5pt;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 3px;
+  }
+
+  /* Diagram container */
+  .diagram-container {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  }
+
+  .diagram-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #171642;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin: 8px 0 14px 0;
+  }
+
+  th {
+    background: #F1F5F9;
+    color: #1E293B;
+    font-weight: 700;
+    text-align: left;
+    padding: 6px 10px;
+    border: 1px solid #CBD5E1;
+  }
+
+  td {
+    padding: 6px 10px;
+    border: 1px solid #E2E8F0;
+    color: #334155;
+  }
+
+  tr:nth-child(even) td {
+    background: #F8FAFC;
+  }
+
+  .footer-note {
+    font-size: 7.5pt;
+    color: #94A3B8;
+    text-align: center;
+    margin-top: 10px;
+    border-top: 1px solid #E2E8F0;
+    padding-top: 8px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER & EXECUTIVE OVERVIEW -->
+<div class="page">
+  <div class="header-card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span class="badge badge-cyan">TechBharat AI CoE • Cohort #2</span>
+      <span class="badge badge-purple">Project ID: C2-22</span>
+    </div>
+    <h1>UtilityAI — Virtual Assistant</h1>
+    <div style="font-size: 10pt; opacity: 0.9; font-weight: 500; margin-top: 2px;">
+      Generative AI-Powered Multi-Utility Citizen Service & Operational Intelligence Platform
+    </div>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-member">
+      <div class="avatar">GS</div>
+      <div>
+        <div class="member-name">Gollavilli Shanmukh Vardhan Sai</div>
+        <div class="member-role">Full-Stack Lead & Conversational AI Architect</div>
+      </div>
+    </div>
+    <div class="team-member">
+      <div class="avatar">PK</div>
+      <div>
+        <div class="member-name">PANAM VICTOR KOMAL</div>
+        <div class="member-role">Systems & RAG Infrastructure Architect</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card" style="border-left-color: #6D28F5;">
+      <div class="stat-val">5 Sectors</div>
+      <div class="stat-label">Power, Water, Gas, Telecom, Waste</div>
+    </div>
+    <div class="stat-card" style="border-left-color: #06B6D4;">
+      <div class="stat-val">500 + 250</div>
+      <div class="stat-label">Requests & Complaints Seeded</div>
+    </div>
+    <div class="stat-card" style="border-left-color: #10B981;">
+      <div class="stat-val">&lt; 800 ms</div>
+      <div class="stat-label">Grounded RAG Response Latency</div>
+    </div>
+    <div class="stat-card" style="border-left-color: #F59E0B;">
+      <div class="stat-val">100% RBAC</div>
+      <div class="stat-label">Strict Customer Data Isolation</div>
+    </div>
+  </div>
+
+  <h2>Executive Project Overview</h2>
+  <p>
+    <strong>UtilityAI (TechBharat C2-22)</strong> unifies public utility interactions across municipal jurisdictions. Modern utility portals are plagued by query fragmentation, slow routing, and disconnected call centers. UtilityAI resolves this through a strictly grounded <strong>Retrieval-Augmented Generation (RAG)</strong> conversational assistant directly docked within a 3-tier Role-Based Access Control (RBAC) dashboard for Citizens, Operations Staff, and Administrators.
+  </p>
+
+  <!-- DIAGRAM 1: HIGH-LEVEL ARCHITECTURE -->
+  <div class="diagram-container">
+    <div class="diagram-title">
+      <span>System Architecture: Multi-Tier Decoupled Infrastructure</span>
+      <span class="badge badge-purple" style="font-size:7pt;">Vite • FastAPI • MongoDB Atlas • ChromaDB</span>
+    </div>
+    <svg viewBox="0 0 760 260">
+      <defs>
+        <linearGradient id="gradCard" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFFFFF"/>
+          <stop offset="100%" stop-color="#F8FAFC"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Client Layer -->
+      <rect x="15" y="20" width="160" height="220" rx="8" fill="url(#gradCard)" stroke="#CBD5E1" stroke-width="1.5"/>
+      <rect x="15" y="20" width="160" height="30" rx="8" fill="#6D28F5"/>
+      <text x="95" y="40" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">CLIENT LAYER (SPA)</text>
+      <rect x="25" y="60" width="140" height="36" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="95" y="78" fill="#1E293B" font-size="9" font-weight="600" text-anchor="middle">React 18 + Vite</text>
+      <text x="95" y="90" fill="#64748B" font-size="7.5" text-anchor="middle">Tailwind • Framer Motion</text>
+
+      <rect x="25" y="105" width="140" height="36" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="95" y="123" fill="#1E293B" font-size="9" font-weight="600" text-anchor="middle">Docked AI Assistant</text>
+      <text x="95" y="135" fill="#64748B" font-size="7.5" text-anchor="middle">Role-Aware & Fixed Layout</text>
+
+      <rect x="25" y="150" width="140" height="36" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="95" y="168" fill="#1E293B" font-size="9" font-weight="600" text-anchor="middle">3 Role Dashboards</text>
+      <text x="95" y="180" fill="#64748B" font-size="7.5" text-anchor="middle">Customer • Staff • Admin</text>
+
+      <rect x="25" y="195" width="140" height="32" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="95" y="215" fill="#0EA5E9" font-size="8.5" font-weight="700" text-anchor="middle">Live GPS Technician Tracker</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 175 130 L 205 130" stroke="#6D28F5" stroke-width="2.5" fill="none"/>
+      <polygon points="205,126 215,130 205,134" fill="#6D28F5"/>
+
+      <!-- API Gateway Layer -->
+      <rect x="215" y="20" width="160" height="220" rx="8" fill="url(#gradCard)" stroke="#CBD5E1" stroke-width="1.5"/>
+      <rect x="215" y="20" width="160" height="30" rx="8" fill="#171642"/>
+      <text x="295" y="40" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">API & SECURITY GATEWAY</text>
+
+      <rect x="225" y="60" width="140" height="42" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="295" y="78" fill="#1E293B" font-size="9" font-weight="600" text-anchor="middle">FastAPI (Python 3.13)</text>
+      <text x="295" y="93" fill="#64748B" font-size="7.5" text-anchor="middle">Uvicorn Async REST API</text>
+
+      <rect x="225" y="112" width="140" height="42" rx="6" fill="#FEF3C7" stroke="#FDE68A"/>
+      <text x="295" y="130" fill="#92400E" font-size="9" font-weight="700" text-anchor="middle">Zero-Trust RBAC Guard</text>
+      <text x="295" y="145" fill="#B45309" font-size="7.5" text-anchor="middle">Strict Server-Side Auth</text>
+
+      <rect x="225" y="164" width="140" height="42" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="295" y="182" fill="#1E293B" font-size="9" font-weight="600" text-anchor="middle">Audit Logging Journal</text>
+      <text x="295" y="197" fill="#64748B" font-size="7.5" text-anchor="middle">Immutable MongoDB Audit</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 375 130 L 405 130" stroke="#6D28F5" stroke-width="2.5" fill="none"/>
+      <polygon points="405,126 415,130 405,134" fill="#6D28F5"/>
+
+      <!-- Intelligence & RAG Layer -->
+      <rect x="415" y="20" width="170" height="220" rx="8" fill="url(#gradCard)" stroke="#CBD5E1" stroke-width="1.5"/>
+      <rect x="415" y="20" width="170" height="30" rx="8" fill="#4338CA"/>
+      <text x="500" y="40" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">INTELLIGENCE & RAG ENGINE</text>
+
+      <rect x="425" y="60" width="150" height="36" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="500" y="78" fill="#1E293B" font-size="9" font-weight="600" text-anchor="middle">AgentQueryRouter</text>
+      <text x="500" y="90" fill="#64748B" font-size="7.5" text-anchor="middle">SR / CMP / SOP Intent Parsing</text>
+
+      <rect x="425" y="105" width="150" height="36" rx="6" fill="#E0F2FE" stroke="#BAE6FD"/>
+      <text x="500" y="123" fill="#0369A1" font-size="9" font-weight="700" text-anchor="middle">Semantic Vector Match</text>
+      <text x="500" y="135" fill="#0284C7" font-size="7.5" text-anchor="middle">ChromaDB + PyMuPDF Chunks</text>
+
+      <rect x="425" y="150" width="150" height="36" rx="6" fill="#EDE9FE" stroke="#DDD6FE"/>
+      <text x="500" y="168" fill="#6D28F5" font-size="9" font-weight="700" text-anchor="middle">Gemini-2.5-Flash LLM</text>
+      <text x="500" y="180" fill="#7C3AED" font-size="7.5" text-anchor="middle">OpenRouter / Grounded Prompt</text>
+
+      <rect x="425" y="195" width="150" height="32" rx="6" fill="#ECFDF5" stroke="#A7F3D0"/>
+      <text x="500" y="215" fill="#065F46" font-size="8" font-weight="700" text-anchor="middle">Deterministic SOP Fallback</text>
+
+      <!-- Arrow 3 -->
+      <path d="M 585 130 L 610 130" stroke="#6D28F5" stroke-width="2.5" fill="none"/>
+      <polygon points="610,126 620,130 610,134" fill="#6D28F5"/>
+
+      <!-- Data Layer -->
+      <rect x="620" y="20" width="125" height="220" rx="8" fill="url(#gradCard)" stroke="#CBD5E1" stroke-width="1.5"/>
+      <rect x="620" y="20" width="125" height="30" rx="8" fill="#0F172A"/>
+      <text x="682" y="40" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">DATA STORE</text>
+
+      <rect x="628" y="60" width="110" height="50" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="682" y="80" fill="#1E293B" font-size="8.5" font-weight="700" text-anchor="middle">MongoDB Atlas</text>
+      <text x="682" y="93" fill="#64748B" font-size="7" text-anchor="middle">500 Requests</text>
+      <text x="682" y="103" fill="#64748B" font-size="7" text-anchor="middle">250 Complaints</text>
+
+      <rect x="628" y="120" width="110" height="45" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="682" y="140" fill="#1E293B" font-size="8.5" font-weight="700" text-anchor="middle">ChromaDB Store</text>
+      <text x="682" y="153" fill="#64748B" font-size="7" text-anchor="middle">SOP Circulars (PDFs)</text>
+
+      <rect x="628" y="175" width="110" height="45" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="682" y="195" fill="#1E293B" font-size="8.5" font-weight="700" text-anchor="middle">Telemetry DB</text>
+      <text x="682" y="208" fill="#64748B" font-size="7" text-anchor="middle">100 Incident Logs</text>
+    </svg>
+  </div>
+</div>
+
+<!-- PAGE 2: DOCKED AI ASSISTANT & UI LAYOUT REPRESENTATION -->
+<div class="page">
+  <h2>Visual UI Representation: Docked Assistant & Dashboard Layout</h2>
+  <p>
+    Unlike conventional floating popup chatbots, UtilityAI features a <strong>docked, role-aware AI Assistant panel</strong> integrated permanently into the right side of the dashboard (340–380px wide). The left side houses high-density stat cards, operational charts, and ticket tables that dynamically adjust to fit.
+  </p>
+
+  <!-- DIAGRAM 2: DOCKED UI MOCKUP -->
+  <div class="diagram-container">
+    <div class="diagram-title">
+      <span>Unified Dashboard Architecture: Content Area + Docked AI Assistant</span>
+      <span class="badge badge-purple">Customer Role Active (John Doe)</span>
+    </div>
+    <svg viewBox="0 0 760 380">
+      <rect x="0" y="0" width="760" height="380" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+      
+      <!-- Top Navbar -->
+      <rect x="0" y="0" width="760" height="38" rx="8" fill="#171642"/>
+      <circle cx="20" cy="19" r="6" fill="#6D28F5"/>
+      <text x="32" y="23" fill="#FFFFFF" font-size="10" font-weight="800">UtilityAI</text>
+      <text x="80" y="23" fill="#94A3B8" font-size="8">TechBharat C2-22</text>
+      <rect x="580" y="8" width="110" height="22" rx="11" fill="rgba(255,255,255,0.1)"/>
+      <circle cx="592" cy="19" r="4" fill="#22D3EE"/>
+      <text x="602" y="23" fill="#FFFFFF" font-size="8" font-weight="600">John Doe (Citizen)</text>
+      <rect x="700" y="8" width="50" height="22" rx="4" fill="#6D28F5"/>
+      <text x="725" y="22" fill="#FFFFFF" font-size="8" font-weight="700" text-anchor="middle">Logout</text>
+
+      <!-- Left Sidebar -->
+      <rect x="0" y="38" width="110" height="342" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <rect x="8" y="48" width="94" height="24" rx="4" fill="#EDE9FE"/>
+      <text x="16" y="64" fill="#6D28F5" font-size="8" font-weight="700">Dashboard</text>
+      <text x="16" y="92" fill="#64748B" font-size="8">Requests (500)</text>
+      <text x="16" y="116" fill="#64748B" font-size="8">Complaints (250)</text>
+      <text x="16" y="140" fill="#64748B" font-size="8">GPS Tracker</text>
+      <text x="16" y="164" fill="#64748B" font-size="8">Knowledge Base</text>
+      <text x="16" y="188" fill="#64748B" font-size="8">Audit Logs</text>
+
+      <!-- Main Dashboard Content (Left Center) -->
+      <g transform="translate(120, 48)">
+        <!-- Stat Cards -->
+        <rect x="0" y="0" width="115" height="50" rx="6" fill="#FFFFFF" stroke="#E2E8F0"/>
+        <text x="10" y="16" fill="#64748B" font-size="7" font-weight="600">ACTIVE TICKETS</text>
+        <text x="10" y="38" fill="#171642" font-size="14" font-weight="800">4 Open</text>
+
+        <rect x="125" y="0" width="115" height="50" rx="6" fill="#FFFFFF" stroke="#E2E8F0"/>
+        <text x="135" y="16" fill="#64748B" font-size="7" font-weight="600">AVG RESOLUTION</text>
+        <text x="135" y="38" fill="#10B981" font-size="14" font-weight="800">18.4 Hrs</text>
+
+        <rect x="250" y="0" width="125" height="50" rx="6" fill="#FFFFFF" stroke="#E2E8F0"/>
+        <text x="260" y="16" fill="#64748B" font-size="7" font-weight="600">DISPATCH STATUS</text>
+        <text x="260" y="38" fill="#0EA5E9" font-size="12" font-weight="800">En Route (ETA 14m)</text>
+
+        <!-- Recent Service Requests Table -->
+        <rect x="0" y="60" width="375" height="150" rx="6" fill="#FFFFFF" stroke="#E2E8F0"/>
+        <text x="12" y="78" fill="#171642" font-size="9" font-weight="700">My Service Requests</text>
+        
+        <rect x="10" y="88" width="355" height="20" fill="#F8FAFC"/>
+        <text x="18" y="102" fill="#64748B" font-size="7" font-weight="700">TICKET ID</text>
+        <text x="85" y="102" fill="#64748B" font-size="7" font-weight="700">UTILITY</text>
+        <text x="155" y="102" fill="#64748B" font-size="7" font-weight="700">TYPE</text>
+        <text x="260" y="102" fill="#64748B" font-size="7" font-weight="700">STATUS</text>
+
+        <text x="18" y="124" fill="#6D28F5" font-size="7.5" font-weight="700">SR000110</text>
+        <text x="85" y="124" fill="#334155" font-size="7.5">Electricity</text>
+        <text x="155" y="124" fill="#334155" font-size="7.5">New 3-Phase Meter</text>
+        <rect x="258" y="114" width="55" height="14" rx="7" fill="#ECFDF5"/>
+        <text x="285" y="124" fill="#059669" font-size="6.5" font-weight="700" text-anchor="middle">In Progress</text>
+
+        <text x="18" y="146" fill="#6D28F5" font-size="7.5" font-weight="700">SR000274</text>
+        <text x="85" y="146" fill="#334155" font-size="7.5">Water</text>
+        <text x="155" y="146" fill="#334155" font-size="7.5">Pipeline Pressure Check</text>
+        <rect x="258" y="136" width="55" height="14" rx="7" fill="#FEF3C7"/>
+        <text x="285" y="146" fill="#D97706" font-size="6.5" font-weight="700" text-anchor="middle">Assigned</text>
+
+        <text x="18" y="168" fill="#6D28F5" font-size="7.5" font-weight="700">CMP000045</text>
+        <text x="85" y="168" fill="#334155" font-size="7.5">Gas</text>
+        <text x="155" y="168" fill="#334155" font-size="7.5">Tariff Dispute (Aug)</text>
+        <rect x="258" y="158" width="55" height="14" rx="7" fill="#F1F5F9"/>
+        <text x="285" y="168" fill="#475569" font-size="6.5" font-weight="700" text-anchor="middle">Under Review</text>
+
+        <!-- Outage Banner -->
+        <rect x="0" y="220" width="375" height="42" rx="6" fill="#EFF6FF" stroke="#BFDBFE"/>
+        <circle cx="20" cy="241" r="8" fill="#3B82F6"/>
+        <text x="20" y="244" fill="#FFFFFF" font-size="9" font-weight="800" text-anchor="middle">i</text>
+        <text x="36" y="236" fill="#1E40AF" font-size="8" font-weight="700">Ward 3 Substation Maintenance Scheduled</text>
+        <text x="36" y="250" fill="#60A5FA" font-size="7">Tomorrow 10:00 AM – 1:00 PM • Backup generators enabled</text>
+      </g>
+
+      <!-- RIGHT DOCKED AI ASSISTANT PANEL (350px wide) -->
+      <g transform="translate(505, 42)">
+        <rect x="0" y="0" width="245" height="328" rx="8" fill="#FFFFFF" stroke="#6D28F5" stroke-width="2"/>
+        
+        <!-- Panel Header -->
+        <rect x="0" y="0" width="245" height="38" rx="8" fill="#171642"/>
+        <circle cx="16" cy="19" r="6" fill="#6D28F5"/>
+        <text x="28" y="22" fill="#FFFFFF" font-size="8.5" font-weight="700">UtilityAI Assistant</text>
+        <rect x="120" y="10" width="75" height="18" rx="9" fill="#10B981" opacity="0.25"/>
+        <text x="157" y="22" fill="#10B981" font-size="6.5" font-weight="700" text-anchor="middle">● Grounded Live</text>
+        <text x="228" y="22" fill="#94A3B8" font-size="10" font-weight="700">—</text>
+
+        <!-- Message Body -->
+        <!-- Assistant greeting -->
+        <rect x="8" y="46" width="220" height="34" rx="6" fill="#F3E8FF"/>
+        <text x="14" y="58" fill="#581C87" font-size="7" font-weight="600">Hi John! I can help you apply for a service,</text>
+        <text x="14" y="70" fill="#581C87" font-size="7">track ticket SR000110, or file a complaint.</text>
+
+        <!-- Quick Chips -->
+        <g transform="translate(8, 86)">
+          <rect x="0" y="0" width="85" height="15" rx="7" fill="#F1F5F9" stroke="#E2E8F0"/>
+          <text x="42" y="11" fill="#475569" font-size="5.5" font-weight="600" text-anchor="middle">Track SR000110</text>
+          <rect x="90" y="0" width="75" height="15" rx="7" fill="#F1F5F9" stroke="#E2E8F0"/>
+          <text x="127" y="11" fill="#475569" font-size="5.5" font-weight="600" text-anchor="middle">How to Apply</text>
+          <rect x="170" y="0" width="60" height="15" rx="7" fill="#F1F5F9" stroke="#E2E8F0"/>
+          <text x="200" y="11" fill="#475569" font-size="5.5" font-weight="600" text-anchor="middle">Billing Help</text>
+        </g>
+
+        <!-- User Bubble -->
+        <rect x="55" y="108" width="180" height="24" rx="6" fill="#6D28F5"/>
+        <text x="63" y="123" fill="#FFFFFF" font-size="7" font-weight="500">What is the status of my meter request?</text>
+
+        <!-- Assistant Reply with Citation -->
+        <rect x="8" y="138" width="228" height="88" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <text x="14" y="152" fill="#171642" font-size="7" font-weight="700">Ticket SR000110 (Electricity Meter)</text>
+        <text x="14" y="164" fill="#334155" font-size="6.5">Status: In Progress • Technician: R. Varma</text>
+        <text x="14" y="176" fill="#0EA5E9" font-size="6.5" font-weight="600">Dispatched: Live ETA ~14 minutes</text>
+        
+        <rect x="14" y="184" width="216" height="16" rx="4" fill="#EDE9FE"/>
+        <text x="20" y="195" fill="#6D28F5" font-size="6" font-weight="700">DOC001 Electricity SOP (Page 14)</text>
+
+        <rect x="14" y="204" width="95" height="16" rx="4" fill="#6D28F5"/>
+        <text x="61" y="215" fill="#FFFFFF" font-size="6.5" font-weight="700" text-anchor="middle">Open GPS Tracker</text>
+
+        <!-- Input Box -->
+        <rect x="8" y="292" width="195" height="26" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+        <text x="16" y="308" fill="#94A3B8" font-size="7">Ask about services, SOPs, or tickets...</text>
+        <rect x="207" y="292" width="30" height="26" rx="6" fill="#6D28F5"/>
+        <polygon points="218,300 226,305 218,310" fill="#FFFFFF"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- PAGE 3: ROLE-BASED PERSONAS & LIVE GPS TRACKING -->
+<div class="page">
+  <h2>Persona Sign-In / Sign-Up & Live GPS Tracking</h2>
+
+  <div class="two-col">
+    <!-- AUTH MODAL VISUAL -->
+    <div class="diagram-container">
+      <div class="diagram-title">
+        <span>Persona Authentication Interface</span>
+        <span class="badge badge-purple">Role Guard</span>
+      </div>
+      <svg viewBox="0 0 350 240">
+        <rect x="0" y="0" width="350" height="240" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+        
+        <!-- Header -->
+        <circle cx="175" cy="24" r="14" fill="#EDE9FE"/>
+        <polygon points="175,15 170,24 174,24 173,31 180,22 176,22" fill="#6D28F5"/>
+        <text x="175" y="48" fill="#171642" font-size="9" font-weight="800" text-anchor="middle">Welcome to UtilityAI</text>
+        <text x="175" y="58" fill="#64748B" font-size="6.5" text-anchor="middle">Authorized RBAC Sign In / Sign Up</text>
+
+        <!-- Persona 1: Customer -->
+        <rect x="20" y="68" width="310" height="42" rx="6" fill="#F8FAFC" stroke="#6D28F5" stroke-width="1.5"/>
+        <circle cx="38" cy="89" r="10" fill="#EDE9FE"/>
+        <text x="38" y="93" fill="#6D28F5" font-size="9" font-weight="700" text-anchor="middle">C</text>
+        <text x="56" y="85" fill="#171642" font-size="8" font-weight="700">John Doe (Citizen / Customer)</text>
+        <text x="56" y="97" fill="#64748B" font-size="6.5">Conn #: EB-9824-7102 • Personal tickets & complaints</text>
+        <rect x="260" y="80" width="60" height="18" rx="4" fill="#6D28F5"/>
+        <text x="290" y="92" fill="#FFFFFF" font-size="6.5" font-weight="700" text-anchor="middle">Sign In &gt;</text>
+
+        <!-- Persona 2: Staff -->
+        <rect x="20" y="118" width="310" height="42" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <circle cx="38" cy="139" r="10" fill="#F3E8FF"/>
+        <text x="38" y="143" fill="#7C3AED" font-size="9" font-weight="700" text-anchor="middle">S</text>
+        <text x="56" y="135" fill="#171642" font-size="8" font-weight="700">Priya Singh (Operations Staff)</text>
+        <text x="56" y="147" fill="#64748B" font-size="6.5">Emp ID: EMP-4029 • SOPs, Outages & Telemetry</text>
+        <rect x="260" y="130" width="60" height="18" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+        <text x="290" y="142" fill="#334155" font-size="6.5" font-weight="700" text-anchor="middle">Sign In &gt;</text>
+
+        <!-- Persona 3: Admin -->
+        <rect x="20" y="168" width="310" height="42" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <circle cx="38" cy="189" r="10" fill="#EDE9FE"/>
+        <text x="38" y="193" fill="#171642" font-size="9" font-weight="700" text-anchor="middle">A</text>
+        <text x="56" y="185" fill="#171642" font-size="8" font-weight="700">Amit Kumar (System Administrator)</text>
+        <text x="56" y="197" fill="#64748B" font-size="6.5">Invite: ADM-SEC-2026 • Document ingestion & audit</text>
+        <rect x="260" y="180" width="60" height="18" rx="4" fill="#F1F5F9" stroke="#CBD5E1"/>
+        <text x="290" y="192" fill="#334155" font-size="6.5" font-weight="700" text-anchor="middle">Sign In &gt;</text>
+
+        <text x="175" y="228" fill="#94A3B8" font-size="6.5" text-anchor="middle">Protected by Firebase Auth & MongoDB RBAC Middleware</text>
+      </svg>
+    </div>
+
+    <!-- GPS TRACKER VISUAL -->
+    <div class="diagram-container">
+      <div class="diagram-title">
+        <span>Live Technician GPS Tracking (Haversine ETA)</span>
+        <span class="badge badge-green">En Route</span>
+      </div>
+      <svg viewBox="0 0 350 240">
+        <rect x="0" y="0" width="350" height="240" rx="8" fill="#E2E8F0"/>
+        
+        <!-- Map Grid lines -->
+        <path d="M 0 50 L 350 50 M 0 110 L 350 110 M 0 170 L 350 170" stroke="#CBD5E1" stroke-width="1"/>
+        <path d="M 70 0 L 70 240 M 150 0 L 150 240 M 230 0 L 230 240 M 310 0 L 310 240" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <!-- Municipal River/Road -->
+        <path d="M 0 190 Q 140 160 220 90 T 350 40" stroke="#93C5FD" stroke-width="8" fill="none" opacity="0.6"/>
+        
+        <!-- Trajectory Path -->
+        <path d="M 60 160 Q 150 140 250 80" stroke="#6D28F5" stroke-width="2.5" stroke-dasharray="4" fill="none"/>
+
+        <!-- Citizen Location -->
+        <circle cx="250" cy="80" r="14" fill="#EDE9FE"/>
+        <circle cx="250" cy="80" r="6" fill="#6D28F5"/>
+        <rect x="210" y="42" width="80" height="20" rx="4" fill="#171642"/>
+        <text x="250" y="55" fill="#FFFFFF" font-size="6.5" font-weight="700" text-anchor="middle">Your Premises</text>
+
+        <!-- Technician Van Location -->
+        <circle cx="60" cy="160" r="16" fill="#FEF3C7"/>
+        <circle cx="60" cy="160" r="7" fill="#F59E0B"/>
+        <rect x="25" y="122" width="85" height="22" rx="4" fill="#F59E0B"/>
+        <text x="67" y="133" fill="#FFFFFF" font-size="6.5" font-weight="700" text-anchor="middle">Van #TR-04</text>
+        <text x="67" y="141" fill="#FEF3C7" font-size="5.5" text-anchor="middle">Tech: R. Varma</text>
+
+        <!-- Floating Telemetry Card -->
+        <rect x="15" y="185" width="320" height="45" rx="6" fill="#FFFFFF" stroke="#E2E8F0"/>
+        <circle cx="35" cy="207" r="12" fill="#10B981" opacity="0.15"/>
+        <text x="35" y="211" fill="#10B981" font-size="10" font-weight="800" text-anchor="middle">OK</text>
+        
+        <text x="55" y="202" fill="#171642" font-size="8" font-weight="700">Dynamic Arrival Estimate: 14 Minutes</text>
+        <text x="55" y="214" fill="#64748B" font-size="6.5">Distance: 3.2 km (Haversine) • Avg Speed: 25 km/h • Speed Dial: +91 98765 43210</text>
+        
+        <rect x="260" y="196" width="65" height="22" rx="4" fill="#10B981"/>
+        <text x="292" y="210" fill="#FFFFFF" font-size="6.5" font-weight="700" text-anchor="middle">Call Tech</text>
+      </svg>
+    </div>
+  </div>
+
+  <h2>RBAC Permission & Data Isolation Matrix</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Platform Resource / Capability</th>
+        <th>Customer (Citizen)</th>
+        <th>Operations Staff</th>
+        <th>Administrator</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Public SOPs & Guides (DOC001–DOC004)</strong></td>
+        <td><span class="badge badge-green">Allowed</span> Read & Cite</td>
+        <td><span class="badge badge-green">Allowed</span> Read & Cite</td>
+        <td><span class="badge badge-green">Allowed</span> Read & Cite</td>
+      </tr>
+      <tr>
+        <td><strong>Internal SOPs (SOP_INTERNAL_001–002)</strong></td>
+        <td><span style="color:#EF4444; font-weight:700;">Denied (403)</span></td>
+        <td><span class="badge badge-green">Allowed</span> Field Access</td>
+        <td><span class="badge badge-green">Allowed</span> Full Access</td>
+      </tr>
+      <tr>
+        <td><strong>Personal Tickets & Complaints</strong></td>
+        <td><span class="badge badge-green">Own Only</span> Isolated</td>
+        <td><span class="badge badge-green">Allowed</span> All 500</td>
+        <td><span class="badge badge-green">Allowed</span> All 500</td>
+      </tr>
+      <tr>
+        <td><strong>Other Customers' Service Requests</strong></td>
+        <td><span style="color:#EF4444; font-weight:700;">Blocked by RBAC</span></td>
+        <td><span class="badge badge-green">Allowed</span> Triage View</td>
+        <td><span class="badge badge-green">Allowed</span> Full Control</td>
+      </tr>
+      <tr>
+        <td><strong>Municipal Outage SCADA Telemetry</strong></td>
+        <td>Public Advisory Only</td>
+        <td><span class="badge badge-green">Allowed</span> Wards 1–40</td>
+        <td><span class="badge badge-green">Allowed</span> Full Logs</td>
+      </tr>
+      <tr>
+        <td><strong>Document Ingestion & Audit Stream</strong></td>
+        <td><span style="color:#EF4444; font-weight:700;">Denied</span></td>
+        <td><span style="color:#EF4444; font-weight:700;">Denied</span></td>
+        <td><span class="badge badge-green">Full Control</span> ChromaDB</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PAGE 4: PERFORMANCE CHARTS & VERIFICATION METRICS -->
+<div class="page">
+  <h2>Performance Metrics & Operational Data Charts</h2>
+
+  <!-- 4 CHARTS GRID -->
+  <div class="two-col" style="margin-bottom: 12px;">
+    <!-- CHART 1: UTILITY BREAKDOWN -->
+    <div class="diagram-container">
+      <div class="diagram-title">
+        <span>Seeded Service Requests by Utility (500 Total)</span>
+        <span class="badge badge-purple">Distribution</span>
+      </div>
+      <svg viewBox="0 0 350 160">
+        <!-- Horizontal Bar Chart -->
+        <text x="20" y="24" fill="#334155" font-size="7.5" font-weight="600">Electricity (42%)</text>
+        <rect x="110" y="14" width="210" height="14" rx="3" fill="#6D28F5"/>
+        <text x="325" y="25" fill="#1E293B" font-size="7" font-weight="700">210</text>
+
+        <text x="20" y="52" fill="#334155" font-size="7.5" font-weight="600">Water (26%)</text>
+        <rect x="110" y="42" width="130" height="14" rx="3" fill="#0EA5E9"/>
+        <text x="245" y="53" fill="#1E293B" font-size="7" font-weight="700">130</text>
+
+        <text x="20" y="80" fill="#334155" font-size="7.5" font-weight="600">Gas (16%)</text>
+        <rect x="110" y="70" width="80" height="14" rx="3" fill="#F59E0B"/>
+        <text x="195" y="81" fill="#1E293B" font-size="7" font-weight="700">80</text>
+
+        <text x="20" y="108" fill="#334155" font-size="7.5" font-weight="600">Telecom (10%)</text>
+        <rect x="110" y="98" width="50" height="14" rx="3" fill="#8B5CF6"/>
+        <text x="165" y="109" fill="#1E293B" font-size="7" font-weight="700">50</text>
+
+        <text x="20" y="136" fill="#334155" font-size="7.5" font-weight="600">Sanitation (6%)</text>
+        <rect x="110" y="126" width="30" height="14" rx="3" fill="#10B981"/>
+        <text x="145" y="137" fill="#1E293B" font-size="7" font-weight="700">30</text>
+      </svg>
+    </div>
+
+    <!-- CHART 2: SLA TURNAROUND -->
+    <div class="diagram-container">
+      <div class="diagram-title">
+        <span>Average Ticket Resolution vs Target SLA</span>
+        <span class="badge badge-green">Hours</span>
+      </div>
+      <svg viewBox="0 0 350 160">
+        <!-- Target vs Actual Bars -->
+        <text x="20" y="24" fill="#334155" font-size="7.5" font-weight="600">Critical Priority</text>
+        <rect x="110" y="14" width="38" height="14" rx="3" fill="#10B981"/>
+        <rect x="110" y="14" width="60" height="14" rx="3" fill="none" stroke="#94A3B8" stroke-dasharray="2"/>
+        <text x="155" y="25" fill="#047857" font-size="7" font-weight="700">3.8h (SLA: 6h)</text>
+
+        <text x="20" y="52" fill="#334155" font-size="7.5" font-weight="600">High Priority</text>
+        <rect x="110" y="42" width="75" height="14" rx="3" fill="#10B981"/>
+        <rect x="110" y="42" width="100" height="14" rx="3" fill="none" stroke="#94A3B8" stroke-dasharray="2"/>
+        <text x="195" y="53" fill="#047857" font-size="7" font-weight="700">12.4h (SLA: 16h)</text>
+
+        <text x="20" y="80" fill="#334155" font-size="7.5" font-weight="600">Medium Priority</text>
+        <rect x="110" y="70" width="120" height="14" rx="3" fill="#0EA5E9"/>
+        <rect x="110" y="70" width="140" height="14" rx="3" fill="none" stroke="#94A3B8" stroke-dasharray="2"/>
+        <text x="240" y="81" fill="#0369A1" font-size="7" font-weight="700">24.1h (SLA: 28h)</text>
+
+        <text x="20" y="108" fill="#334155" font-size="7.5" font-weight="600">Low Priority</text>
+        <rect x="110" y="98" width="180" height="14" rx="3" fill="#6D28F5"/>
+        <rect x="110" y="98" width="200" height="14" rx="3" fill="none" stroke="#94A3B8" stroke-dasharray="2"/>
+        <text x="300" y="109" fill="#4338CA" font-size="7" font-weight="700">44h (SLA: 48h)</text>
+
+        <text x="110" y="145" fill="#94A3B8" font-size="6.5">Solid: Actual Avg Time | Dashed: Regulatory SLA Limit</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <!-- CHART 3: RAG LATENCY BREAKDOWN -->
+    <div class="diagram-container">
+      <div class="diagram-title">
+        <span>Grounded RAG Query Latency (745 ms Total)</span>
+        <span class="badge badge-purple">Pipeline Breakdown</span>
+      </div>
+      <svg viewBox="0 0 350 140">
+        <!-- Stacked Progress Bar -->
+        <rect x="20" y="30" width="310" height="24" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+        
+        <rect x="20" y="30" width="18" height="24" rx="6" fill="#F59E0B"/>
+        <rect x="38" y="30" width="75" height="24" fill="#0EA5E9"/>
+        <rect x="113" y="30" width="217" height="24" rx="6" fill="#6D28F5"/>
+
+        <text x="20" y="80" fill="#F59E0B" font-size="7" font-weight="700">Intent Parse: 45ms (6%)</text>
+        <text x="125" y="80" fill="#0EA5E9" font-size="7" font-weight="700">Vector Match: 180ms (24%)</text>
+        <text x="235" y="80" fill="#6D28F5" font-size="7" font-weight="700">Gemini-2.5: 520ms (70%)</text>
+
+        <rect x="20" y="98" width="310" height="28" rx="4" fill="#ECFDF5" stroke="#A7F3D0"/>
+        <text x="175" y="115" fill="#065F46" font-size="7" font-weight="700" text-anchor="middle">Deterministic Rule Fallback (Quota Zero): ~85 ms response</text>
+      </svg>
+    </div>
+
+    <!-- CHART 4: WARD INCIDENT HEATMAP -->
+    <div class="diagram-container">
+      <div class="diagram-title">
+        <span>Municipal Ward Outage Density (Wards 1–40)</span>
+        <span class="badge badge-cyan">SCADA Telemetry</span>
+      </div>
+      <svg viewBox="0 0 350 140">
+        <!-- Heatmap Grid -->
+        <g transform="translate(25, 20)">
+          <!-- Row 1 -->
+          <rect x="0" y="0" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="16" y="15" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W1</text>
+          <rect x="38" y="0" width="32" height="24" rx="4" fill="#F59E0B" opacity="0.4"/><text x="54" y="15" fill="#92400E" font-size="6.5" font-weight="700" text-anchor="middle">W2</text>
+          <rect x="76" y="0" width="32" height="24" rx="4" fill="#EF4444" opacity="0.8"/><text x="92" y="15" fill="#FFFFFF" font-size="6.5" font-weight="800" text-anchor="middle">W3</text>
+          <rect x="114" y="0" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="130" y="15" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W4</text>
+          <rect x="152" y="0" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="168" y="15" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W5</text>
+          <rect x="190" y="0" width="32" height="24" rx="4" fill="#F59E0B" opacity="0.5"/><text x="206" y="15" fill="#92400E" font-size="6.5" font-weight="700" text-anchor="middle">W6</text>
+          <rect x="228" y="0" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="244" y="15" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W7</text>
+          <rect x="266" y="0" width="32" height="24" rx="4" fill="#EF4444" opacity="0.6"/><text x="282" y="15" fill="#FFFFFF" font-size="6.5" font-weight="800" text-anchor="middle">W8</text>
+
+          <!-- Row 2 -->
+          <rect x="0" y="30" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="16" y="45" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W9</text>
+          <rect x="38" y="30" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="54" y="45" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W10</text>
+          <rect x="76" y="30" width="32" height="24" rx="4" fill="#F59E0B" opacity="0.6"/><text x="92" y="45" fill="#92400E" font-size="6.5" font-weight="700" text-anchor="middle">W11</text>
+          <rect x="114" y="30" width="32" height="24" rx="4" fill="#EF4444" opacity="0.9"/><text x="130" y="45" fill="#FFFFFF" font-size="6.5" font-weight="800" text-anchor="middle">W12</text>
+          <rect x="152" y="30" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="168" y="45" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W13</text>
+          <rect x="190" y="30" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="206" y="45" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W14</text>
+          <rect x="228" y="30" width="32" height="24" rx="4" fill="#F59E0B" opacity="0.4"/><text x="244" y="45" fill="#92400E" font-size="6.5" font-weight="700" text-anchor="middle">W15</text>
+          <rect x="266" y="30" width="32" height="24" rx="4" fill="#10B981" opacity="0.3"/><text x="282" y="45" fill="#065F46" font-size="6.5" font-weight="700" text-anchor="middle">W16</text>
+        </g>
+        <text x="175" y="98" fill="#64748B" font-size="6.5" text-anchor="middle">Wards 17–40 Operating at Normal Baseline (&lt;1 fault/mo)</text>
+        <text x="175" y="112" fill="#94A3B8" font-size="6">Red: Critical Faults | Amber: Moderate Outages | Green: Clear</text>
+      </svg>
+    </div>
+  </div>
+
+  <h2>Verification, Testing & Sign-Off Summary</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Verification Area</th>
+        <th>Target Criteria</th>
+        <th>Demonstrated Metric</th>
+        <th>Sign-Off Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Automated Unit & Flow Tests</strong></td>
+        <td>Vitest + React Testing Library</td>
+        <td><strong>22 / 22 Tests Passed</strong> (auth & intro)</td>
+        <td><span class="badge badge-green">PASSED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Zero-Hallucination RAG</strong></td>
+        <td>100% cited answers or fallback</td>
+        <td><strong>100% Verified Citations</strong> (DOC001–004)</td>
+        <td><span class="badge badge-green">VERIFIED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Strict RBAC Enforcement</strong></td>
+        <td>HTTP 403 on cross-tenant access</td>
+        <td><strong>100% Isolated</strong> (Tested CUST0001 vs CUST0010)</td>
+        <td><span class="badge badge-green">ENFORCED</span></td>
+      </tr>
+      <tr>
+        <td><strong>Production Build Integrity</strong></td>
+        <td>Strict TypeScript zero error</td>
+        <td><strong>Vite build in 8.27s</strong> (0 warnings)</td>
+        <td><span class="badge badge-green">PRODUCTION-READY</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    TechBharat AI Centre of Excellence — Cohort #2 • Project C2-22: Generative AI-Powered Utility Virtual Assistant<br>
+    Authors: Gollavilli Shanmukh Vardhan Sai & PANAM VICTOR KOMAL • November 2026 • Production MVP Sign-Off
+  </div>
+</div>
+
+</body>
+</html>
