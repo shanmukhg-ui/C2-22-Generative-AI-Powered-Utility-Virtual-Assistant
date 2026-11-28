@@ -16,16 +16,11 @@ const client = axios.create({
   }
 });
 
-// Interceptor to attach verified Firebase ID token
+// Interceptor to attach verified auth token
 client.interceptors.request.use(async (config) => {
-  const currentUser = auth.currentUser;
-  if (currentUser) {
-    try {
-      const token = await currentUser.getIdToken();
-      config.headers.Authorization = `Bearer ${token}`;
-    } catch (err) {
-      console.warn('Could not retrieve active Firebase ID token', err);
-    }
+  const token = localStorage.getItem('utilityai_auth_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
@@ -43,6 +38,18 @@ client.interceptors.response.use(
 export const authApi = {
   getMe: async (): Promise<User> => {
     const res = await client.get('/auth/me');
+    return res.data;
+  },
+  login: async (email: string, password?: string): Promise<{ success: boolean; token: string; user: User }> => {
+    const res = await client.post('/auth/login', { email, password });
+    return res.data;
+  },
+  register: async (name: string, email: string, password?: string): Promise<{ success: boolean; token: string; user: User }> => {
+    const res = await client.post('/auth/register', { name, email, password });
+    return res.data;
+  },
+  switchPersona: async (personaId: string): Promise<{ success: boolean; token: string; user: User }> => {
+    const res = await client.post('/auth/persona', { persona_id: personaId });
     return res.data;
   },
   updateProfile: async (data: Partial<User>): Promise<{ success: boolean; user: User; message: string }> => {

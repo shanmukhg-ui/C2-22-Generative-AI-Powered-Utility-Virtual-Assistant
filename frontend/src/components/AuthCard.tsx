@@ -95,12 +95,8 @@ export const AuthCard: React.FC<AuthCardProps> = ({
         return 'Please enter a valid email address.';
       case 'auth/popup-closed-by-user':
         return 'Google Sign-In was closed before completing.';
-      case 'auth/api-key-not-valid':
-        return 'Firebase API key updating in production. Please refresh your browser.';
-      case 'auth/too-many-requests':
-        return 'Too many unsuccessful attempts. Please wait a moment and try again.';
       default:
-        return err?.message || 'An unexpected authentication error occurred.';
+        return err?.response?.data?.detail || err?.message || 'An unexpected authentication error occurred.';
     }
   };
 
@@ -150,10 +146,14 @@ export const AuthCard: React.FC<AuthCardProps> = ({
     setLoading(true);
     try {
       await registerWithEmail(fullName, email, password);
-      setSuccessMessage('Account registered successfully! A verification email has been sent to your inbox. Please verify before accessing protected services.');
-      setMode('signin');
-      setPassword('');
-      setConfirmPassword('');
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        setSuccessMessage('Account registered successfully! You can now access citizen services.');
+        setMode('signin');
+        setPassword('');
+        setConfirmPassword('');
+      }
     } catch (err: any) {
       setError(formatFirebaseError(err));
     } finally {
@@ -201,7 +201,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
     setError(null);
     setDemoError(null);
     setSelectedDemo(demo);
-    setDemoPasswordInput('');
+    setDemoPasswordInput('DemoUser@2026');
     setDemoTab('signin');
     setDemoFullName(demo.name);
     setEmail(demo.email);
@@ -323,7 +323,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
           </span>
           <span className="text-[10px] text-emerald-400 font-medium flex items-center gap-1">
             <ShieldCheck className="w-3 h-3 text-emerald-400" />
-            Firebase Verified
+            Verified Persona
           </span>
         </div>
 
@@ -370,7 +370,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
         </div>
         <p className="text-[10px] text-slate-400 flex items-center justify-center gap-1">
           <Lock className="w-3 h-3 text-slate-400 shrink-0" />
-          Clicking a persona prompts for its secure Firebase credentials
+          Click any persona for instant 1-click login
         </p>
       </div>
 
@@ -381,7 +381,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-slate-800 px-3 text-slate-400 font-semibold tracking-wider">
-            Or Firebase Authentication
+            Or Sign In With Email
           </span>
         </div>
       </div>
@@ -679,7 +679,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
           <ShieldCheck className="w-4 h-4 text-emerald-400 mr-1.5" />
           RBAC Verified Backend
         </span>
-        <span className="font-mono text-[10px] text-slate-500">FastAPI + Firebase Auth + MongoDB</span>
+        <span className="font-mono text-[10px] text-slate-500">FastAPI + Native Auth + MongoDB</span>
       </div>
 
       {/* Demo Persona Password Dialog (Prompted on Persona selection) */}
