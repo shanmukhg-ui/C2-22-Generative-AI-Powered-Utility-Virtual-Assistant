@@ -1,8 +1,12 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
+const defaultApiKey = 'AIzaSyDemoPlaceholderKeyForLocalWeb00';
+const rawApiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+const apiKey = (rawApiKey && rawApiKey.trim().length > 0) ? rawApiKey.trim() : defaultApiKey;
+
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
+  apiKey,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'c2-22-utility-assistant.firebaseapp.com',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'c2-22-utility-assistant',
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'c2-22-utility-assistant.firebasestorage.app',
@@ -24,7 +28,8 @@ googleProvider.setCustomParameters({
 });
 
 export const isFirebaseConfigured = (): boolean => {
-  return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
+  const k = import.meta.env.VITE_FIREBASE_API_KEY;
+  return Boolean(k && k.trim().length > 0 && !k.includes('Placeholder'));
 };
 
 export default app;
