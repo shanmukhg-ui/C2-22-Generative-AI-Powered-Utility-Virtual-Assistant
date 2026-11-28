@@ -79,6 +79,7 @@ def main():
         ("List all successfully resolved cases", "Service Requests", stats['service_requests']['resolved']),
         ("What are the currently assigned cases?", "Service Requests", stats['service_requests']['assigned_in_progress']),
         ("Show all pending complaints", "Citizen Grievances & Complaints", stats['complaints']['awaiting_acceptance']),
+        ("How many complaints were resolved today?", "Citizen Grievances & Complaints", stats['complaints']['resolved']),
         ("critical electricity incidents in Ward 11 that are still unresolved", "Operational Incidents & Outages", 0),
         ("assigned cases for Rajesh Kumar", "Service Requests", 0),
     ]
