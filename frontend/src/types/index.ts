@@ -2,7 +2,7 @@ export type Role = 'Customer' | 'Employee' | 'Administrator';
 
 export interface User {
   user_id: string;
-  firebase_uid: string;
+  firebase_uid?: string;
   name: string;
   email: string;
   role: Role;

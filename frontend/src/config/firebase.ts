@@ -1,21 +1,10 @@
-/**
- * Native authentication configuration.
- * Decoupled from external Firebase dependencies to guarantee 100% reliable local & cloud operation.
- */
-
-export const auth: any = {
-  currentUser: null,
-  signOut: async () => {
-    localStorage.removeItem('utilityai_auth_token');
-  },
-  onIdTokenChanged: () => () => {},
-  onAuthStateChanged: () => () => {}
+// Lightweight Mock Firebase Layer (Authentication Removed per Project Configuration)
+export const auth = {
+  currentUser: null
 };
 
-export const googleProvider: any = {
-  setCustomParameters: () => {}
-};
+export const googleProvider = {};
 
-export const isFirebaseConfigured = (): boolean => true;
+export const isFirebaseConfigured = (): boolean => false;
 
-export default auth;
+export default {};

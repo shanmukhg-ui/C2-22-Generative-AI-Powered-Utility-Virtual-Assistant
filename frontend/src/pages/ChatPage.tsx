@@ -95,7 +95,9 @@ export const ChatPage: React.FC<{ initialQuery?: string }> = ({ initialQuery }) 
   }, [user]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages, loading]);
 
   const handleSend = async (queryText?: string) => {

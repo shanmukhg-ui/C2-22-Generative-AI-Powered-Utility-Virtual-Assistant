@@ -159,60 +159,20 @@ class StatsService:
         # 3. Utility Filter
         utility_label = None
         if any(k in lower for k in ["electricity", "power"]):
+            mongo_filter["utility"] = {"$regex": r"^(Electricity|Power)", "$options": "i"}
             utility_label = "Electricity"
-            regex_pat = r"(Electricity|Power|Voltage|Outage|Surge|Wire|Transformer)"
-            if is_complaint:
-                mongo_filter["$or"] = [
-                    {"utility": {"$regex": r"^(Electricity|Power)", "$options": "i"}},
-                    {"category": {"$regex": regex_pat, "$options": "i"}},
-                    {"description": {"$regex": regex_pat, "$options": "i"}}
-                ]
-            else:
-                mongo_filter["utility"] = {"$regex": r"^(Electricity|Power)", "$options": "i"}
         elif "water" in lower:
+            mongo_filter["utility"] = {"$regex": r"^Water", "$options": "i"}
             utility_label = "Water"
-            regex_pat = r"(Water|Supply|Pipe|Leakage|Pressure|Drain)"
-            if is_complaint:
-                mongo_filter["$or"] = [
-                    {"utility": {"$regex": r"^Water", "$options": "i"}},
-                    {"category": {"$regex": regex_pat, "$options": "i"}},
-                    {"description": {"$regex": regex_pat, "$options": "i"}}
-                ]
-            else:
-                mongo_filter["utility"] = {"$regex": r"^Water", "$options": "i"}
         elif "gas" in lower:
+            mongo_filter["utility"] = {"$regex": r"^Gas", "$options": "i"}
             utility_label = "Gas"
-            regex_pat = r"(Gas|Pipeline|LPG|Odor|Cylinder)"
-            if is_complaint:
-                mongo_filter["$or"] = [
-                    {"utility": {"$regex": r"^Gas", "$options": "i"}},
-                    {"category": {"$regex": regex_pat, "$options": "i"}},
-                    {"description": {"$regex": regex_pat, "$options": "i"}}
-                ]
-            else:
-                mongo_filter["utility"] = {"$regex": r"^Gas", "$options": "i"}
-        elif any(k in lower for k in ["telecom", "broadband", "fiber", "network", "internet"]):
+        elif any(k in lower for k in ["telecom", "broadband", "fiber"]):
+            mongo_filter["utility"] = {"$regex": r"^Telecom", "$options": "i"}
             utility_label = "Telecom"
-            regex_pat = r"(Telecom|Broadband|Fiber|Network|Internet|Cable)"
-            if is_complaint:
-                mongo_filter["$or"] = [
-                    {"utility": {"$regex": r"^Telecom", "$options": "i"}},
-                    {"category": {"$regex": regex_pat, "$options": "i"}},
-                    {"description": {"$regex": regex_pat, "$options": "i"}}
-                ]
-            else:
-                mongo_filter["utility"] = {"$regex": r"^Telecom", "$options": "i"}
-        elif any(k in lower for k in ["waste", "sanitation", "garbage", "trash"]):
+        elif any(k in lower for k in ["waste", "sanitation", "garbage"]):
+            mongo_filter["utility"] = {"$regex": r"^(Waste|Solid Waste|Sanitation)", "$options": "i"}
             utility_label = "Solid Waste"
-            regex_pat = r"(Waste|Solid Waste|Sanitation|Garbage|Trash|Bin)"
-            if is_complaint:
-                mongo_filter["$or"] = [
-                    {"utility": {"$regex": r"^(Waste|Solid Waste|Sanitation)", "$options": "i"}},
-                    {"category": {"$regex": regex_pat, "$options": "i"}},
-                    {"description": {"$regex": regex_pat, "$options": "i"}}
-                ]
-            else:
-                mongo_filter["utility"] = {"$regex": r"^(Waste|Solid Waste|Sanitation)", "$options": "i"}
 
         # 4. Ward Filter (e.g., "Ward 11", "Ward 3")
         ward_match = re.search(r'\bward\s*(\d+)\b', lower)
@@ -224,29 +184,16 @@ class StatsService:
             else:
                 mongo_filter["service_location"] = {"$regex": rf"Ward\s*{ward_num}\b", "$options": "i"}
 
-        # 5. Assigned Staff / Person Name (e.g. "Rajesh Kumar", "Priya Singh")
-        name_match = re.search(r'(?:for|assigned to|technician)\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)', msg, re.IGNORECASE)
-        matched_staff_name = None
+        # 5. Assigned Staff / Person Name (e.g. "Rajesh Kumar")
+        name_match = re.search(r'(?:for|assigned to|technician)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)', msg)
         if name_match:
-            candidate_name = name_match.group(1).strip()
-            # If the user literally typed "a particular technician" or similar generic prompt
-            if candidate_name.lower() in ["a particular", "particular", "particular technician", "technician"]:
-                mongo_filter["status"] = {"$in": cls.STATUS_ASSIGNED_IN_PROGRESS}
-                if not status_label:
-                    status_label = "Assigned / In Progress"
-            else:
-                matched_staff_name = candidate_name
-                existing_or = mongo_filter.get("$or", [])
-                staff_or = [
-                    {"technician_name": {"$regex": candidate_name, "$options": "i"}},
-                    {"assigned_staff_id": {"$regex": candidate_name, "$options": "i"}},
-                    {"reported_by_staff_id": {"$regex": candidate_name, "$options": "i"}}
-                ]
-                if existing_or:
-                    mongo_filter["$and"] = [{"$or": existing_or}, {"$or": staff_or}]
-                    del mongo_filter["$or"]
-                else:
-                    mongo_filter["$or"] = staff_or
+            staff_name = name_match.group(1).strip()
+            # Find staff ID or search technician_name / assigned_staff_id
+            mongo_filter["$or"] = [
+                {"technician_name": {"$regex": staff_name, "$options": "i"}},
+                {"assigned_staff_id": {"$regex": staff_name, "$options": "i"}},
+                {"reported_by_staff_id": {"$regex": staff_name, "$options": "i"}}
+            ]
 
         # 6. Role-Based Access Isolation (RBAC):
         # Customer role can ONLY view their own complaints / requests
@@ -291,8 +238,7 @@ class StatsService:
         if severity_label: applied_desc.append(f"Severity: **{severity_label}**")
         if utility_label: applied_desc.append(f"Utility: **{utility_label}**")
         if ward_match: applied_desc.append(f"Location: **Ward {ward_match.group(1)}**")
-        if matched_staff_name: applied_desc.append(f"Staff: **{matched_staff_name}**")
-        elif name_match and not matched_staff_name: applied_desc.append("Status: **Assigned Cases**")
+        if name_match: applied_desc.append(f"Staff: **{name_match.group(1)}**")
 
         filter_summary_str = f" ({', '.join(applied_desc)})" if applied_desc else ""
 
@@ -307,13 +253,10 @@ class StatsService:
             }
 
         shown_count = len(records)
-        is_count_query = "how many" in lower
         lines = [
             f"### 📋 {title} Query Results",
+            f"Found **{total_matching}** record(s){filter_summary_str}. Showing **{shown_count} of {total_matching}** records:\n"
         ]
-        if is_count_query:
-            lines.append(f"There are currently **{total_matching}** record(s){filter_summary_str} verified directly from the database.\n")
-        lines.append(f"Found **{total_matching}** record(s){filter_summary_str}. Showing **{shown_count} of {total_matching}** records:\n")
 
         table_rows = []
         for r in records:

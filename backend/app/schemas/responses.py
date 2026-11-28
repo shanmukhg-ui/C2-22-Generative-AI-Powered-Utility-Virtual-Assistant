@@ -22,7 +22,7 @@ class ChatResponse(BaseModel):
 
 class UserResponse(BaseModel):
     user_id: str
-    firebase_uid: str
+    firebase_uid: Optional[str] = None
     name: str
     email: str
     role: str

@@ -3,7 +3,7 @@ import { useAuth, PRESET_USERS, DemoPersona } from '../contexts/AuthContext';
 import {
   Shield, Sparkles, User, Database, CheckCircle2, Zap,
   ArrowRight, Search, Bell, ExternalLink, ChevronDown, Check,
-  Radio, ShieldCheck, Activity, LogOut, KeyRound, X, RefreshCw
+  Radio, ShieldCheck, Activity, LogOut
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -17,38 +17,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
-  // Secure Persona Switching Dialog State
-  const [switchTargetDemo, setSwitchTargetDemo] = useState<DemoPersona | null>(null);
-  const [switchPasswordInput, setSwitchPasswordInput] = useState('');
-  const [switchError, setSwitchError] = useState<string | null>(null);
-  const [switchLoading, setSwitchLoading] = useState(false);
-
-  const handleSelectSwitchPersona = (demo: DemoPersona) => {
+  const handleSelectSwitchPersona = async (demo: DemoPersona) => {
+    setShowRoleDropdown(false);
     if (user?.user_id === demo.id) {
-      setShowRoleDropdown(false);
       return;
     }
-    setShowRoleDropdown(false);
-    setSwitchTargetDemo(demo);
-    setSwitchPasswordInput('');
-    setSwitchError(null);
-  };
-
-  const handleConfirmPersonaSwitch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!switchTargetDemo || !switchPasswordInput) return;
-
-    setSwitchLoading(true);
-    setSwitchError(null);
-
-    const result = await switchPersona(switchTargetDemo.id, switchPasswordInput);
-    setSwitchLoading(false);
-
-    if (result.success) {
-      setSwitchTargetDemo(null);
-    } else {
-      setSwitchError(result.message || 'Authentication failed. Please verify demo password.');
-    }
+    await switchPersona(demo.id);
   };
 
   const roleBadgeColor = () => {
@@ -242,70 +216,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateLanding, onOpenCommand
         </div>
       </div>
     </header>
-
-    {/* Secure Persona Switch Password Modal */}
-    {switchTargetDemo && (
-      <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div className="bg-slate-800 rounded-2xl max-w-sm w-full p-6 space-y-4 border border-slate-700 shadow-2xl relative text-slate-100">
-          <button
-            type="button"
-            onClick={() => setSwitchTargetDemo(null)}
-            aria-label="Close dialog"
-            className="absolute top-4 right-4 text-slate-400 hover:text-white"
-          >
-            <X className="w-4 h-4" />
-          </button>
-
-          <div>
-            <div className="w-10 h-10 rounded-xl bg-purple-600/30 text-purple-400 flex items-center justify-center mb-2">
-              <KeyRound className="w-5 h-5" />
-            </div>
-            <h3 className="text-sm font-bold text-white">Switch Demo Persona</h3>
-            <p className="text-xs text-slate-300 mt-1">
-              Authenticating as <strong>{switchTargetDemo.name}</strong> ({switchTargetDemo.email}).
-            </p>
-          </div>
-
-          {switchError && (
-            <div className="p-2.5 rounded-lg bg-rose-950/70 border border-rose-800 text-rose-200 text-xs">
-              {switchError}
-            </div>
-          )}
-
-          <form onSubmit={handleConfirmPersonaSwitch} className="space-y-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300">Firebase Account Password</label>
-              <input
-                type="password"
-                value={switchPasswordInput}
-                onChange={(e) => setSwitchPasswordInput(e.target.value)}
-                placeholder="Enter password..."
-                required
-                autoFocus
-                className="w-full mt-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-
-            <div className="flex gap-2 pt-1">
-              <button
-                type="button"
-                onClick={() => setSwitchTargetDemo(null)}
-                className="flex-1 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={switchLoading}
-                className="flex-1 py-2 bg-[#6D28F5] hover:bg-[#5B21D6] text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center space-x-1"
-              >
-                {switchLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <span>Switch User</span>}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    )}
   </>
   );
 };

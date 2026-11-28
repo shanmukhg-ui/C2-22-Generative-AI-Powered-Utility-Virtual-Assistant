@@ -152,8 +152,8 @@ export const DashboardChat: React.FC<DashboardChatProps> = ({
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
-    if (!isCollapsed) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!isCollapsed && messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isTyping, isCollapsed]);
 

@@ -26,7 +26,7 @@ import { useIntroPreference } from './hooks/useIntroPreference';
 import { CheckCircle2, Shield, Zap } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { user } = useAuth();
+  const { user, switchPersona } = useAuth();
   const { shouldShowIntro, markIntroShown, forceReplay } = useIntroPreference();
   // Default to public landing page matching the user's primary design
   const [currentPage, setCurrentPage] = useState<string>('landing');
@@ -134,9 +134,11 @@ const AppContent: React.FC = () => {
             setLoginInitialPersona(undefined);
             setCurrentPage('login');
           }}
-          onSelectPersona={(personaId) => {
-            setLoginInitialPersona(personaId);
-            setCurrentPage('login');
+          onSelectPersona={async (personaId) => {
+            await switchPersona(personaId);
+            if (personaId === 'EMP0001') setCurrentPage('employee-dash');
+            else if (personaId === 'ADM0001') setCurrentPage('admin-dash');
+            else setCurrentPage('customer-dash');
           }}
           onLoginSuccess={() => {
             setLoginInitialPersona(undefined);

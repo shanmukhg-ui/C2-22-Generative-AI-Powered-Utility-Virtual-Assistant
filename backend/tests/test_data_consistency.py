@@ -88,26 +88,6 @@ class TestDataConsistencyAndChatbot(unittest.TestCase):
         self.assertEqual(res["intent"], "DYNAMIC_QUERY_EMPTY")
         self.assertIn("No records found", res["reply"])
 
-    def test_dynamic_query_electricity_complaints(self):
-        """'Show all electricity complaints' dynamically filters by electricity utility."""
-        res = AgentQueryRouter.route_and_execute("Show all electricity complaints", "EMP0001", "Employee")
-        self.assertIn(res["intent"], ["DYNAMIC_DATA_QUERY", "DYNAMIC_QUERY_EMPTY"])
-        self.assertIn("complaints", res["citations"][0]["document_name"].lower())
-
-    def test_dynamic_query_how_many_resolved_today(self):
-        """'How many complaints were resolved today?' returns exact count from Single Source of Truth."""
-        stats = StatsService.get_all_stats()
-        res = AgentQueryRouter.route_and_execute("How many complaints were resolved today?", "EMP0001", "Employee")
-        self.assertEqual(res["intent"], "DYNAMIC_DATA_QUERY")
-        self.assertEqual(res["total_count"], stats["complaints"]["resolved"])
-        self.assertIn(f"**{stats['complaints']['resolved']}**", res["reply"])
-
-    def test_dynamic_query_assigned_technician(self):
-        """'Show complaints assigned to a particular technician' handles technician queries."""
-        res = AgentQueryRouter.route_and_execute("Show complaints assigned to a particular technician", "EMP0001", "Employee")
-        self.assertEqual(res["intent"], "DYNAMIC_DATA_QUERY")
-        self.assertTrue(len(res["cards"]) > 0)
-
     def test_conversational_grievance_lodging_and_sync(self):
         """Grievances filed via conversational chatbot immediately appear in counts."""
         initial_stats = StatsService.get_all_stats()

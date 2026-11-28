@@ -6,7 +6,6 @@ import {
   X, User, Briefcase, Shield, Cpu, RotateCcw, ExternalLink,
   Search, Check, Eye, HelpCircle, Layers, Server, MessageSquare
 } from 'lucide-react';
-import { AuthCard } from '../components/AuthCard';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -25,7 +24,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onTryChatWithPrompt,
   onReplayIntro
 }) => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [selectedPersonaId, setSelectedPersonaId] = useState<string | undefined>(undefined);
 
   // In-Laptop Live Interactive Assistant Demo State
@@ -103,10 +101,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const handleQuickLogin = (userId?: string) => {
     if (onSelectPersona && userId) {
       onSelectPersona(userId);
+    } else if (onLogin) {
+      onLogin();
     } else {
-      setSelectedPersonaId(userId);
-      setIsLoginModalOpen(true);
-      if (onLogin) onLogin();
+      onGetStarted();
     }
   };
 
@@ -197,9 +195,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             )}
             <button
               onClick={() => {
-                setSelectedPersonaId(undefined);
-                setIsLoginModalOpen(true);
                 if (onLogin) onLogin();
+                else onGetStarted();
               }}
               className="px-6 py-2.5 text-xs font-bold text-[#111827] hover:text-[#6D28F5] border border-slate-200 hover:border-[#6D28F5] rounded-xl transition shadow-xs bg-white hover:bg-slate-50"
             >
@@ -777,33 +774,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </div>
       </footer>
-
-      {/* 10. Interactive Complete Firebase Authentication Modal */}
-      {isLoginModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg my-8">
-            <AuthCard
-              isModal={true}
-              title="Welcome to UtilityAI"
-              subtitle="Sign in to access your authorized utility services"
-              initialPersonaId={selectedPersonaId}
-              onClose={() => {
-                setIsLoginModalOpen(false);
-                setSelectedPersonaId(undefined);
-              }}
-              onSuccess={() => {
-                setIsLoginModalOpen(false);
-                setSelectedPersonaId(undefined);
-                if (onLoginSuccess) {
-                  onLoginSuccess();
-                } else {
-                  onGetStarted();
-                }
-              }}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

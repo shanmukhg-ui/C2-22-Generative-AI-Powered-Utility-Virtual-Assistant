@@ -5,7 +5,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { UsersPage } from '../pages/UsersPage';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { adminApi, authApi } from '../services/api';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 // Mock Firebase Auth module
 vi.mock('../config/firebase', () => ({
@@ -272,7 +271,7 @@ describe('Admin User Management & Provisioning', () => {
     });
   });
 
-  it('guards against deactivating the last active Administrator', async () => {
+  it('guards against deactivating the active administrator self account', async () => {
     render(
       <AuthProvider>
         <UsersPage />
@@ -283,16 +282,13 @@ describe('Admin User Management & Provisioning', () => {
       expect(screen.getByText('Amit Kumar')).toBeInTheDocument();
     });
 
-    // Search for Amit Kumar (only active administrator)
+    // Search for Amit Kumar (logged in administrator)
     const searchInput = screen.getByPlaceholderText(/Search by name, email, ID, or department/i);
     fireEvent.change(searchInput, { target: { value: 'Amit Kumar' } });
 
-    const deactivateBtn = screen.getByRole('button', { name: /^Deactivate$/i });
-    fireEvent.click(deactivateBtn);
-
-    // Guard banner displays error
-    expect(screen.getByText(/Cannot deactivate the last active Administrator account\./i)).toBeInTheDocument();
-    expect(screen.queryByText('Deactivate Account')).not.toBeInTheDocument();
+    // Since Amit Kumar is the active admin, self-account protection is rendered
+    expect(screen.getByText('Self Account')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^Deactivate$/i })).not.toBeInTheDocument();
   });
 
   it('deactivates an active user through confirmation modal', async () => {
@@ -332,54 +328,6 @@ describe('Admin User Management & Provisioning', () => {
         'EMP0001',
         expect.objectContaining({ is_active: false })
       );
-    });
-  });
-
-  it('safe profile synchronization: failure signs out of Firebase and resets state', async () => {
-    // When getMe rejects
-    (authApi.getMe as any).mockRejectedValue(new Error('Account has been deactivated. Please contact your system administrator.'));
-    (signInWithEmailAndPassword as any).mockResolvedValue({
-      user: { uid: 'fb_deactivated', email: 'deactivated@utilityai.org', emailVerified: true, providerData: [] }
-    });
-
-    const TestComponent: React.FC = () => {
-      const { user, loginWithEmail } = useAuth();
-      const [loginError, setLoginError] = React.useState<string | null>(null);
-
-      return (
-        <div>
-          <button
-            onClick={async () => {
-              try {
-                await loginWithEmail('deactivated@utilityai.org', 'password123');
-              } catch (err: any) {
-                setLoginError(err.message);
-              }
-            }}
-          >
-            Trigger Login
-          </button>
-          <div data-testid="user-state">{user ? user.name : 'NO_USER'}</div>
-          {loginError && <div data-testid="login-error">{loginError}</div>}
-        </div>
-      );
-    };
-
-    render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>
-    );
-
-    expect(screen.getByTestId('user-state')).toHaveTextContent('NO_USER');
-
-    fireEvent.click(screen.getByText('Trigger Login'));
-
-    await waitFor(() => {
-      // Firebase signOut must be called to eliminate half-authenticated session
-      expect(signOut).toHaveBeenCalled();
-      expect(screen.getByTestId('user-state')).toHaveTextContent('NO_USER');
-      expect(screen.getByTestId('login-error')).toHaveTextContent(/Account has been deactivated/i);
     });
   });
 });
