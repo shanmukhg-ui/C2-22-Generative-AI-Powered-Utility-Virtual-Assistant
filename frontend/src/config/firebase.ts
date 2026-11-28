@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const defaultApiKey = 'AIzaSyBQYbbhvmoZgj7OZjrnf51Kis2uwngV81U';
 const rawApiKey = import.meta.env.VITE_FIREBASE_API_KEY;
-const apiKey = (rawApiKey && rawApiKey.trim().length > 0) ? rawApiKey.trim() : defaultApiKey;
+const apiKey = (rawApiKey && rawApiKey.trim().length > 0 && !rawApiKey.includes('Placeholder')) ? rawApiKey.trim() : defaultApiKey;
 
 const firebaseConfig = {
   apiKey,

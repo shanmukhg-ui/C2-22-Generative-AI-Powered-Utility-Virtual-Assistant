@@ -95,6 +95,8 @@ export const AuthCard: React.FC<AuthCardProps> = ({
         return 'Please enter a valid email address.';
       case 'auth/popup-closed-by-user':
         return 'Google Sign-In was closed before completing.';
+      case 'auth/api-key-not-valid':
+        return 'Firebase API key updating in production. Please refresh your browser.';
       case 'auth/too-many-requests':
         return 'Too many unsuccessful attempts. Please wait a moment and try again.';
       default:
