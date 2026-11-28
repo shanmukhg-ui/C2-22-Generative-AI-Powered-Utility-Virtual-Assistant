@@ -929,7 +929,7 @@ Formatted Answer:"""
                         "model": model,
                         "messages": [{"role": "user", "content": prompt}],
                         "temperature": 0.2,
-                        "max_tokens": 120
+                        "max_tokens": 60
                     },
                     timeout=10.0
                 )
